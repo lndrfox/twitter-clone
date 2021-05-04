@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from './views/Home.vue'
+import Home from './views/Home'
 
 const routes = [
   {
@@ -11,15 +11,21 @@ const routes = [
   {
     path: '/user',
     name: 'user',
-    component: () => import('./views/User.vue')
+    component: () => import('./views/User')
+  },
+  {
+  path: "/:catchAll(.*)",
+  component: () => import('./views/NotFound'),
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
 })
 
-export default router;
+export default router
 
 createApp(Home).use(router).mount('#app')
+
+

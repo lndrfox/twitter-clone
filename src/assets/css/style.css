@@ -6,7 +6,7 @@
   overflow: hidden;
 }
 
-.topnav router-link {
+.topnav a{
   float: left;
   color: #333;;
   text-align: center;
@@ -16,12 +16,12 @@
   font-family: "Gill Sans", sans-serif
 }
 
-.topnav router-link:hover {
+.topnav a:hover {
   background-color: #b3b3b3;
   color: black;
 }
 
-.topnav router-link.active {
+.topnav a.active {
   background-color: #1298cb;
   color: white;
 }
