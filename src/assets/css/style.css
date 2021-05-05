@@ -25,3 +25,8 @@
   background-color: #1298cb;
   color: white;
 }
+
+.topnav .router-link-exact-active {
+   background-color: indianred;
+   cursor: pointer;
+ }

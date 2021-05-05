@@ -1,12 +1,12 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from './views/Home'
+import App from './App'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: () => import('./views/Home')
   },
   {
     path: '/user',
@@ -14,18 +14,20 @@ const routes = [
     component: () => import('./views/User')
   },
   {
-  path: "/:catchAll(.*)",
-  component: () => import('./views/NotFound'),
+	path: "/:catchAll(.*)",
+	component: () => import('./views/NotFound')
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+  linkActiveClass: "active",
+  linkExactActiveClass: "exact-active"
 })
 
 export default router
 
-createApp(Home).use(router).mount('#app')
+createApp(App).use(router).mount('#app')
 
 

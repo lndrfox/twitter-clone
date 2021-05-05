@@ -1,26 +1,21 @@
 <template>
-  <div id="#app">
-    <h2>NOM SITE</h2>
-    <div class="topnav">
-      <router-link class="active" to="/">Home</router-link>
-      <router-link to="/user">Compte</router-link>
-      <router-link to="/deco">Déconnexion</router-link>
-    </div>
-  <router-view/> 
+  <h2>NOM SITE</h2>
+  <div class="topnav">
+    <router-link to="/">Home</router-link>
+    <router-link to="/user">Compte</router-link>
+    <router-link to="/deco">Déconnexion</router-link>
   </div>
+  <router-view/> 
 </template>
 
 <script>
 
 export default {
-  name: 'NavBar',
-  props: {
-    page: Number
-  }
+  name: 'NavBar'
 }
 
 </script>
 
 <style scoped>
-  @import './../assets/css/style.css';
+  @import './../assets/css/style.css'
 </style>

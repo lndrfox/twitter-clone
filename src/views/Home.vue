@@ -1,14 +1,7 @@
 <template>
-  <NavBar :page='1'/>
+  <h1>Hello</h1>
 </template>
 
 <script>
-import NavBar from '../components/NavBar'
 
-export default {
-  name: 'Home',
-  components: {
-    NavBar
-  }
-}
 </script>
