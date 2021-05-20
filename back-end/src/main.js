@@ -3,10 +3,9 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const path= require('path');
 
-const connectionDB= require('./model/connectDB');
+const register= require('./controller/register');
 
 const app = new express();
-const router= express.Router();
 
 /*-- APP SET UP --*/
 
@@ -19,17 +18,12 @@ app.use(express.static(__dirname));
 
 
 
-router.use('/',async function(req, res) {
 
-	
-	res.send("salut");
-
-});
 
 /*-- SETTING UP ROUTER FOR OUR SERVER --*/
 
-app.use('/',router);
 
+app.use('/register',register);
 
 /*-- PICKING PORT NUMBER AND LISTENING --*/
 
