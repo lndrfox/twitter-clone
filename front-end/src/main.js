@@ -14,6 +14,11 @@ const routes = [
     component: () => import('./views/User')
   },
   {
+    path: '/register',
+    name: 'register',
+    component: () => import('./views/Inscription')
+  },
+  {
 	path: "/:catchAll(.*)",
 	component: () => import('./views/NotFound')
   }

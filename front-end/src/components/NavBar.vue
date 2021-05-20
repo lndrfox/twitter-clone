@@ -3,7 +3,7 @@
   <div class="topnav">
     <router-link to="/">Home</router-link>
     <router-link to="/user">Compte</router-link>
-    <router-link to="/deco">Déconnexion</router-link>
+    <router-link to="/register">Inscription</router-link>
   </div>
   <router-view/> 
 </template>
