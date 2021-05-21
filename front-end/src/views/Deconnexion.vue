@@ -1,10 +1,4 @@
-<template>
-  <h1>Deconnexion</h1>
-  <form v-on:submit.prevent="logout">
-   <input type="submit" id="submit" name="submit">
-  </form>
-  <br>
-</template>
+
 
 <script>
 
@@ -19,21 +13,18 @@ export default{
     }
   },
 
-  methods: {
+  mounted: async function() {
 
-       async logout(){
+    if(this.$cookies.isKey('token')) {
+      
+      let token= this.$cookies.get('token') ;
+      this.$cookies.remove("token"); 
+      await axios.post('http://localhost:5050/logout',{token : token}, {useCredentails :true});
+      this.logged=false; 
+    }
 
-        if(this.$cookies.isKey('token')){
-
-          let token= this.$cookies.get('token') ;
-          this.$cookies.remove("token"); 
-          await axios.post('http://localhost:5050/logout',{token : token}, {useCredentails :true});
-          this.logged=false;
-
-        }
-
-      }
-  },
+    this.$router.push({ name: 'login' });
+  }
 
 
 }

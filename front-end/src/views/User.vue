@@ -4,4 +4,14 @@
 
 <script>
 
+export default{
+
+	mounted: function() {
+		if(!this.$cookies.isKey('token')) {
+			this.$router.push({ name: 'home' });
+		}
+	}
+}
+
+
 </script>
