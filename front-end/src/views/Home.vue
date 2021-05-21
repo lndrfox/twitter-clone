@@ -24,7 +24,7 @@
       </div>
 
       <div class="react">
-        like ici
+        <button @click="like(message.id_message)">Like</button>
       </div>
 
     </div>
@@ -65,7 +65,7 @@ export default {
           await axios.post('http://localhost:5050/home',{token : this.$cookies.get("token"), post_content :  this.post_content}, {useCredentails :true});
       },
 
-        async checkPost(){
+      async checkPost(){
 
         if(this.post_content.length <= 280 && this.post_content.length >0){
 
@@ -77,6 +77,18 @@ export default {
         else{
 
           this.errorPost="Le poste doit faire entre 1 et 280 charactères";
+        }
+
+      },
+
+      async like(id){
+
+      console.log(id);
+
+        if(this.logged){
+
+            await axios.post('http://localhost:5050/home/react',{token : this.$cookies.get("token"), react : "l"}, {useCredentails :true});
+
         }
 
       }

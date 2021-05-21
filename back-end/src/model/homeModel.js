@@ -19,12 +19,12 @@ function homeModel(){
 		/*-- GETTING USERS MATCHING WITH userName --*/
 
 		const [rows, field] = await connection.execute(
-			"SELECT U.login, U.profile_pic, M.content, M.date_message , M.id_message  FROM users U JOIN messages M WHERE (U.login = M.login_poster) ORDER BY M.date_message DESC"
+			"SELECT U.login, U.profile_pic, M.content, M.date_message , M.id_message FROM users U JOIN messages M WHERE (U.login = M.login_poster) ORDER BY M.date_message DESC"
 			);
 
 		db.closeDB(connection);
 		return rows;
-	}
+	},
 
 	this.postMessage = async(login, post_content) =>{
 
@@ -49,6 +49,14 @@ function homeModel(){
 		db.closeDB(connection);
 
 
+	},
+
+	this.like = async (id_message, react, login) =>{
+
+
+
+
+		
 	}
 
 

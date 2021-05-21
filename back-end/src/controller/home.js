@@ -26,6 +26,20 @@ router.get('/',
 		res.send({messages : await model.displayMessages()} );
 	});
 
+router.post('/react'
+
+,async function(req, res){ 
+
+
+	if(global.tokens.hasOwnProperty(req.body.token)){
+
+		console.log("like");
+	}
+
+	res.end();
+
+});
+
 
 
 /*-- EXPORT --*/
