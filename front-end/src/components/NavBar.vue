@@ -3,15 +3,54 @@
   <div class="topnav">
     <router-link to="/">Home</router-link>
     <router-link to="/user">Compte</router-link>
-    <router-link to="/register">Inscription</router-link>
+    <router-link v-if="!logged" to="/register">Inscription</router-link>
+    <router-link v-if="!logged" to="/login">Connexion</router-link>
+    <button v-if="logged" v-on:click="logout">Deconnexion</button>
   </div>
   <router-view/> 
 </template>
 
 <script>
 
+//import axios from 'axios';
+
 export default {
-  name: 'NavBar'
+  name: 'NavBar',
+
+  data(){
+    return {
+      logged: this.loggedIn()
+    }
+  },
+
+  methods: {
+
+      loggedIn(){
+
+          return this.$cookies.isKey('token');
+      },
+
+       logout(){
+
+        if(this.loggedIn()){
+
+          //let nickname = this.$cookie.get('nickname') ;
+          //let token= this.$cookie.get('token') ;
+          this.$cookies.remove("token"); 
+          this.$cookies.remove("nickname");
+          //await axios.post('http://localhost:5050/logout',{token : token, nickname : nickname }, {useCredentails :true});
+          this.logged=false;
+        }
+
+      }
+  },
+
+  mounted: 
+    function () {
+      window.setInterval(() => {
+        this.logged=this.loggedIn();
+      }, 10)
+    }
 }
 
 </script>
