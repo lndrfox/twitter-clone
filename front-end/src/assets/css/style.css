@@ -1,5 +1,6 @@
 body {
-  background-color: #e5eef1
+  background-color: #e5eef1;
+  margin: 0px 0px;
 }
 
 /*--------------------------------------------------------------------
@@ -21,7 +22,7 @@ body {
 }
 
 .topnav a:hover {
-  background-color: #abc8d3;
+  background-color: #e5e5e5;
 }
 
 .topnav a.active {
@@ -81,8 +82,9 @@ body {
   font-family: "Gill Sans", sans-serif;
 }
 
-.login .connect input[type=submit]:hover{
-  background-color: #127faa;
+.register{
+  text-align:center; 
+  padding-top:20px;
 }
 
 .login .alert{
@@ -121,9 +123,14 @@ body {
                                 HOME
   --------------------------------------------------------------------*/
 
-#message{
-  margin-left: 50px;
+#messagesContaines{
+  color: #333;
+  margin: auto;
   width: 50%;
+}
+
+#message{
+  margin: 30px 20px;
   background-color: white;
   box-shadow: 0px 0px 8px #d5d5d5;
   border-radius:7px;
@@ -158,4 +165,37 @@ body {
   border-top-width: thin;
   border-top-color: #dfdfdf;
   padding: 10px 10px;
+}
+
+/*--------------------------------------------------------------------
+                                  USER
+  --------------------------------------------------------------------*/
+
+#cover_pic img{
+  position: relative;
+  width: 100%;
+  height: 220px;
+}
+
+#profil{
+  margin-top: -5px;
+  padding: 5px 5px;
+  background-color: white;
+  overflow: hidden;
+  display: flex;
+  font-family: "Gill Sans", sans-serif;
+  color: #333
+}
+
+#profil p {
+  padding-left: 300px;
+}
+
+#profil img{
+  margin-left: 50px;
+  position: absolute;
+  top: 170px;
+  width: 200px;
+  height: 200px;
+  border-radius: 100px;
 }

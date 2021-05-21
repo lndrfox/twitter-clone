@@ -1,5 +1,4 @@
 <template>
-  <h2>NOM SITE</h2>
   <div class="topnav">
     <router-link to="/">Home</router-link>
     <router-link v-if="logged" to="/user">Compte</router-link>

@@ -7,6 +7,7 @@ const register= require('./controller/register');
 const login= require('./controller/login');
 const logout= require('./controller/logout');
 const home= require('./controller/home');
+const user= require('./controller/user');
 
 
 const app = new express();
@@ -39,6 +40,7 @@ app.use('/register',register);
 app.use('/login',login);
 app.use('/logout',logout);
 app.use('/home',home);
+app.use('/user', user);
 
 
 /*-- PICKING PORT NUMBER AND LISTENING --*/

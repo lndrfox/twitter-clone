@@ -17,7 +17,7 @@ export default{
 
     if(this.$cookies.isKey('token')) {
       
-      let token= this.$cookies.get('token') ;
+      let token = this.$cookies.get('token');
       this.$cookies.remove("token"); 
       await axios.post('http://localhost:5050/logout',{token : token}, {useCredentails :true});
       this.logged=false; 
