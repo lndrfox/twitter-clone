@@ -21,8 +21,7 @@ body {
 }
 
 .topnav a:hover {
-  background-color: #b3b3b3;
-  color: black;
+  background-color: #abc8d3;
 }
 
 .topnav a.active {

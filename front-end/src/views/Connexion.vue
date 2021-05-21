@@ -1,16 +1,21 @@
 <template>
-  <h1>Connexion</h1>
-  <form v-on:submit.prevent="login">
-   <label for="nickname">Choisissez votre pseudo : </label>
-   <input type="text" id="nickname" name="nickname" v-model="nickname">
-   <br>
-   <label for="password">Choisissez votre mot de passe : </label>
-   <input type="password" id="password" name="password" v-model="password">
-   <br>
-   <input type="submit" id="submit" name="submit">
-  </form>
-  <br>
-  {{answer}}
+	<div class="login"><br>
+		<div class="header">
+			<h1>Connexion</h1>
+		</div>
+		<div class="alert" v-if="(answer.length !== 0)">{{answer}}</div>
+		<form v-on:submit.prevent="verify">
+			<br>
+			<input type="text" name="nickname" placeholder="Pseudo" v-model="nickname">
+			<br>
+			<input type="password" name="password" placeholder="Mot de passe" v-model="password">
+			<br>
+			<div class="connect">
+				<input type="submit" name="submit" value="Se Connecter">
+			</div>
+		</form>
+		<br>
+	</div>
 </template>
 
 <script>
@@ -28,23 +33,53 @@ export default{
 	},
 
 	methods: {
+		verify() {
+			if(this.nickname.length === 0) {
+				this.answer = "Vous devez entrer un pseudo"
+			}
+			else if (this.password.length === 0) {
+				this.answer = "Vous devez entrer un mot de passe"
+			}
+			else if(this.nickname.length > 50) {
+				this.answer = "Le pseudo est trop long"
+			}
+			else if(this.password.length > 60) {
+				this.answer = "Le mot de passe est trop long"
+			}
+			else{
+				this.login();
+			}
+			this.nickname = "";
+			this.password = "";
+		},
 		async login(){
 			try{
 				
-				let response =await axios.post('http://localhost:5050/login',{nickname : this.nickname , password : this.password}, {useCredentails :true});
+				let response = await axios.post('http://localhost:5050/login',
+					{nickname : this.nickname , password : this.password}, 
+					{useCredentails :true});
+
+				this.answer=response.data.success;
+
 				if(response.data.success == "Success"){
 
 					this.$cookies.set('token',response.data.token);
+					this.answer = ""
+					this.$router.push({ name: 'home' })
 					
 				}
-				this.answer=response.data.success;
 			}catch(error){
 				console.log(error);
 			}
 		}
 	},
 
-
+	mounted: function() {
+		if(this.$cookies.isKey('token')) {
+			this.$router.push({ name: 'home' });
+		}
+	}
 }
 
 </script>
+

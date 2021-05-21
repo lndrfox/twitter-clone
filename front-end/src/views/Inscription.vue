@@ -6,15 +6,15 @@
 		<div class="alert" v-if="(answer.length !== 0)">{{answer}}</div>
 		<form v-on:submit.prevent="verify">
 			<br>
-			<input type="text" id="nickname" name="nickname" placeholder="Pseudo" v-model="nickname">
+			<input type="text" name="nickname" placeholder="Pseudo" v-model="nickname">
 			<br><br>
 	
-			<input type="password" id="password" name="password" placeholder="Mot de passe" v-model="password">
+			<input type="password" name="password" placeholder="Mot de passe" v-model="password">
 			<br>
-			<input type="password" id="password" name="password1" placeholder="Vérifier mot de passe" v-model="password1">
+			<input type="password" name="password1" placeholder="Vérifier mot de passe" v-model="password1">
 			<br>
 			<div class="connect">
-				<input type="submit" id="submit" name="submit">
+				<input type="submit" name="submit" value="S'inscrire">
 			</div>
 		</form>
 		<br>
@@ -76,9 +76,13 @@ export default{
 				console.log(error);
 			}
 		}
+	},
+
+	mounted: function() {
+		if(this.$cookies.isKey('token')) {
+			this.$router.push({ name: 'home' });
+		}
 	}
-
-
 }
 
 </script>
