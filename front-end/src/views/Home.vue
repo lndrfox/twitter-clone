@@ -5,6 +5,15 @@
   <input type="submit" id="submit" name="submit">
   {{errorPost}}
   </form>
+  <div id="messagesContaines">
+    <div id="message" v-for="message in messages" v-bind:key="message.id_message">
+       {{message.login}}
+       <img :src="message.profile_pic" style="width:100px;height:100px;">
+       {{message.content}}
+       {{message.date_message}}
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -16,6 +25,7 @@ export default {
 
   data(){
     return {
+      messages: [],
       logged: this.$cookies.isKey('token'),
       post_content: "",
       errorPost: ""
@@ -26,11 +36,13 @@ export default {
 
       async getMessages(){
 
-        await axios.get('http://localhost:5050/home', {useCredentails :true});
+        let response =await axios.get('http://localhost:5050/home', {useCredentails :true});
+        return response.data.messages;
       },
 
       resetInput() {
         this.$refs["post_content"].value = "";
+        this.post_content="";
       },
 
       async post_message(){
@@ -39,9 +51,10 @@ export default {
 
         async checkPost(){
 
-        if(this.post_content.length <= 10 && this.post_content.length >0){
+        if(this.post_content.length <= 280 && this.post_content.length >0){
 
           await this.post_message();
+          this.messages= await this.getMessages();
           this.resetInput();
         }
 
@@ -54,15 +67,21 @@ export default {
 
   },
 
+  beforeMount: async function(){
+
+    this.messages= await this.getMessages();
+  },
+
   mounted: 
     async function () {
       setInterval(
      (function(self) {         
          return async function() {   
-             await self.getMessages(); 
+            self.messages= await self.getMessages(); 
+
          }
      })(this),
-     5000); 
+     10000); 
     }
 }
 
