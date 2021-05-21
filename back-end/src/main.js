@@ -6,6 +6,7 @@ const path= require('path');
 const register= require('./controller/register');
 const login= require('./controller/login');
 const logout= require('./controller/logout');
+const home= require('./controller/home');
 
 
 const app = new express();
@@ -37,9 +38,11 @@ app.use('/',router);
 app.use('/register',register);
 app.use('/login',login);
 app.use('/logout',logout);
+app.use('/home',home);
+
 
 /*-- PICKING PORT NUMBER AND LISTENING --*/
 
-const PORT = process.env.PORT || 5050;
+const PORT = 5050;
 
 app.listen(PORT, () => console.log(`server started on port ${PORT}`));

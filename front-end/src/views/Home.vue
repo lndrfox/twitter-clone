@@ -30,7 +30,7 @@ export default {
 
       async post_message(){
 
-          await axios.post('http://localhost:5050/home',{token : this.$cookies.get("nickname"), post_content :  this.post_content}, {useCredentails :true});
+          await axios.post('http://localhost:5050/home',{token : this.$cookies.get("token"), post_content :  this.post_content}, {useCredentails :true});
       },
 
         async checkPost(){

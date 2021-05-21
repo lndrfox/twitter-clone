@@ -38,7 +38,6 @@ function registerModel(){
 					[userName, hashedPW],
 					function(err, result){
 					if(err) throw err;
-					console.log("1 user inserted");
 				});
 
 				db.closeDB(connection);

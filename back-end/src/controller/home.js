@@ -2,7 +2,7 @@
 
 const express=require('express');
 const router=express.Router();
-const model=require('../model/loginModel');
+const model=require('../model/homeModel');
 
 
 
@@ -14,8 +14,10 @@ router.post('/'
 
 	if(global.tokens.hasOwnProperty(req.body.token)){
 
-
+		model.postMessage(global.tokens[req.body.token],req.body.post_content);
 	}
+
+	res.end();
 
 });
 
