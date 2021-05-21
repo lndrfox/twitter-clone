@@ -22,7 +22,7 @@ CREATE TABLE twitternj.messages(
 	id_message INT PRIMARY KEY AUTO_INCREMENT,
 	login_poster nvarchar(50) NOT NULL,
 	content nvarchar(280) NOT NULL,
-	date_message date NOT NULL DEFAULT CURRENT_TIMESTAMP
+	date_message datetime NOT NULL DEFAULT NOW()
 );
 
 ALTER TABLE twitternj.messages ADD CONSTRAINT

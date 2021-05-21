@@ -24,13 +24,17 @@ export default {
 
   methods: {
 
+      async getMessages(){
+
+        await axios.get('http://localhost:5050/home', {useCredentails :true});
+      },
+
       resetInput() {
         this.$refs["post_content"].value = "";
       },
 
       async post_message(){
-
-          await axios.post('http://localhost:5050/home',{token : this.$cookies.get("nickname"), post_content :  this.post_content}, {useCredentails :true});
+          await axios.post('http://localhost:5050/home',{token : this.$cookies.get("token"), post_content :  this.post_content}, {useCredentails :true});
       },
 
         async checkPost(){
@@ -48,7 +52,18 @@ export default {
 
       }
 
-  }
+  },
+
+  mounted: 
+    async function () {
+      setInterval(
+     (function(self) {         
+         return async function() {   
+             await self.getMessages(); 
+         }
+     })(this),
+     5000); 
+    }
 }
 
 
