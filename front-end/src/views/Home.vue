@@ -50,10 +50,11 @@ export default {
 
         async checkPost(){
 
-        if(this.post_content.length <= 10 && this.post_content.length >0){
+        if(this.post_content.length <= 280 && this.post_content.length >0){
 
           await this.post_message();
           this.resetInput();
+          this.messages= await this.getMessages();
         }
 
         else{
@@ -68,7 +69,6 @@ export default {
   beforeMount: async function(){
 
     this.messages= await this.getMessages();
-    console.log(this.messages);
   },
 
   mounted: 
@@ -80,7 +80,7 @@ export default {
 
          }
      })(this),
-     1000); 
+     10000); 
     }
 }
 
