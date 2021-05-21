@@ -92,3 +92,27 @@ body {
   color: #8e3a3a;
   border: 1px solid #e4a2a2;
 }
+
+.login .footer{
+
+  text-align: center;
+  border: 0px solid;
+  border-top-width: thin;
+  border-top-color: #d3d3d3;
+}
+
+.login .footer a {
+  background-color: #4CAF50;
+  text-decoration: none;
+  border: 1px solid #4aa84c;
+  border-radius: 4px;
+  padding: 10px 15px;
+  display: inline-block;
+  font-size: 16px;
+  font-family: "Gill Sans", sans-serif;
+  color: white;
+}
+
+.login .footer a:hover {
+  background-color: #469949;
+}

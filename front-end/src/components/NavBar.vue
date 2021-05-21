@@ -2,8 +2,7 @@
   <h2>NOM SITE</h2>
   <div class="topnav">
     <router-link to="/">Home</router-link>
-    <router-link to="/user">Compte</router-link>
-    <router-link v-if="!logged" to="/register">Inscription</router-link>
+    <router-link v-if="logged" to="/user">Compte</router-link>
     <router-link v-if="!logged" to="/login">Connexion</router-link>
     <router-link v-if="logged" to="/logout">Deconnexion</router-link>
   </div>

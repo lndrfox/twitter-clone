@@ -15,6 +15,10 @@
 			</div>
 		</form>
 		<br>
+		<div class="footer">
+			<p>Vous n'êtes pas encore inscrit ?</p>
+			<router-link v-if="!logged" to="/register">S'Inscrire</router-link>
+		</div>
 	</div>
 </template>
 
