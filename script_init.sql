@@ -13,7 +13,7 @@ CREATE TABLE twitternj.users(
 	login nvarchar(50) PRIMARY KEY,
 	password nvarchar(60) NOT NULL,
 	description nvarchar(200) NOT NULL DEFAULT "",
-	profile_pic text NOT NULL DEFAULT "default",
+	profile_pic text NOT NULL DEFAULT "https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?k=6&m=1223671392&s=170667a&w=0&h=zP3l7WJinOFaGb2i1F4g8IS2ylw0FlIaa6x3tP9sebU=",
 	cover_pic text NOT NULL DEFAULT "default",
 	date_inscription date NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

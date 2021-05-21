@@ -8,7 +8,7 @@
   <div id="messagesContaines">
     <div id="message" v-for="message in messages" v-bind:key="message.id_message">
        {{message.login}}
-       {{message.profile_pic}}
+       <img :src="message.profile_pic" style="width:100px;height:100px;">
        {{message.content}}
        {{message.date_message}}
     </div>
@@ -42,6 +42,7 @@ export default {
 
       resetInput() {
         this.$refs["post_content"].value = "";
+        this.post_content="";
       },
 
       async post_message(){
@@ -53,8 +54,8 @@ export default {
         if(this.post_content.length <= 280 && this.post_content.length >0){
 
           await this.post_message();
-          this.resetInput();
           this.messages= await this.getMessages();
+          this.resetInput();
         }
 
         else{
