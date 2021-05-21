@@ -35,7 +35,6 @@ export default{
 				if(response.data.success == "Success"){
 
 					this.$cookies.set('token',response.data.token);
-					this.$cookies.set('nickname',response.data.nickname);
 					
 				}
 				this.answer=response.data.success;

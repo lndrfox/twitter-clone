@@ -27,6 +27,11 @@ const routes = [
     component: () => import('./views/Connexion')
   },
   {
+    path: '/logout',
+    name: 'logout',
+    component: () => import('./views/Deconnexion')
+  },
+  {
 	path: "/:catchAll(.*)",
 	component: () => import('./views/NotFound')
   }

@@ -23,10 +23,10 @@ router.post('/'
 
 				var randtoken = require('rand-token');
 				token = randtoken.generate(16);
-				global.tokens[req.body.nickname]=token;
+				global.tokens[token]=req.body.nickname;
 			}
 
-			res.send({success : success , token : token , nickname : req.body.nickname});
+			res.send({success : success , token : token});
 
 
 		}catch(error){

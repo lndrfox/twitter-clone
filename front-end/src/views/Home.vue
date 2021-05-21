@@ -1,39 +1,55 @@
 <template>
-  <h1>Hello</h1>
-  {{users}}
+  <form v-if="logged" v-on:submit.prevent="checkPost">
+   <textarea v-model="post_content"  maxlength="280" rows="5" cols="33" style="resize: none;" ref="post_content"></textarea>
+   <br>
+  <input type="submit" id="submit" name="submit">
+  {{errorPost}}
+  </form>
 </template>
 
 <script>
 
 import axios from 'axios';
 
-export default{
+export default {
+  name: 'NavBar',
 
-	data(){
-		return {
-			users: "a"
-		}
-	},
+  data(){
+    return {
+      logged: this.$cookies.isKey('token'),
+      post_content: "",
+      errorPost: ""
+    }
+  },
 
-	methods: {
-		async loadUsers(){
-			try{
-				let response= await axios.get('http://localhost:5050/',{useCredentails :true});
-				this.users = response.data;
+  methods: {
 
-			}catch(error){
-				console.log(error);
-			}
-		}
-	},
+      resetInput() {
+        this.$refs["post_content"].value = "";
+      },
 
- mounted: async function() {
+      async post_message(){
 
-  await this.loadUsers();
+          await axios.post('http://localhost:5050/home',{token : this.$cookies.get("nickname"), post_content :  this.post_content}, {useCredentails :true});
+      },
 
- }
-	
+        async checkPost(){
 
+        if(this.post_content.length <= 10 && this.post_content.length >0){
+
+          await this.post_message();
+          this.resetInput();
+        }
+
+        else{
+
+          this.errorPost="Le poste doit faire entre 1 et 280 charactères";
+        }
+
+      }
+
+  }
 }
+
 
 </script>
