@@ -1,5 +1,6 @@
 <template>
   <h1>Hello</h1>
+  {{users}}
 </template>
 
 <script>

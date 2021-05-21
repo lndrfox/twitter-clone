@@ -1,6 +1,9 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import VueCookies from 'vue3-cookies'
 import App from './App'
+
+
 
 const routes = [
   {
@@ -19,6 +22,11 @@ const routes = [
     component: () => import('./views/Inscription')
   },
   {
+    path: '/login',
+    name: 'login',
+    component: () => import('./views/Connexion')
+  },
+  {
 	path: "/:catchAll(.*)",
 	component: () => import('./views/NotFound')
   }
@@ -32,6 +40,8 @@ const router = createRouter({
 
 export default router
 
-createApp(App).use(router).mount('#app')
+let app =createApp(App);
+app.use(VueCookies);
+app.use(router).mount('#app')
 
 
