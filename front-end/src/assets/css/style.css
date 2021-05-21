@@ -1,8 +1,12 @@
+body {
+  background-color: #e5eef1
+}
+
 /*--------------------------------------------------------------------
                             NAVIGUATION BAR
   --------------------------------------------------------------------*/
 .topnav {
-  background-color: #c5c5c5;
+  background-color: white;
   overflow: hidden;
 }
 
@@ -24,4 +28,68 @@
 .topnav a.active {
   background-color: #1298cb;
   color: white;
+}
+
+/*--------------------------------------------------------------------
+                                LOGIN
+  --------------------------------------------------------------------*/
+
+.login { 
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width: 20%;
+  background-color: white;
+  padding: 15px;
+  padding-left: 32px;
+  padding-right: 32px;
+  border-radius:10px;
+  font-size: 16px;
+  font-family: "Gill Sans", sans-serif;
+  color: #333;
+  box-shadow: 5px 5px 15px #d5d5d5;
+}
+
+.login .header{
+  text-align: center;
+}
+
+.login input[type=text], input[type=password]{
+  width: 100%;
+  padding: 10px 10px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family: "Gill Sans", sans-serif;
+}
+
+.connect{
+  text-align:center; 
+  padding-top:20px;
+}
+
+.login .connect input[type=submit]{
+  background-color:  #1298cb;
+  border: 1px solid #1486b4;
+  border-radius: 4px;
+  color: white;
+  padding: 10px 15px;
+  display: inline-block;
+  font-size: 16px;
+  font-family: "Gill Sans", sans-serif;
+}
+
+.login .connect input[type=submit]:hover{
+  background-color: #127faa;
+}
+
+.login .alert{
+  background-color: #ffaeae;
+  padding: 14px 20px;
+  border-radius: 6px;
+  color: #8e3a3a;
+  border: 1px solid #e4a2a2;
 }

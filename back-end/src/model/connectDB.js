@@ -9,9 +9,9 @@ function DataBase(){
 		/*-- CONNECT TO DB --*/
 
 			const db=await mysql.createConnection({
-			host : ,'localhost',
-			user : , //YOUR MYSQL USERNAME HERE
-			password: ,//YOUR PASSWORD HERE
+			host : 'localhost',
+			user : 'twitternj', //YOUR MYSQL USERNAME HERE
+			password: 'Access_data1' ,//YOUR PASSWORD HERE
 			database:'twitternj'
 		});
 
