@@ -18,10 +18,11 @@ function homeModel(){
 
 		/*-- GETTING USERS MATCHING WITH userName --*/
 
-		const [rows, field] = await connection.execute
-			("SELECT U.login, U.profile_pic, M.content, M.date_message  FROM users U JOIN messages M WHERE (U.login = M.login_poster)");
+		const [rows, field] = await connection.execute(
+			"SELECT U.login, U.profile_pic, M.content, M.date_message  FROM users U JOIN messages M WHERE (U.login = M.login_poster)"
+			);
 
-		db.closeDB();
+		db.closeDB(connection);
 		return rows;
 	}
 

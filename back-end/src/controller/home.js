@@ -14,12 +14,19 @@ router.post('/'
 
 	if(global.tokens.hasOwnProperty(req.body.token)){
 
-		model.postMessage(global.tokens[req.body.token],req.body.post_content);
+		await model.postMessage(global.tokens[req.body.token],req.body.post_content);
 	}
 
 	res.end();
 
 });
+
+router.get('/',
+	async function(req,res){
+
+		let r = await model.displayMessages() ;
+		res.send({messages : r} );
+	});
 
 
 
