@@ -5,6 +5,8 @@ const path= require('path');
 
 const register= require('./controller/register');
 const login= require('./controller/login');
+const logout= require('./controller/logout');
+
 
 const app = new express();
 const router= express.Router();
@@ -34,6 +36,7 @@ router.get('/',function(req, res) {
 app.use('/',router);
 app.use('/register',register);
 app.use('/login',login);
+app.use('/logout',logout);
 
 /*-- PICKING PORT NUMBER AND LISTENING --*/
 

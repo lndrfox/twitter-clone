@@ -12,7 +12,7 @@
 
 <script>
 
-//import axios from 'axios';
+import axios from 'axios';
 
 export default {
   name: 'NavBar',
@@ -30,15 +30,15 @@ export default {
           return this.$cookies.isKey('token');
       },
 
-       logout(){
+       async logout(){
 
         if(this.loggedIn()){
 
-          //let nickname = this.$cookie.get('nickname') ;
-          //let token= this.$cookie.get('token') ;
+          let nickname = this.$cookies.get('nickname') ;
+          let token= this.$cookies.get('token') ;
           this.$cookies.remove("token"); 
           this.$cookies.remove("nickname");
-          //await axios.post('http://localhost:5050/logout',{token : token, nickname : nickname }, {useCredentails :true});
+          await axios.post('http://localhost:5050/logout',{token : token, nickname : nickname }, {useCredentails :true});
           this.logged=false;
         }
 
