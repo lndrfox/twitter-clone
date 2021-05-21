@@ -97,7 +97,7 @@ export default {
 
          }
      })(this),
-     10000); 
+     5000); 
     }
 }
 
