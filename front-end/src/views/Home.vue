@@ -2,15 +2,31 @@
   <form v-if="logged" v-on:submit.prevent="checkPost">
    <textarea v-model="post_content"  maxlength="280" rows="5" cols="33" style="resize: none;" ref="post_content"></textarea>
    <br>
-  <input type="submit" id="submit" name="submit">
+  <input type="submit" name="submit">
   {{errorPost}}
   </form>
   <div id="messagesContaines">
+
     <div id="message" v-for="message in messages" v-bind:key="message.id_message">
-       {{message.login}}
-       <img :src="message.profile_pic" style="width:100px;height:100px;">
+
+      <div class="user">
+
+        <div class="img">
+          <img :src="message.profile_pic">
+        </div>
+        
+        <p>{{message.login}} {{message.date_message}}</p>
+
+      </div>
+
+      <br><div class="post">
        {{message.content}}
-       {{message.date_message}}
+      </div>
+
+      <div class="react">
+        like ici
+      </div>
+
     </div>
 
   </div>
@@ -21,7 +37,7 @@
 import axios from 'axios';
 
 export default {
-  name: 'NavBar',
+  name: 'Home',
 
   data(){
     return {
