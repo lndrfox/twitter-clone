@@ -5,6 +5,15 @@
   <input type="submit" id="submit" name="submit">
   {{errorPost}}
   </form>
+  <div id="messagesContaines">
+    <div id="message" v-for="message in messages" v-bind:key="message.id_message">
+       {{message.login}}
+       {{message.profile_pic}}
+       {{message.content}}
+       {{message.date_message}}
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -16,6 +25,7 @@ export default {
 
   data(){
     return {
+      messages: [],
       logged: this.$cookies.isKey('token'),
       post_content: "",
       errorPost: ""
@@ -26,7 +36,8 @@ export default {
 
       async getMessages(){
 
-        await axios.get('http://localhost:5050/home', {useCredentails :true});
+        let response =await axios.get('http://localhost:5050/home', {useCredentails :true});
+        return response.data.messages;
       },
 
       resetInput() {
@@ -54,15 +65,22 @@ export default {
 
   },
 
+  beforeMount: async function(){
+
+    this.messages= await this.getMessages();
+    console.log(this.messages);
+  },
+
   mounted: 
     async function () {
       setInterval(
      (function(self) {         
          return async function() {   
-             await self.getMessages(); 
+            self.messages= await self.getMessages(); 
+
          }
      })(this),
-     5000); 
+     1000); 
     }
 }
 

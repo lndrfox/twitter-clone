@@ -23,9 +23,7 @@ router.post('/'
 
 router.get('/',
 	async function(req,res){
-
-		let r = await model.displayMessages() ;
-		res.send({messages : r} );
+		res.send({messages : await model.displayMessages()} );
 	});
 
 
