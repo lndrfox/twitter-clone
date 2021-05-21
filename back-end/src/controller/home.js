@@ -14,11 +14,8 @@ router.post('/'
 
 	if(global.tokens.hasOwnProperty(req.body.token)){
 
-		delete global.tokens[req.body.token];
 
 	}
-
-	res.send("ok");
 
 });
 
