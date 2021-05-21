@@ -31,12 +31,12 @@ ALTER TABLE twitternj.abonnements ADD CONSTRAINT
 	ON DELETE CASCADE
 	ON UPDATE CASCADE;
 
+
 ALTER TABLE twitternj.abonnements ADD CONSTRAINT
-	FK_login_suivi FOREIGN KEY (login_suiveur)
+	FK_login_suiveur FOREIGN KEY (login_suiveur)
 	REFERENCES users(login)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE;
-
 
 CREATE TABLE twitternj.messages(
 	id_message INT PRIMARY KEY AUTO_INCREMENT,
