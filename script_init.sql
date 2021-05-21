@@ -86,3 +86,9 @@ ALTER TABLE twitternj.retweet_cite ADD CONSTRAINT
 	REFERENCES users(login)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE;
+
+CREATE USER twitternj@localhost IDENTIFIED BY 'Access_data1';
+
+GRANT ALL PRIVILEGES ON twitternj . * TO twitternj@localhost;
+
+FLUSH PRIVILEGES;
