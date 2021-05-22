@@ -8,6 +8,7 @@ const login= require('./controller/login');
 const logout= require('./controller/logout');
 const home= require('./controller/home');
 const user= require('./controller/user');
+const usermodif = require('./controller/usermodif');
 
 
 const app = new express();
@@ -41,6 +42,7 @@ app.use('/login',login);
 app.use('/logout',logout);
 app.use('/home',home);
 app.use('/user', user);
+app.use('/usermodif', usermodif);
 
 
 /*-- PICKING PORT NUMBER AND LISTENING --*/

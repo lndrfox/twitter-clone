@@ -82,6 +82,10 @@ body {
   font-family: "Gill Sans", sans-serif;
 }
 
+.login .connect input[type=submit]:hover{
+  background-color: #118bb9;
+}
+
 .register{
   text-align:center; 
   padding-top:20px;
@@ -171,31 +175,113 @@ body {
                                   USER
   --------------------------------------------------------------------*/
 
-#cover_pic img{
+.profil_bar #cover_pic img{
   position: relative;
   width: 100%;
   height: 220px;
 }
 
-#profil{
+.profil_bar #profil{
   margin-top: -5px;
   padding: 5px 5px;
   background-color: white;
   overflow: hidden;
   display: flex;
-  font-family: "Gill Sans", sans-serif;
-  color: #333
+  font-family: "Goudy Bookletter 1911", sans-serif;
+  letter-spacing: -0.05em;
+  color: #808080;
 }
 
-#profil p {
+.profil_bar #profil #begin{
   padding-left: 300px;
 }
 
-#profil img{
+.profil_bar #profil .bar {
+  padding: 10px 20px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 18px;
+}
+
+.profil_bar #profil .bar .text {
+  font-size: 13px;
+}
+
+.profil_bar #profil img{
   margin-left: 50px;
   position: absolute;
   top: 170px;
   width: 200px;
   height: 200px;
   border-radius: 100px;
+}
+
+.profil_desc {
+  margin: 5px 5px;
+  margin-top: 50px;
+  margin-left: 45px;
+  float: left;
+  width: 240px;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  letter-spacing: -0.05em;
+  color: #1e1e1e;
+}
+
+.profil_desc #name{
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.profil_desc #desc{
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.profil_desc .joined{
+  margin-bottom: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 16px;
+  color: #8e8e8e;
+}
+
+.profil_desc .joined img{
+  margin-right: 5px;
+  float: left;
+  width: 16px;
+  height: 16px;
+}
+
+.profil_desc .modif{
+  border: 0px solid;
+  border-top-width: thin;
+  border-top-color: #d3d3d3;
+  text-align: center;
+}
+
+.profil_desc textarea {
+  margin-bottom: 20px;
+  width: 100%;
+  font-size: 14px;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  border: 2px solid #d3d3d3;
+  border-radius: 5px;
+}
+
+.profil_desc .modif button, .profil_desc .modif input[type=submit]{
+  margin-top: 20px;
+  width: 100%;
+  background-color:  #1298cb;
+  border: 0px solid;
+  border-radius: 20px;
+  color: white;
+  padding: 10px 15px;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.profil_desc #modif button:hover, .profil_desc .modif input[type=submit]:hover{
+   background-color: #118bb9;
 }
