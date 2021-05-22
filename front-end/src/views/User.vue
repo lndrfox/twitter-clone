@@ -271,14 +271,16 @@ export default{
         if(this.logged && user_liked==0 && user_disliked == 0){
 
             await axios.post('http://localhost:5050/home/react',{token : this.$cookies.get("token"), react : "l", id: id}, {useCredentails :true});
-            this.messages= await this.getMessages();
+            let info = await this.getInfo();
+						this.posts = info.posts;
 
         }
 
         if(this.logged && user_liked ==1 && user_disliked ==0){
 
             await axios.post('http://localhost:5050/home/react/un',{token : this.$cookies.get("token"), id: id}, {useCredentails :true});
-            this.messages= await this.getMessages();
+            let info = await this.getInfo();
+            this.posts = info.posts;
         }
 
       },
@@ -288,14 +290,16 @@ export default{
         if(this.logged && user_liked==0 && user_disliked == 0){
 
             await axios.post('http://localhost:5050/home/react',{token : this.$cookies.get("token"), react : "d", id: id}, {useCredentails :true});
-            this.messages= await this.getMessages();
+            let info = await this.getInfo();
+            this.posts = info.posts;
 
         }
 
         if(this.logged && user_liked ==0 && user_disliked ==1){
 
             await axios.post('http://localhost:5050/home/react/un',{token : this.$cookies.get("token"), id: id}, {useCredentails :true});
-            this.messages= await this.getMessages();
+            let info = await this.getInfo();
+            this.posts = info.posts;
         }
 
       }

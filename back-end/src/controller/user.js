@@ -20,7 +20,21 @@ router.post('/'
 			if(req.body.login){
 
 				let user = await model.userInfo(req.body.login);
-				let posts = await model.userPost(req.body.login);
+
+				let posts;
+
+				if(global.tokens.hasOwnProperty(req.body.token)){
+
+					posts = await model.userPostLogged(req.body.login, global.tokens[req.body.token]);
+
+				}
+
+				else{
+
+					 posts = await model.userPost(req.body.login);
+
+				}
+				
 				if(global.tokens.hasOwnProperty(req.body.token) && req.body.login ==global.tokens[req.body.token]){
 					canModify =true;
 				}
@@ -31,7 +45,7 @@ router.post('/'
 
 				if(global.tokens.hasOwnProperty(req.body.token)) {
 					let user = await model.userInfo(global.tokens[req.body.token]);
-					let posts = await model.userPost(global.tokens[req.body.token]);
+					let posts = await model.userPostLogged(global.tokens[req.body.token], global.tokens[req.body.token]);
 					canModify= true;
 					res.send({user : user, posts: posts, canModify : canModify});
 				}
