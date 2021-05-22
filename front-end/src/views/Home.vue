@@ -15,7 +15,7 @@
           <img :src="message.profile_pic">
         </div>
         
-        <p id="login">{{message.login}}</p>
+        <p id="login">{{message.t_name}}</p>
         <p id="credit">@{{message.login}}</p>
 
       </div>

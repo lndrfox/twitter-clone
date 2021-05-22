@@ -34,8 +34,8 @@ function registerModel(){
 				let salt= bcrypt.genSaltSync(10);
 				let hashedPW=bcrypt.hashSync(password, salt);
 				
-				connection.query("INSERT INTO users (login, password) VALUES (? ,?) ",
-					[userName, hashedPW],
+				connection.query("INSERT INTO users (login, t_name,  password) VALUES (? ,?, ?) ",
+					[userName, userName, hashedPW],
 					function(err, result){
 					if(err) throw err;
 				});
