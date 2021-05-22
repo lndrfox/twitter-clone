@@ -105,6 +105,7 @@
 <script>
 
 import axios from 'axios'
+import swal from 'sweetalert';
 
 export default{
 
@@ -181,11 +182,13 @@ export default{
 				this.modifier_cover = true;
 			}
 			else {
+				this.link_cover = this.link_cover.trim();
 				if(this.link_cover === "") {
 					this.link_cover = this.user.cover_pic;
 				}
 				else if(!this.checkIfImageExists(this.link_cover)) {
-					this.link_cover = "https://media.istockphoto.com/photos/texture-of-blue-paper-picture-id945663596?k=6&m=945663596&s=612x612&w=0&h=Tl7ZKKzERt5_WtEcUwp9yZKDjQZev15RTZ0a85WkUbs=";
+					this.link_cover = this.user.cover_pic;
+					swal({text: "Cette image n'existe pas", icon: "warning"});
 				}
 				this.modifier_cover = false;
 				this.link_cover_sav = this.link_cover;
@@ -198,11 +201,13 @@ export default{
 				this.modifier_photo = true;
 			}
 			else {
+				this.link_photo = this.link_photo.trim();
 				if(this.link_photo === "") {
 					this.link_photo = this.user.profile_pic;
 				}
 				else if(!this.checkIfImageExists(this.link_photo)) {
-					this.link_photo = "https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?k=6&m=1223671392&s=170667a&w=0&h=zP3l7WJinOFaGb2i1F4g8IS2ylw0FlIaa6x3tP9sebU=";
+					this.link_photo =  this.user.profile_pic;
+					swal({text: "Cette image n'existe pas", icon: "warning"});
 				}
 				this.modifier_photo = false;
 				this.link_photo_sav = this.link_photo;
