@@ -23,14 +23,7 @@
     <div id="message" v-for="message in messages" v-bind:key="message.id_message">
       <div v-if="getMention(recherche_text_sav, message.content)">
 
-        <div class="user">
-
-          <div class="img">
-            <img :src="message.profile_pic">
-          </div>
-          
-          <p id="login">{{message.t_name}}</p>
-          <p id="credit">@{{message.login}}</p>
+      <div class="user" v-on:click="redirectUser(message.login)">
 
         </div>
 
@@ -82,6 +75,11 @@ export default {
   },
 
   methods: {
+
+      redirectUser(login){
+
+        this.$router.push({ name: 'user', query: { login: login }});
+      },
 
       async getMessages(){
 

@@ -1,5 +1,4 @@
 <template>
-
 	<div class= "profil_bar">
 
 		<div id="cover_pic">
@@ -38,7 +37,7 @@
 	<div class="profil_desc">
 
 		<div id="name">
-			{{user.login}}
+			{{user.t_name}}
 			<p>@{{user.login}}</p>
 		</div>
 
@@ -53,7 +52,7 @@
 			Rejoint le {{date}}
 		</div>
 
-		<div class="modif">
+		<div class="modif" v-if="canModify">
 			<button id="modifier" v-on:click="checkModif">Modifier</button>
 			<button id="annuler" v-if="modifier" v-on:click="annuler">Annuler</button>
 		</div>
@@ -113,6 +112,7 @@ export default{
     return {
       posts: [],
       logged: this.$cookies.isKey('token'),
+      canModify: false,
       user: {},
       date: "",
       modifier: false,
@@ -129,10 +129,23 @@ export default{
   methods: {
 
       async getInfo(){
-        let response = await axios.post('http://localhost:5050/user', 
-			{token: this.$cookies.get('token')}, 
+
+        let tok = this.logged ? this.$cookies.get('token') : "";
+        if(this.$route.query.login){
+
+          let response = await axios.post('http://localhost:5050/user', 
+			{token: tok , login :this.$route.query.login}, 
 			{useCredentails :true});
         return response.data;
+        }
+
+        else{
+
+          let response = await axios.post('http://localhost:5050/user', 
+			{token: tok}, 
+			{useCredentails :true});
+        return response.data;
+        }
       },
 
       annuler() {
@@ -162,7 +175,6 @@ export default{
 						link :  this.link_cover_sav}, 
 						{useCredentails :true});
 				}
-				console.log(this.link_photo_sav !== this.user.profile_pic);
 				if(this.link_photo_sav !== this.user.profile_pic) {
 					await axios.post('http://localhost:5050/user/photo',
 						{token : this.$cookies.get("token"), 
@@ -259,14 +271,16 @@ export default{
         if(this.logged && user_liked==0 && user_disliked == 0){
 
             await axios.post('http://localhost:5050/home/react',{token : this.$cookies.get("token"), react : "l", id: id}, {useCredentails :true});
-            this.messages= await this.getMessages();
+            let info = await this.getInfo();
+						this.posts = info.posts;
 
         }
 
         if(this.logged && user_liked ==1 && user_disliked ==0){
 
             await axios.post('http://localhost:5050/home/react/un',{token : this.$cookies.get("token"), id: id}, {useCredentails :true});
-            this.messages= await this.getMessages();
+            let info = await this.getInfo();
+            this.posts = info.posts;
         }
 
       },
@@ -276,14 +290,16 @@ export default{
         if(this.logged && user_liked==0 && user_disliked == 0){
 
             await axios.post('http://localhost:5050/home/react',{token : this.$cookies.get("token"), react : "d", id: id}, {useCredentails :true});
-            this.messages= await this.getMessages();
+            let info = await this.getInfo();
+            this.posts = info.posts;
 
         }
 
         if(this.logged && user_liked ==0 && user_disliked ==1){
 
             await axios.post('http://localhost:5050/home/react/un',{token : this.$cookies.get("token"), id: id}, {useCredentails :true});
-            this.messages= await this.getMessages();
+            let info = await this.getInfo();
+            this.posts = info.posts;
         }
 
       }
@@ -292,12 +308,21 @@ export default{
   beforeMount: async function(){
 
 	let info = await this.getInfo();
-	this.posts = info.posts;
-	this.user = info.user;
-	this.date = this.getDate(info.user.date_inscription.substring(0,10));
-	this.desc = info.user.description;
-	this.link_cover_sav = info.user.cover_pic;
-	this.link_photo_sav = info.user.profile_pic;
+	if(info.user!=null){
+				this.posts = info.posts;
+				this.user = info.user;
+				this.date = this.getDate(info.user.date_inscription.substring(0,10));
+				this.desc = info.user.description;
+				this.link_cover_sav = info.user.cover_pic;
+				this.link_photo_sav = info.user.profile_pic;
+				this.canModify= info.canModify;
+	}
+
+	else{
+
+		this.$router.push({name: "home"});
+	}
+
 
   },
 
@@ -307,21 +332,25 @@ export default{
 			return async function() {
 
 				let info = await self.getInfo();
-				self.posts = info.posts;
-				self.user = info.user;
-				self.date = self.getDate(info.user.date_inscription.substring(0,10));
-				if(!self.modifier){
-					self.desc = info.user.description;
-					self.link_cover_sav = info.user.cover_pic;
-					self.link_photo_sav = info.user.profile_pic;
+				if(info.user!=null){
 
+          self.posts = info.posts;
+          self.user = info.user;
+          self.date = self.getDate(info.user.date_inscription.substring(0,10));
+          if(!self.modifier){
+            self.desc = info.user.description;
+            self.link_cover_sav = info.user.cover_pic;
+            self.link_photo_sav = info.user.profile_pic;
+          }
+				}
+
+				else{
+
+					this.$router.push({name: "home"});
 				}
 
 			}
 		})(this), 1000);
-	if(!this.$cookies.isKey('token')) {
-		this.$router.push({ name: 'home' });
-	}
   }
 }
 
