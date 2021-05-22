@@ -7,6 +7,10 @@ const register= require('./controller/register');
 const login= require('./controller/login');
 const logout= require('./controller/logout');
 const home= require('./controller/home');
+const user= require('./controller/user');
+const usermodif = require('./controller/usermodif');
+const usercover = require('./controller/usercover');
+const userphoto = require('./controller/userphoto');
 
 
 const app = new express();
@@ -39,6 +43,10 @@ app.use('/register',register);
 app.use('/login',login);
 app.use('/logout',logout);
 app.use('/home',home);
+app.use('/user', user);
+app.use('/usermodif', usermodif);
+app.use('/usercover', usercover);
+app.use('/userphoto', userphoto);
 
 
 /*-- PICKING PORT NUMBER AND LISTENING --*/

@@ -1,5 +1,6 @@
 body {
-  background-color: #e5eef1
+  background-color: #e5eef1;
+  margin: 0px 0px;
 }
 
 /*--------------------------------------------------------------------
@@ -21,7 +22,7 @@ body {
 }
 
 .topnav a:hover {
-  background-color: #abc8d3;
+  background-color: #e5e5e5;
 }
 
 .topnav a.active {
@@ -82,7 +83,12 @@ body {
 }
 
 .login .connect input[type=submit]:hover{
-  background-color: #127faa;
+  background-color: #118bb9;
+}
+
+.register{
+  text-align:center; 
+  padding-top:20px;
 }
 
 .login .alert{
@@ -121,9 +127,14 @@ body {
                                 HOME
   --------------------------------------------------------------------*/
 
-#message{
-  margin-left: 50px;
+#messagesContaines{
+  color: #333;
+  margin: auto;
   width: 50%;
+}
+
+#message{
+  margin: 30px 20px;
   background-color: white;
   box-shadow: 0px 0px 8px #d5d5d5;
   border-radius:7px;
@@ -158,4 +169,190 @@ body {
   border-top-width: thin;
   border-top-color: #dfdfdf;
   padding: 10px 10px;
+}
+
+/*--------------------------------------------------------------------
+                                  USER
+  --------------------------------------------------------------------*/
+
+.profil_bar #cover_pic img{
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 220px;
+}
+
+.profil_bar #cover_pic #plus{
+  position: absolute;
+  top: 245px;
+  left: 95%;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+}
+
+.profil_bar #cover_pic #plus:hover{
+  filter: brightness(90%);
+}
+
+.profil_bar input{
+  box-shadow: 0 0 10px #8dbaea;
+  position: absolute;
+  padding: 5px 10px;
+  width: 400px;
+  font-size: 14px;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  border:1px solid #1298cb;
+  border-radius: 5px;
+  resize: none;
+}
+
+.profil_bar #cover_pic input{
+  left:62%;
+  top: 218px;
+}
+
+.profil_bar #profil input{
+  left: 20%;
+  top: 290px;
+}
+
+.profil_bar input:focus{
+  outline: none !important;
+  box-shadow: 0 0 10px #719ECE;
+}
+
+.profil_bar #profil{
+  margin-top: -5px;
+  padding: 5px 5px;
+  background-color: white;
+  overflow: hidden;
+  display: flex;
+  font-family: "Goudy Bookletter 1911", sans-serif;
+  letter-spacing: -0.05em;
+  color: #808080;
+}
+
+.profil_bar #profil #begin{
+  padding-left: 300px;
+}
+
+.profil_bar #profil .bar {
+  padding: 10px 20px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 18px;
+}
+
+.profil_bar #profil .bar .text {
+  font-size: 13px;
+}
+
+.profil_bar #profil img{
+  margin-left: 50px;
+  position: absolute;
+  top: 170px;
+  width: 200px;
+  height: 200px;
+  border-radius: 100px;
+}
+
+.profil_bar #profil #plus{
+  position: absolute;
+  top: 310px;
+  left: 160px;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+}
+
+.profil_bar #profil #plus:hover{
+  filter: brightness(90%);
+}
+
+.profil_desc {
+  margin: 5px 5px;
+  margin-top: 50px;
+  margin-left: 45px;
+  float: left;
+  width: 240px;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  letter-spacing: -0.05em;
+  color: #1e1e1e;
+}
+
+.profil_desc #name{
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.profil_desc #desc{
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.profil_desc textarea{
+  margin-bottom: 20px;
+  width: 100%;
+  font-size: 14px;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  border: 2px solid #d3d3d3;
+  border-radius: 5px;
+  resize: none;
+}
+
+.profil_desc textarea:focus {
+  outline: none !important;
+  box-shadow: 0 0 10px #719ECE;
+}
+
+.profil_desc .joined{
+  margin-bottom: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 16px;
+  color: #8e8e8e;
+}
+
+.profil_desc .joined img{
+  margin-right: 5px;
+  float: left;
+  width: 16px;
+  height: 16px;
+}
+
+.profil_desc .modif{
+  border: 0px solid;
+  border-top-width: thin;
+  border-top-color: #d3d3d3;
+  text-align: center;
+}
+
+.profil_desc .modif button{
+  margin-top: 20px;
+  width: 100%;
+  border: 0px solid;
+  border-radius: 20px;
+  color: white;
+  padding: 10px 15px;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.profil_desc .modif #modifier{
+  background-color:  #1298cb;
+}
+
+.profil_desc .modif #modifier:hover{
+   background-color: #118bb9;
+}
+
+.profil_desc .modif #annuler{
+  background-color:  #e52929;
+}
+
+.profil_desc .modif #annuler:hover{
+   background-color: #ca2626;
 }
