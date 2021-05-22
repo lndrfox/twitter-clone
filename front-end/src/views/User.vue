@@ -251,7 +251,41 @@ export default{
 				return false;
 			};
 		}
-	}
+      },
+
+      async like(id, user_liked, user_disliked){
+
+        if(this.logged && user_liked==0 && user_disliked == 0){
+
+            await axios.post('http://localhost:5050/home/react',{token : this.$cookies.get("token"), react : "l", id: id}, {useCredentails :true});
+            this.messages= await this.getMessages();
+
+        }
+
+        if(this.logged && user_liked ==1 && user_disliked ==0){
+
+            await axios.post('http://localhost:5050/home/react/un',{token : this.$cookies.get("token"), id: id}, {useCredentails :true});
+            this.messages= await this.getMessages();
+        }
+
+      },
+
+      async dislike(id, user_liked, user_disliked){
+
+        if(this.logged && user_liked==0 && user_disliked == 0){
+
+            await axios.post('http://localhost:5050/home/react',{token : this.$cookies.get("token"), react : "d", id: id}, {useCredentails :true});
+            this.messages= await this.getMessages();
+
+        }
+
+        if(this.logged && user_liked ==0 && user_disliked ==1){
+
+            await axios.post('http://localhost:5050/home/react/un',{token : this.$cookies.get("token"), id: id}, {useCredentails :true});
+            this.messages= await this.getMessages();
+        }
+
+      }
   },
 
   beforeMount: async function(){

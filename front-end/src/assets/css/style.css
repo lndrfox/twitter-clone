@@ -152,6 +152,23 @@ body {
   background-color: #fafafa;
 }
 
+#message input[type=submit]{
+  background-color:  #1298cb;
+  float: left;
+  margin-top: 10px;
+  width: 20%;
+  border: 0px solid;
+  border-radius: 20px;
+  color: white;
+  padding: 10px 15px;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+}
+#message input[type=submit]:hover{
+   background-color: #118bb9;
+}
+
 #message .user .img{
   float: left;
   padding: 15px 15px;
@@ -184,6 +201,18 @@ body {
   line-height: 20px;
   padding: 0px 15px;
   padding-bottom: 10px;
+}
+
+#message textarea {
+  border: 0px solid;
+  margin: 15px 15px;
+  width: 93%;
+  font-size: 18px;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+}
+
+#message textarea:focus {
+  outline: none !important;
 }
 
 #message .footer {

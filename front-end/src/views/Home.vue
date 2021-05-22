@@ -1,10 +1,17 @@
 <template>
-  <form v-if="logged" v-on:submit.prevent="checkPost">
-   <textarea v-model="post_content"  maxlength="280" rows="5" cols="33" style="resize: none;" ref="post_content"></textarea>
-   <br>
-  <input type="submit" name="submit">
-  {{errorPost}}
-  </form>
+  <div id="messagesContaines"><div id="message">
+    <div class="user">
+
+    </div>
+
+    <form v-if="logged" v-on:submit.prevent="checkPost">
+     <textarea v-model="post_content"  maxlength="280" rows="2"  style="resize: none;" ref="post_content" placeholder="Quoi de neuf ?"></textarea>
+     <br>
+    <input type="submit" name="submit">
+    {{errorPost}}
+    </form>
+  </div></div>
+
   <div id="messagesContaines">
 
     <div id="message" v-for="message in messages" v-bind:key="message.id_message">
