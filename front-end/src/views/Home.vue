@@ -25,6 +25,7 @@
 
       <div class="react">
         <button @click="like(message.id_message)">Like</button>
+        {{message.nb_likes}}
       </div>
 
     </div>
@@ -83,11 +84,10 @@ export default {
 
       async like(id){
 
-      console.log(id);
-
         if(this.logged){
 
-            await axios.post('http://localhost:5050/home/react',{token : this.$cookies.get("token"), react : "l"}, {useCredentails :true});
+            await axios.post('http://localhost:5050/home/react',{token : this.$cookies.get("token"), react : "l", id: id}, {useCredentails :true});
+            this.messages= await this.getMessages();
 
         }
 

@@ -33,7 +33,7 @@ router.post('/react'
 
 	if(global.tokens.hasOwnProperty(req.body.token)){
 
-		console.log("like");
+		await model.like(req.body.id, req.body.react, global.tokens[req.body.token]);
 	}
 
 	res.end();

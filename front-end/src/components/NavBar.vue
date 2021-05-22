@@ -16,7 +16,7 @@ export default {
 
   data(){
     return {
-      logged: this.loggedIn()
+      logged: false
     }
   },
 

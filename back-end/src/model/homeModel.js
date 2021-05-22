@@ -19,9 +19,8 @@ function homeModel(){
 		/*-- GETTING USERS MATCHING WITH userName --*/
 
 		const [rows, field] = await connection.execute(
-			"SELECT U.login, U.profile_pic, M.content, M.date_message , M.id_message FROM users U JOIN messages M WHERE (U.login = M.login_poster) ORDER BY M.date_message DESC"
+			"SELECT U.login, U.profile_pic, M.content, M.date_message , M.id_message, COUNT(case R.reaction when \"l\" then 1 else null end) as nb_likes, COUNT(case R.reaction when \"d\" then 1 else null end) as nb_dislikes FROM users U JOIN messages M ON (U.login = M.login_poster) LEFT OUTER JOIN reactions R ON (R.id_message =  M.id_message) GROUP BY M.id_message ORDER BY M.date_message DESC"
 			);
-
 		db.closeDB(connection);
 		return rows;
 	},
@@ -53,7 +52,25 @@ function homeModel(){
 
 	this.like = async (id_message, react, login) =>{
 
+		/*-- CONNECTING TO DATABASE --*/
 
+		const db=require('./connectDB');
+		let connection;
+
+		try{
+			connection= await db.connectDB();
+		}catch(error){
+
+			throw error;
+		}
+
+		connection.query("INSERT INTO reactions (id_message, login_user, reaction) VALUES (? ,?, ?) ",
+					[id_message, login, react],
+					function(err, result){
+					if(err) throw err;
+				});
+
+		db.closeDB(connection);
 
 
 		
