@@ -39,6 +39,7 @@
 
 		<div id="name">
 			{{user.login}}
+			<p>@{{user.login}}</p>
 		</div>
 
 		<div v-if="!modifier" id="desc">
@@ -62,30 +63,43 @@
 
 	<div id="messagesContaines">
 
-		<div id="message" v-for="message in posts" v-bind:key="message.id_message">
+    <div id="message" v-for="message in posts" v-bind:key="message.id_message">
 
-			<div class="user">
+      <div class="user">
 
-				<div class="img">
-					<img :src="link_photo_sav">
-				</div>
+        <div class="img">
+          <img :src="link_photo_sav">
+        </div>
+        
+        <p id="login">{{user.login}}</p>
+        <p id="credit">@{{user.login}}</p>
 
-				<p>{{user.login}} {{message.date_message}}</p>
+      </div>
 
-			</div>
+      <br><div class="post">
+       {{message.content}}
+      </div>
 
-			<br>
-			<div class="post">
-				{{message.content}}
-			</div>
+      <div class="footer">
 
-			<div class="react">
-				like ici
-			</div>
+        <p>{{getDatePost(message.date_message)}}</p>
 
-		</div>
+        <div class="react">
 
-	</div>
+          <div v-if="logged">
+            <button id="like" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
+            <p>{{message.nb_likes}}</p>
+
+            <button id="dislike" @click="dislike(message.id_message, message.user_liked, message.user_disliked)"></button>
+            <p>{{message.nb_dislikes}}</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -136,21 +150,21 @@ export default{
 			}
 			else {
 				if(this.desc !== this.user.description){
-					await axios.post('http://localhost:5050/usermodif',
+					await axios.post('http://localhost:5050/user/modif',
 						{token : this.$cookies.get("token"), 
 						desc :  this.desc}, 
 						{useCredentails :true});
 				}
 				if(this.link_cover_sav !== this.user.cover_pic) {
-					await axios.post('http://localhost:5050/usercover',
+					await axios.post('http://localhost:5050/user/cover',
 						{token : this.$cookies.get("token"), 
-						link :  this.link_cover}, 
+						link :  this.link_cover_sav}, 
 						{useCredentails :true});
 				}
 				if(this.link_photo_sav !== this.user.profile_pic) {
-					await axios.post('http://localhost:5050/userphoto',
+					await axios.post('http://localhost:5050/user/photo',
 						{token : this.$cookies.get("token"), 
-						link :  this.link_photo}, 
+						link :  this.link_photo_sav}, 
 						{useCredentails :true});
 				}
 				this.modifier_cover = false;
@@ -175,6 +189,7 @@ export default{
 				}
 				this.modifier_cover = false;
 				this.link_cover_sav = this.link_cover;
+				this.link_cover = ""; 
 			}
 		},
 
@@ -191,6 +206,7 @@ export default{
 				}
 				this.modifier_photo = false;
 				this.link_photo_sav = this.link_photo;
+				this.link_photo = "";
 			}
 		},
 
@@ -201,7 +217,18 @@ export default{
         let a = s.substring(0,4);
         let m = mois[parseInt(s.substring(5,7)) - 1];
         let j = s.substring(8,10);
-        return j+" "+m+" "+a
+        return j+" "+m+" "+a;
+      },
+
+      getDatePost(s) {
+        let mois = ["Janvier","Février","Mars","Avril",
+          "Mai","Juin","Juillet","Août",
+          "Septembre", "Octobre","Novembre","Décembre"];
+        let a = s.substring(0,4);
+        let m = mois[parseInt(s.substring(5,7)) - 1];
+        let j = s.substring(8,10);
+        let t = s.substring(11, 16);
+        return t + " · " + j + " " + m + ", " + a;
       },
 
       checkIfImageExists(url) {
