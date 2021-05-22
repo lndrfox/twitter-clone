@@ -136,40 +136,100 @@ body {
 #message{
   margin: 30px 20px;
   background-color: white;
-  box-shadow: 0px 0px 8px #d5d5d5;
-  border-radius:7px;
-  font-family: "Gill Sans", sans-serif;
-  font-size: 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  border-radius:5px;
+  border: 1px solid #eee #ddd #bbb;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  letter-spacing: -0.05em;
+}
+
+#message:hover {
+  background-color: #fafafa;
 }
 
 #message .user .img{
   float: left;
-  padding: 1px 10px;
-  padding-top: 15px;
+  padding: 15px 15px;
+  padding-right: 7px;
 }
 
 #message .user img{
-  width: 25px;
-  height: 25px;
+  width: 50px;
+  height: 50px;
   border-radius: 25px;
 }
 
-#message .user p {
-  padding-top: 17px;
+#message .user #login{
+  font-weight:bold;
+  font-size: 0.9em;
+  padding-top: 21px;
+  margin-bottom:0px;
+}
+
+#message .user #credit{
+  color: #7c7b7b;
+  font-size: 0.85em;
+  padding-top: 3px;
+  margin-top: 0px;
+  margin-bottom: 6px;
 }
 
 #message .post {
+  font-size: 18px;
+  line-height: 20px;
   padding: 0px 15px;
-  padding-bottom: 25px;
+  padding-bottom: 10px;
 }
 
-#message .react{
-  background-color: #f3f3f3;
+#message .footer {
+  font-size: 14px;
+  color: #7c7b7b;
+  margin: 10px 15px;
+}
+
+#message .footer p{
+  margin: 0px 0px;
+  padding-bottom: 10px;
+}
+
+#message .footer .react{
   border: 0px solid;
   border-top-width: thin;
   border-top-color: #dfdfdf;
-  padding: 10px 10px;
+  padding: 5px 0px;
+  padding-bottom: 33px;
 }
+
+#message .footer .react #like{
+  float: left;
+  background: url("../img/like.png") no-repeat top left;
+  border: 0px solid;
+  background-size: 25px 25px;
+  width: 25px;
+  height: 25px;
+}
+
+#message .footer .react #dislike {
+  margin-top: 0px;
+  margin-left: 15px;
+  float: left;
+  background: url("../img/dislike.png") no-repeat top left;
+  border: 0px solid;
+  background-size: 23px 23px;
+  width: 25px;
+  height: 23px;
+}
+
+#message .footer .react button:hover{
+   filter: brightness(80%);
+}
+
+#message .footer .react p{
+  padding-top: 5px;
+  float: left;
+}
+
+
 
 /*--------------------------------------------------------------------
                                   USER
@@ -245,6 +305,7 @@ body {
 }
 
 .profil_bar #profil .bar .text {
+  padding-top: 5px;
   font-size: 13px;
 }
 
@@ -285,6 +346,12 @@ body {
   margin-bottom: 20px;
   font-weight: bold;
   font-size: 20px;
+}
+
+.profil_desc #name p{
+  margin-top: 0px;
+  font-size: 14px;
+  color: #8e8e8e;
 }
 
 .profil_desc #desc{

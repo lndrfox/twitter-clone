@@ -15,7 +15,8 @@
           <img :src="message.profile_pic">
         </div>
         
-        <p>{{message.login}} {{message.date_message}}</p>
+        <p id="login">{{message.login}}</p>
+        <p id="credit">@{{message.login}}</p>
 
       </div>
 
@@ -23,14 +24,20 @@
        {{message.content}}
       </div>
 
-      <div class="react">
-        <div class ="like" v-if="logged">
-          <button @click="like(message.id_message, message.user_liked, message.user_disliked)">Like</button>
-        </div>
-        {{message.nb_likes}} Likes
-        <div class ="dislike" v-if="logged">
-          <button @click="dislike(message.id_message, message.user_liked, message.user_disliked)">Dislike</button>
-          {{message.nb_dislikes}} Disikes
+      <div class="footer">
+
+        <p>{{getDate(message.date_message)}}</p>
+
+        <div class="react">
+
+          <div v-if="logged">
+            <button id="like" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
+            <p>{{message.nb_likes}}</p>
+
+            <button id="dislike" @click="dislike(message.id_message, message.user_liked, message.user_disliked)"></button>
+            <p>{{message.nb_dislikes}}</p>
+          </div>
+
         </div>
       </div>
 
@@ -130,6 +137,17 @@ export default {
             this.messages= await this.getMessages();
         }
 
+      },
+
+       getDate(s) {
+        let mois = ["Janvier","Février","Mars","Avril",
+          "Mai","Juin","Juillet","Août",
+          "Septembre", "Octobre","Novembre","Décembre"];
+        let a = s.substring(0,4);
+        let m = mois[parseInt(s.substring(5,7)) - 1];
+        let j = s.substring(8,10);
+        let t = s.substring(11, 16);
+        return t + " · " + j + " " + m + ", " + a;
       }
 
   },
