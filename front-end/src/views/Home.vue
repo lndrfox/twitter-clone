@@ -1,13 +1,19 @@
 <template>
-  <div id="messagesContaines"><div id="message">
+
+  <div id="recherche">
+    <input type="search" placeholder="@everyone" v-model="recherche_text">
+    <button v-on:click="rechercher">Rechercher</button>
+  </div>
+
+  <div id="messagesContaines"><div id="message" class="poster">
     <div class="user">
 
     </div>
 
     <form v-if="logged" v-on:submit.prevent="checkPost">
-     <textarea v-model="post_content"  maxlength="280" rows="2"  style="resize: none;" ref="post_content" placeholder="Quoi de neuf ?"></textarea>
+     <textarea v-model="post_content" maxlength="280" rows="2" ref="post_content" placeholder="Quoi de neuf ?"></textarea>
      <br>
-    <input type="submit" name="submit">
+    <input type="submit" name="submit" value="Publier">
     {{errorPost}}
     </form>
   </div></div>
@@ -15,37 +21,40 @@
   <div id="messagesContaines">
 
     <div id="message" v-for="message in messages" v-bind:key="message.id_message">
+      <div v-if="getMention(recherche_text_sav, message.content)">
 
-      <div class="user">
+        <div class="user">
 
-        <div class="img">
-          <img :src="message.profile_pic">
-        </div>
-        
-        <p id="login">{{message.t_name}}</p>
-        <p id="credit">@{{message.login}}</p>
-
-      </div>
-
-      <br><div class="post">
-       {{message.content}}
-      </div>
-
-      <div class="footer">
-
-        <p>{{getDate(message.date_message)}}</p>
-
-        <div class="react">
-
-          <div v-if="logged">
-            <button id="like" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
-            <p>{{message.nb_likes}}</p>
-
-            <button id="dislike" @click="dislike(message.id_message, message.user_liked, message.user_disliked)"></button>
-            <p>{{message.nb_dislikes}}</p>
+          <div class="img">
+            <img :src="message.profile_pic">
           </div>
+          
+          <p id="login">{{message.t_name}}</p>
+          <p id="credit">@{{message.login}}</p>
 
         </div>
+
+        <br><div class="post">
+         {{message.content}}
+        </div>
+
+        <div class="footer">
+
+          <p>{{getDate(message.date_message)}}</p>
+
+          <div class="react">
+
+            <div v-if="logged">
+              <button id="like" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
+              <p>{{message.nb_likes}}</p>
+
+              <button id="dislike" @click="dislike(message.id_message, message.user_liked, message.user_disliked)"></button>
+              <p>{{message.nb_dislikes}}</p>
+            </div>
+
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -65,7 +74,10 @@ export default {
       messages: [],
       logged: this.$cookies.isKey('token'),
       post_content: "",
-      errorPost: ""
+      errorPost: "",
+      recherche: false,
+      recherche_text: "",
+      recherche_text_sav: ""
     }
   },
 
@@ -155,8 +167,33 @@ export default {
         let j = s.substring(8,10);
         let t = s.substring(11, 16);
         return t + " · " + j + " " + m + ", " + a;
-      }
+      },
 
+      rechercher() {
+        if((this.recherche_text === "") || (this.recherche_text[0] !== '@' && this.recherche_text[0] !== '#')) {
+          this.recherche = false;
+          this.recherche_text = "";
+          this.recherche_text_sav = "";
+        } 
+        else {
+          this.recherche = true;
+          this.recherche_text_sav = this.recherche_text;
+        }
+      },
+
+      getMention(s, text) {
+        if(this.recherche) {
+          let i = text.search(s)
+          if(i !== -1) {
+            if((text[i-1] === '\n' ||  text[i-1] === ' ' || i === 0) && 
+               (text[i+s.length] === '\n' ||  text[i+s.length] === ' ' || i+s.length === text.length)) {
+                  return true;
+            }
+          }
+          return false;
+        }
+        return true;
+      }
   },
 
   beforeMount: async function(){
