@@ -132,6 +132,46 @@ body {
                                 HOME
   --------------------------------------------------------------------*/
 
+#recherche{
+  margin: 30px 20px;
+}
+
+#recherche input{
+  width: 210px;
+  padding: 10px 10px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-family: "Gill Sans", sans-serif;
+  float: left;
+}
+
+#recherche input:focus {
+  outline: none !important;
+  box-shadow: 0 0 10px #719ECE;
+}
+
+#recherche button{
+  background-color:  #1298cb;
+  float: left;
+  width: 110px;
+  border: 0px solid;
+  border-radius: 20px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  color: white;
+  padding: 10px 15px;
+  padding-left: 12px;
+  display: inline-block;
+  font-size: 15px;
+  font-weight: bold;
+}
+#recherche button:hover {
+  background-color: #118bb9;
+}
+
 #messagesContaines{
   color: #333;
   margin: auto;
@@ -152,11 +192,30 @@ body {
   background-color: #fafafa;
 }
 
+#message textarea {
+  overflow:hidden;
+  background-color: transparent;
+  border: 0px solid;
+  margin: 15px 15px;
+  width: 93%;
+  font-size: 18px;
+   resize: none;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+}
+
+#message textarea:focus, #message textarea:hover {
+  outline: none !important;
+}
+
+.poster {
+  padding-bottom: 50px;
+}
+
 #message input[type=submit]{
   background-color:  #1298cb;
-  float: left;
-  margin-top: 10px;
-  width: 20%;
+  margin-right: 15px;
+  float: right;
+  width: 17%;
   border: 0px solid;
   border-radius: 20px;
   color: white;
@@ -201,18 +260,6 @@ body {
   line-height: 20px;
   padding: 0px 15px;
   padding-bottom: 10px;
-}
-
-#message textarea {
-  border: 0px solid;
-  margin: 15px 15px;
-  width: 93%;
-  font-size: 18px;
-  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
-}
-
-#message textarea:focus {
-  outline: none !important;
 }
 
 #message .footer {
