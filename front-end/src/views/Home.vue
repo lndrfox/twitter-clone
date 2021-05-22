@@ -24,8 +24,14 @@
       </div>
 
       <div class="react">
-        <button @click="like(message.id_message)">Like</button>
-        {{message.nb_likes}}
+        <div class ="like" v-if="logged">
+          <button @click="like(message.id_message, message.user_liked, message.user_disliked)">Like</button>
+        </div>
+        {{message.nb_likes}} Likes
+        <div class ="dislike" v-if="logged">
+          <button @click="dislike(message.id_message, message.user_liked, message.user_disliked)">Dislike</button>
+          {{message.nb_dislikes}} Disikes
+        </div>
       </div>
 
     </div>
@@ -53,8 +59,18 @@ export default {
 
       async getMessages(){
 
-        let response =await axios.get('http://localhost:5050/home', {useCredentails :true});
-        return response.data.messages;
+        if(this.logged){
+
+          let response =await axios.post('http://localhost:5050/home/logged',{token : this.$cookies.get("token")}, {useCredentails :true});
+          return response.data.messages;
+        }
+
+        else{
+
+          let response =await axios.get('http://localhost:5050/home', {useCredentails :true});
+          return response.data.messages;
+        }
+
       },
 
       resetInput() {
@@ -82,13 +98,36 @@ export default {
 
       },
 
-      async like(id){
+      async like(id, user_liked, user_disliked){
 
-        if(this.logged){
+        if(this.logged && user_liked==0 && user_disliked == 0){
 
             await axios.post('http://localhost:5050/home/react',{token : this.$cookies.get("token"), react : "l", id: id}, {useCredentails :true});
             this.messages= await this.getMessages();
 
+        }
+
+        if(this.logged && user_liked ==1 && user_disliked ==0){
+
+            await axios.post('http://localhost:5050/home/react/un',{token : this.$cookies.get("token"), id: id}, {useCredentails :true});
+            this.messages= await this.getMessages();
+        }
+
+      },
+
+      async dislike(id, user_liked, user_disliked){
+
+        if(this.logged && user_liked==0 && user_disliked == 0){
+
+            await axios.post('http://localhost:5050/home/react',{token : this.$cookies.get("token"), react : "d", id: id}, {useCredentails :true});
+            this.messages= await this.getMessages();
+
+        }
+
+        if(this.logged && user_liked ==0 && user_disliked ==1){
+
+            await axios.post('http://localhost:5050/home/react/un',{token : this.$cookies.get("token"), id: id}, {useCredentails :true});
+            this.messages= await this.getMessages();
         }
 
       }
