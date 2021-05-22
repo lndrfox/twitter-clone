@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS twitternj.reactions;
 DROP TABLE IF EXISTS twitternj.retweet;
 DROP TABLE IF EXISTS twitternj.retweet_cite;
 DROP TABLE IF EXISTS twitternj.messages;
+DROP TABLE IF EXISTS twitternj.abonnements;
 DROP TABLE IF EXISTS twitternj.users;
 
 
@@ -17,6 +18,25 @@ CREATE TABLE twitternj.users(
 	cover_pic text NOT NULL DEFAULT "default",
 	date_inscription date NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE twitternj.abonnements(
+	login_suivi nvarchar(50),
+	login_suiveur nvarchar(50),
+	PRIMARY KEY(login_suivi, login_suiveur)
+);
+
+ALTER TABLE twitternj.abonnements ADD CONSTRAINT
+	FK_login_suivi FOREIGN KEY (login_suivi)
+	REFERENCES users(login)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE;
+
+
+ALTER TABLE twitternj.abonnements ADD CONSTRAINT
+	FK_login_suiveur FOREIGN KEY (login_suiveur)
+	REFERENCES users(login)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE;
 
 CREATE TABLE twitternj.messages(
 	id_message INT PRIMARY KEY AUTO_INCREMENT,
