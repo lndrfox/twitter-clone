@@ -18,7 +18,7 @@ function userModel(){
 
 		/*-- GETTING USER MATCHING WITH userName --*/
 
-		const [rows, field] = await connection.execute("SELECT login, description, profile_pic, cover_pic, date_inscription FROM users WHERE login = ?",[userName]);
+		const [rows, field] = await connection.execute("SELECT login, t_name, description, profile_pic, cover_pic, date_inscription FROM users WHERE login = ?",[userName]);
 
 		db.closeDB(connection);
 		return rows[0];

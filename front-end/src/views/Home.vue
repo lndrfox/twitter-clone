@@ -16,7 +16,7 @@
 
     <div id="message" v-for="message in messages" v-bind:key="message.id_message">
 
-      <div class="user">
+      <div class="user" v-on:click="redirectUser(message.login)">
 
         <div class="img">
           <img :src="message.profile_pic">
@@ -70,6 +70,11 @@ export default {
   },
 
   methods: {
+
+      redirectUser(login){
+
+        this.$router.push({ name: 'user', query: { login: login }});
+      },
 
       async getMessages(){
 
