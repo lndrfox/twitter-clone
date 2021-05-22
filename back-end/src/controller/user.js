@@ -58,7 +58,6 @@ router.post('/cover'
 
 ,async function(req, res){ 
 
-
 		try{
 			if(global.tokens.hasOwnProperty(req.body.token)) {
 

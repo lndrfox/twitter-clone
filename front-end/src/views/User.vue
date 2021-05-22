@@ -161,6 +161,7 @@ export default{
 						link :  this.link_cover_sav}, 
 						{useCredentails :true});
 				}
+				console.log(this.link_photo_sav !== this.user.profile_pic);
 				if(this.link_photo_sav !== this.user.profile_pic) {
 					await axios.post('http://localhost:5050/user/photo',
 						{token : this.$cookies.get("token"), 
