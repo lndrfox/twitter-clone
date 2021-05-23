@@ -1,5 +1,10 @@
 <template>
 
+  <div v-if="logged">
+    <button v-on:click="afficheTout">Tout</button>
+    <button v-on:click="afficheAbonnements">Abonnements</button>
+  </div>
+
   <div id="recherche">
     <input type="search" placeholder="@everyone" v-model="recherche_text">
     <button v-on:click="rechercher">Rechercher</button>
@@ -21,20 +26,20 @@
   <div id="messagesContaines">
 
     <div id="message" v-for="message in messages" v-bind:key="message.id_message">
-      <div v-if="affichage(recherche_text_sav, message.content, message.login)">
+      <div v-if="affichage(recherche_text_sav, message.content, message.login, message.login_rter)">
 
-        <div v-if="!isRT(message)">
+      <div v-if="!isRT(message)">
 
-       <div class="user" v-on:click="redirectUser(message.login)">
+         <div class="user" v-on:click="redirectUser(message.login)">
 
-        <div class="img">
-          <img :src="message.profile_pic">
-        </div>
-        
-        <p id="login">{{message.t_name}}</p>
-        <p id="credit">@{{message.login}}</p>
+            <div class="img">
+              <img :src="message.profile_pic">
+            </div>
+            
+            <p id="login">{{message.t_name}}</p>
+            <p id="credit">@{{message.login}}</p>
 
-      </div>
+          </div>
 
 
         <br><div class="post">
@@ -61,7 +66,7 @@
           </div>
         </div>
 
-        </div>
+      </div>
 
       <div v-if="isRT(message)">
 
@@ -146,9 +151,13 @@ export default {
       logged: this.$cookies.isKey('token'),
       post_content: "",
       errorPost: "",
+
+      home: true,
+
       recherche: false,
       recherche_text: "",
       recherche_text_sav: "",
+
       user: {},
       following: []
     }
@@ -338,13 +347,34 @@ export default {
         return false;
       },
 
-      affichage(s, text, login) {
+      afficheTout() {
+        this.home = true;
+      },
 
-        /* Par barre de recherche */
-        if(this.recherche) {
-            return (this.getMention(s, text) || 
-                    this.getMentionUser(s, login));
+      afficheAbonnements() {
+        this.home = false;
+      },
+
+      affichage(s, text, login, login_rter) {
+
+        /* Si c'est un retweet */ 
+          if(login_rter !== null) {
+            login = login_rter;
+            text = "";
           }
+
+        /* Par barre de recherche multiple arguments */
+        if(this.recherche) {
+          let r = s.split(" ");
+          let res = false;
+
+          for(var k = 0; k < r.length; k++) {
+           res = res || (this.getMention(r[k], text) || 
+                      this.getMentionUser(r[k], login));
+          }
+          
+          return res;
+        }
 
         /* Utilisateur non connecte */
         if(this.logged === false) {
@@ -355,16 +385,28 @@ export default {
         /* Utilisateur connecte*/
         else {
 
+          if (login_rter !== null) {
+            return follow;
+          }
+
           let user = '@' + this.user.login;
 
           let follow = false;
+
           for(var i = 0; i < this.following.length; i++) {
             let user_followed = '@' + this.following[i];
             follow = follow || this.getMentionUser(user_followed, login);
           }
 
-          return (this.getMention("@everyone", text) || 
-                  this.getMention(user, text)) || follow;
+          /* Tout */
+          if(this.home) {
+            return (this.getMention("@everyone", text) || 
+                    this.getMention(user, text)) || follow;
+          }
+          /* Abonnements uniquement */
+          else {
+            return follow;
+          }
         }
 
       },

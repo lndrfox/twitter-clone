@@ -1,4 +1,5 @@
 <template>
+
 	<div class= "profil_bar">
 
 		<div id="cover_pic">
@@ -381,15 +382,14 @@ export default{
 
 		img.src = url;
 
-		if (img.complete) {
-			return true;
-		} else {
-			img.onload = () => {
+		img.onload = function () {
+			return;
+		}
+
+		if (img.width > 0) {
 				return true;
-			};
-			img.onerror = () => {
-				return false;
-			};
+		} else {
+			return false;
 		}
       },
 

@@ -85,6 +85,7 @@ body {
   display: inline-block;
   font-size: 16px;
   font-family: "Gill Sans", sans-serif;
+  outline: none;
 }
 
 .login .connect input[type=submit]:hover{
@@ -171,6 +172,7 @@ body {
   display: inline-block;
   font-size: 15px;
   font-weight: bold;
+  outline: none;
 }
 #recherche button:hover {
   background-color: #118bb9;
@@ -227,6 +229,7 @@ body {
   display: inline-block;
   font-size: 16px;
   font-weight: bold;
+  outline: none;
 }
 #message input[type=submit]:hover{
    background-color: #118bb9;
@@ -292,6 +295,7 @@ body {
   background-size: 25px 25px;
   width: 25px;
   height: 25px;
+  outline: none;
 }
 
 #message .footer .react #dislike {
@@ -303,6 +307,7 @@ body {
   background-size: 23px 23px;
   width: 25px;
   height: 23px;
+  outline: none;
 }
 
 #message .footer .react button:hover{
@@ -505,6 +510,7 @@ body {
   display: inline-block;
   font-size: 16px;
   font-weight: bold;
+  outline: none;
 }
 
 .profil_desc .modif #modifier, .profil_desc .abo #abonnement{
