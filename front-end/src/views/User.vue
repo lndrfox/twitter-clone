@@ -42,14 +42,21 @@
 	<div class="profil_desc">
 
 		<div id="name">
+			<div v-if="!modifier">
 			{{user.t_name}}
+			</div>
+			<div v-if="modifier" id="t_name">
+				{{user.t_name}}
+				<input type="text" v-model="name" maxlength="50" ref="name">
+			</div>	
+
 			<p>@{{user.login}}</p>
 		</div>
 
 		<div v-if="!modifier" id="desc">
 			{{user.description}}
 		</div><div v-if="modifier" id="desc">
-			<textarea v-model="desc" maxlength="200" rows="5" cols="33" ref="desc"></textarea>
+			<textarea v-model="desc" maxlength="200" rows="5" cols="33"></textarea>
 		</div>
 
 		<div class="joined">
@@ -80,7 +87,7 @@
           <img :src="link_photo_sav">
         </div>
         
-        <p id="login">{{user.login}}</p>
+        <p id="login">{{user.t_name}}</p>
         <p id="credit">@{{user.login}}</p>
 
       </div>
@@ -132,6 +139,7 @@ export default{
       modifier_photo: false,
       modifier_cover: false,
       desc: "",
+      name: "",
       link_cover: "",
       link_photo: "",
       link_cover_sav: "",
@@ -182,6 +190,14 @@ export default{
 						desc :  this.desc}, 
 						{useCredentails :true});
 				}
+				if(this.name !== this.user.t_name && this.name !== "" && 
+					this.name !== null && this.name.value !== 0) {
+					await axios.post('http://localhost:5050/user/name',
+						{token : this.$cookies.get("token"), 
+						name :  this.name}, 
+						{useCredentails :true});
+
+				}
 				if(this.link_cover_sav !== this.user.cover_pic) {
 					await axios.post('http://localhost:5050/user/cover',
 						{token : this.$cookies.get("token"), 
@@ -194,6 +210,8 @@ export default{
 						link :  this.link_photo_sav}, 
 						{useCredentails :true});
 				}
+				this.name = this.user.t_name;
+				this.$refs["name"].value = this.user.t_name;
 				this.modifier_cover = false;
 				this.modifier_photo = false;
 				this.modifier = false;
@@ -371,6 +389,7 @@ export default{
 		this.user = info.user;
 		this.date = this.getDate(info.user.date_inscription.substring(0,10));
 		this.desc = info.user.description;
+		this.name = info.user.t_name;
 		this.link_cover_sav = info.user.cover_pic;
 		this.link_photo_sav = info.user.profile_pic;
 		this.canModify = info.canModify;
@@ -400,6 +419,7 @@ export default{
 					self.date = self.getDate(info.user.date_inscription.substring(0,10));
 					if(!self.modifier){
 						self.desc = info.user.description;
+						self.name = info.user.name;
 						self.link_cover_sav = info.user.cover_pic;
 						self.link_photo_sav = info.user.profile_pic;
 					}
@@ -414,7 +434,7 @@ export default{
 				}
 
 			}
-		})(this), 1000);
+		})(this), 5000);
   }
 }
 

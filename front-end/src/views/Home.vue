@@ -21,7 +21,7 @@
   <div id="messagesContaines">
 
     <div id="message" v-for="message in messages" v-bind:key="message.id_message">
-      <div v-if="getMention(recherche_text_sav, message.content)">
+      <div v-if="getMention(recherche_text_sav, message.content, message.login)">
 
        <div class="user" v-on:click="redirectUser(message.login)">
 
@@ -187,9 +187,14 @@ export default {
         }
       },
 
-      getMention(s, text) {
+      getMention(s, text, login) {
         if(this.recherche) {
-          let i = text.search(s)
+          if(s[0] === '@') {
+            if (login === s.substring(1,s.length)) {
+              return true;
+            }
+          }
+          let i = text.search(s);
           if(i !== -1) {
             if((text[i-1] === '\n' ||  text[i-1] === ' ' || i === 0) && 
                (text[i+s.length] === '\n' ||  text[i+s.length] === ' ' || i+s.length === text.length)) {

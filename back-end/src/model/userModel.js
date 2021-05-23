@@ -95,6 +95,30 @@ function userModel(){
 
 	}
 
+	this.modifName = async(login, name) =>{
+
+		/*-- CONNECTING TO DATABASE --*/
+
+		const db=require('./connectDB');
+		let connection;
+
+		try{
+			connection= await db.connectDB();
+		}catch(error){
+
+			throw error;
+		}
+
+		connection.query("UPDATE users SET t_name = ? WHERE login = ?",[name, login],
+					function(err, result){
+					if(err) throw err;
+				});
+
+		db.closeDB(connection);
+
+
+	}
+
 	this.modifCover = async(login, link) =>{
 
 		/*-- CONNECTING TO DATABASE --*/

@@ -85,6 +85,29 @@ router.post('/modif'
 
 });
 
+router.post('/name'
+
+,async function(req, res){ 
+
+
+		try{
+			if(global.tokens.hasOwnProperty(req.body.token)) {
+
+				if(req.body.name !== null) {
+					await model.modifName(global.tokens[req.body.token], req.body.name);
+				}
+			}
+
+			res.end();
+
+
+		}catch(error){
+			console.error(error);
+			return res.status(500).send('Erreur interne au serveur, connexion à la base de données impossible');
+		}
+
+});
+
 router.post('/cover'
 
 ,async function(req, res){ 
