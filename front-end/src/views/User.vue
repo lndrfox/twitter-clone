@@ -27,7 +27,12 @@
 
 			<div class = "bar">
 				<div class="text">Following</div>
-				0
+				{{following}}
+			</div>
+
+			<div class = "bar">
+				<div class="text">Followers</div>
+				{{followers}}
 			</div>
 
 		</div>
@@ -55,6 +60,11 @@
 		<div class="modif" v-if="canModify">
 			<button id="modifier" v-on:click="checkModif">Modifier</button>
 			<button id="annuler" v-if="modifier" v-on:click="annuler">Annuler</button>
+		</div>
+
+		<div class="abo" v-if="!canModify && logged">
+			<button v-if="!isFollowing" id="abonnement" v-on:click="abonner">S'abonner</button>
+			<button v-if="isFollowing" id="desabonnement" v-on:click="desabonner">Se Désabonner</button>
 		</div>
 
 
@@ -113,6 +123,9 @@ export default{
       posts: [],
       logged: this.$cookies.isKey('token'),
       canModify: false,
+      isFollowing: false,
+      following: 0,
+      followers: 0,
       user: {},
       date: "",
       modifier: false,
@@ -302,20 +315,68 @@ export default{
             this.posts = info.posts;
         }
 
+      },
+
+      async abonnement() {
+
+		let reponse = await axios.post("http://localhost:5050/user/abonnement",
+			{token: this.$cookies.get("token"), user: this.user.login},
+			{useCredentails :true});
+
+		this.isFollowing = reponse.data.exist;
+
+      },
+
+      async abonner() {
+
+		await axios.post("http://localhost:5050/user/abonner",
+			{token: this.$cookies.get("token"), user: this.user.login},
+			{useCredentails :true});
+
+		this.isFollowing = true;
+
+      },
+
+      async desabonner() {
+
+		await axios.post("http://localhost:5050/user/desabonner",
+			{token: this.$cookies.get("token"), user: this.user.login},
+			{useCredentails :true});
+
+		this.isFollowing = false;
+      },
+
+      async nbabonnement() {
+		let reponse = await axios.post("http://localhost:5050/user/nbabonnement",
+			{user: this.user.login},
+			{useCredentails :true});
+
+		this.following = reponse.data.nbabonnement;
+      },
+
+       async nbabonnes() {
+		let reponse = await axios.post("http://localhost:5050/user/nbabonnes",
+			{user: this.user.login},
+			{useCredentails :true});
+
+		this.followers = reponse.data.nbabonnes;
       }
   },
 
   beforeMount: async function(){
 
 	let info = await this.getInfo();
-	if(info.user!=null){
-				this.posts = info.posts;
-				this.user = info.user;
-				this.date = this.getDate(info.user.date_inscription.substring(0,10));
-				this.desc = info.user.description;
-				this.link_cover_sav = info.user.cover_pic;
-				this.link_photo_sav = info.user.profile_pic;
-				this.canModify= info.canModify;
+	if(info.user != null){
+		this.posts = info.posts;
+		this.user = info.user;
+		this.date = this.getDate(info.user.date_inscription.substring(0,10));
+		this.desc = info.user.description;
+		this.link_cover_sav = info.user.cover_pic;
+		this.link_photo_sav = info.user.profile_pic;
+		this.canModify = info.canModify;
+		await this.abonnement();
+		await this.nbabonnement();
+		await this.nbabonnes();
 	}
 
 	else{
@@ -334,14 +395,17 @@ export default{
 				let info = await self.getInfo();
 				if(info.user!=null){
 
-          self.posts = info.posts;
-          self.user = info.user;
-          self.date = self.getDate(info.user.date_inscription.substring(0,10));
-          if(!self.modifier){
-            self.desc = info.user.description;
-            self.link_cover_sav = info.user.cover_pic;
-            self.link_photo_sav = info.user.profile_pic;
-          }
+					self.posts = info.posts;
+					self.user = info.user;
+					self.date = self.getDate(info.user.date_inscription.substring(0,10));
+					if(!self.modifier){
+						self.desc = info.user.description;
+						self.link_cover_sav = info.user.cover_pic;
+						self.link_photo_sav = info.user.profile_pic;
+					}
+					self.canModify = info.canModify;
+					await self.nbabonnement();
+					await self.nbabonnes();
 				}
 
 				else{

@@ -470,14 +470,14 @@ body {
   height: 16px;
 }
 
-.profil_desc .modif{
+.profil_desc .modif, .profil_desc .abo{
   border: 0px solid;
   border-top-width: thin;
   border-top-color: #d3d3d3;
   text-align: center;
 }
 
-.profil_desc .modif button{
+.profil_desc .modif button, .profil_desc .abo button{
   margin-top: 20px;
   width: 100%;
   border: 0px solid;
@@ -489,18 +489,18 @@ body {
   font-weight: bold;
 }
 
-.profil_desc .modif #modifier{
+.profil_desc .modif #modifier, .profil_desc .abo #abonnement{
   background-color:  #1298cb;
 }
 
-.profil_desc .modif #modifier:hover{
+.profil_desc .modif #modifier:hover, .profil_desc .abo #abonnement:hover{
    background-color: #118bb9;
 }
 
-.profil_desc .modif #annuler{
+.profil_desc .modif #annuler, .profil_desc .abo #desabonnement{
   background-color:  #e52929;
 }
 
-.profil_desc .modif #annuler:hover{
+.profil_desc .modif #annuler:hover, .profil_desc .abo #desabonnement:hover{
    background-color: #ca2626;
 }
