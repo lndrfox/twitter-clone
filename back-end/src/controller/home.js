@@ -69,6 +69,36 @@ router.post('/react/un'
 });
 
 
+router.post('/rt'
+
+,async function(req, res){ 
+
+
+	if(global.tokens.hasOwnProperty(req.body.token)){
+
+		await model.rt(req.body.id, global.tokens[req.body.token]);
+	}
+
+	res.end();
+
+});
+
+router.post('/rt/un'
+
+,async function(req, res){ 
+
+
+	if(global.tokens.hasOwnProperty(req.body.token)){
+
+		await model.unrt(req.body.id, global.tokens[req.body.token]);
+	}
+
+	res.end();
+
+});
+
+
+
 
 /*-- EXPORT --*/
 
