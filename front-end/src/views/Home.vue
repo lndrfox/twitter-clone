@@ -23,6 +23,8 @@
     <div id="message" v-for="message in messages" v-bind:key="message.id_message">
       <div v-if="affichage(recherche_text_sav, message.content, message.login)">
 
+        <div v-if="!isRT(message)">
+
        <div class="user" v-on:click="redirectUser(message.login)">
 
         <div class="img">
@@ -59,6 +61,68 @@
           </div>
         </div>
 
+        </div>
+
+      <div v-if="isRT(message)">
+
+       <div class="user" v-on:click="redirectUser(message.login_rter)">
+
+        <div class="img">
+          <img :src="message.profile_pic_rter">
+        </div>
+        
+        <p id="login">{{message.t_name_rter}}</p>
+        <p id="credit">@{{message.login_rter}}</p>
+
+      </div>
+
+      <div id="message">
+
+         <div class="user" v-on:click="redirectUser(message.login)">
+
+        <div class="img">
+          <img :src="message.profile_pic">
+        </div>
+        
+        <p id="login">{{message.t_name}}</p>
+        <p id="credit">@{{message.login}}</p>
+
+      </div>
+
+        <br><div class="post">
+         {{message.content}}
+        </div>
+
+        <div class="footer">
+
+          <p>{{getDate(message.date_message)}}</p>
+
+          <div class="react">
+
+            <div v-if="logged">
+              <button id="like" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
+              <p>{{message.nb_likes}}</p>
+
+              <button id="dislike" @click="dislike(message.id_message, message.user_liked, message.user_disliked)"></button>
+              <p>{{message.nb_dislikes}}</p>
+
+              <button id="rt" @click="rt(message.id_message,message.user_rt)" >rt</button>
+              <p>{{message.nb_rt}}</p>
+            </div>
+
+          </div>
+        </div>
+
+        
+
+      </div>
+      <br>
+
+      <div class="footer"></div>
+
+
+        </div>
+
       </div>
 
     </div>
@@ -92,6 +156,16 @@ export default {
       redirectUser(login){
 
         this.$router.push({ name: 'user', query: { login: login }});
+      },
+
+      isRT(message){
+
+        if(message.login_rter != null){
+
+          return true;
+        }
+
+        return false;
       },
 
       async getMessages(){
