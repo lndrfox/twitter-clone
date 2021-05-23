@@ -53,13 +53,13 @@
           <div class="react">
 
             <div v-if="logged">
-              <button id="like" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
+              <button :id="likeActive(message.user_liked)" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
               <p>{{message.nb_likes}}</p>
 
-              <button id="dislike" @click="dislike(message.id_message, message.user_liked, message.user_disliked)"></button>
+              <button :id="dislikeActive(message.user_disliked)" @click="dislike(message.id_message, message.user_liked, message.user_disliked)"></button>
               <p>{{message.nb_dislikes}}</p>
 
-              <button id="rt" @click="rt(message.id_message,message.user_rt)" >rt</button>
+              <button :id="rtActive(message.user_rt)" @click="rt(message.id_message,message.user_rt)" ></button>
               <p>{{message.nb_rt}}</p>
             </div>
 
@@ -105,13 +105,14 @@
           <div class="react">
 
             <div v-if="logged">
-              <button id="like" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
+
+              <button :id="likeActive(message.user_liked)" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
               <p>{{message.nb_likes}}</p>
 
-              <button id="dislike" @click="dislike(message.id_message, message.user_liked, message.user_disliked)"></button>
+              <button :id="dislikeActive(message.user_disliked)" @click="dislike(message.id_message, message.user_liked, message.user_disliked)"></button>
               <p>{{message.nb_dislikes}}</p>
 
-              <button id="rt" @click="rt(message.id_message,message.user_rt)" >rt</button>
+              <button :id="rtActive(message.user_rt)" @click="rt(message.id_message,message.user_rt)" ></button>
               <p>{{message.nb_rt}}</p>
             </div>
 
@@ -302,6 +303,30 @@ export default {
             this.messages= await this.getMessages();
         }
 
+      },
+
+      likeActive(user_liked) {
+        if(user_liked === 0) {
+          return 'like';
+        } else {
+          return 'likeActive';
+        }
+      },
+
+      dislikeActive(user_disliked) {
+        if(user_disliked === 0) {
+          return 'dislike';
+        } else {
+          return 'dislikeActive';
+        }
+      },
+
+      rtActive(user_rt) {
+        if(user_rt === 0) {
+          return 'rt';
+        } else {
+          return 'rtActive';
+        }
       },
 
        getDate(s) {

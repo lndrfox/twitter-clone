@@ -288,26 +288,58 @@ body {
   padding-bottom: 33px;
 }
 
-#message .footer .react #like{
+#message .footer .react button{
   float: left;
-  background: url("../img/like.png") no-repeat top left;
   border: 0px solid;
-  background-size: 25px 25px;
   width: 25px;
-  height: 25px;
   outline: none;
+}
+
+#message .footer .react #like{
+  background: url("../img/like.png") no-repeat top left;
+  background-size: 25px 25px;
+  height: 25px;
+}
+
+#message .footer .react #likeActive{
+  background: url("../img/likeactive.png") no-repeat top left;
+  background-size: 25px 25px;
+  height: 25px;
+
 }
 
 #message .footer .react #dislike {
   margin-top: 0px;
   margin-left: 15px;
-  float: left;
   background: url("../img/dislike.png") no-repeat top left;
-  border: 0px solid;
   background-size: 23px 23px;
-  width: 25px;
   height: 23px;
-  outline: none;
+}
+
+#message .footer .react #dislikeActive {
+  margin-top: 0px;
+  margin-left: 15px;
+  background: url("../img/dislikeactive.png") no-repeat top left;
+  background-size: 23px 23px;
+  height: 23px;
+}
+
+#message .footer .react #rt{
+  margin-top: 5px;
+  margin-left: 15px;
+  margin-right: 6px;
+  background: url("../img/retweet.png") no-repeat top left;
+  background-size: 25px 15px;
+  height: 15px;
+}
+
+#message .footer .react #rtActive{
+  margin-top: 5px;
+  margin-left: 15px;
+  margin-right: 6px;
+  background: url("../img/retweetactive.png") no-repeat top left;
+  background-size: 25px 15px;
+  height: 15px;
 }
 
 #message .footer .react button:hover{
