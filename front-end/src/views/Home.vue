@@ -51,6 +51,9 @@
 
               <button id="dislike" @click="dislike(message.id_message, message.user_liked, message.user_disliked)"></button>
               <p>{{message.nb_dislikes}}</p>
+
+              <button id="rt" @click="rt(message.id_message,message.user_rt)" >rt</button>
+              <p>{{message.nb_rt}}</p>
             </div>
 
           </div>
@@ -126,6 +129,23 @@ export default {
         else{
 
           this.errorPost="Le poste doit faire entre 1 et 280 charactères";
+        }
+
+      },
+
+      async rt(id, user_rt){
+
+        if(this.logged && user_rt==0 ){
+
+            await axios.post('http://localhost:5050/home/rt',{token : this.$cookies.get("token"), id: id}, {useCredentails :true});
+            this.messages= await this.getMessages();
+
+        }
+
+        if(this.logged && user_rt ==1 ){
+
+            await axios.post('http://localhost:5050/home/rt/un',{token : this.$cookies.get("token"), id: id}, {useCredentails :true});
+            this.messages= await this.getMessages();
         }
 
       },

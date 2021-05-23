@@ -108,6 +108,9 @@
 
             <button id="dislike" @click="dislike(message.id_message, message.user_liked, message.user_disliked)"></button>
             <p>{{message.nb_dislikes}}</p>
+
+            <button id="rt" @click="rt(message.id_message,message.user_rt)" >rt</button>
+            <p>{{message.nb_rt}}</p>
           </div>
 
         </div>
@@ -331,6 +334,25 @@ export default{
             await axios.post('http://localhost:5050/home/react/un',{token : this.$cookies.get("token"), id: id}, {useCredentails :true});
             let info = await this.getInfo();
             this.posts = info.posts;
+        }
+
+      },
+
+      async rt(id, user_rt){
+
+        if(this.logged && user_rt==0 ){
+
+            await axios.post('http://localhost:5050/home/rt',{token : this.$cookies.get("token"), id: id}, {useCredentails :true});
+            let info = await this.getInfo();
+						this.posts = info.posts;
+
+        }
+
+        if(this.logged && user_rt ==1 ){
+
+            await axios.post('http://localhost:5050/home/rt/un',{token : this.$cookies.get("token"), id: id}, {useCredentails :true});
+            let info = await this.getInfo();
+						this.posts = info.posts;
         }
 
       },
