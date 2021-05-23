@@ -290,6 +290,28 @@ function userModel(){
 			return rows[0].nb;
 		}
 	}
+
+	this.following = async (userName) => {
+
+		/*-- CONNECTING TO DATABASE --*/
+
+		const db=require('./connectDB');
+		let connection;
+
+		try{
+			connection = await db.connectDB();
+		}catch(error){
+
+			throw error;
+		}
+
+		/*-- GETTING USER MATCHING WITH userName --*/
+
+		const [rows, field] = await connection.execute("SELECT login_suivi FROM abonnements WHERE login_suiveur = ?",[userName]);
+
+		db.closeDB(connection);
+		return rows;
+	}
 }
 
 
