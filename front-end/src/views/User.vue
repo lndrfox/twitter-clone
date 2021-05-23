@@ -27,7 +27,12 @@
 
 			<div class = "bar">
 				<div class="text">Following</div>
-				0
+				{{following}}
+			</div>
+
+			<div class = "bar">
+				<div class="text">Followers</div>
+				{{followers}}
 			</div>
 
 		</div>
@@ -37,14 +42,21 @@
 	<div class="profil_desc">
 
 		<div id="name">
+			<div v-if="!modifier">
 			{{user.t_name}}
+			</div>
+			<div v-if="modifier" id="t_name">
+				{{user.t_name}}
+				<input type="text" v-model="name" maxlength="50" ref="name">
+			</div>	
+
 			<p>@{{user.login}}</p>
 		</div>
 
 		<div v-if="!modifier" id="desc">
 			{{user.description}}
 		</div><div v-if="modifier" id="desc">
-			<textarea v-model="desc" maxlength="200" rows="5" cols="33" ref="desc"></textarea>
+			<textarea v-model="desc" maxlength="200" rows="5" cols="33"></textarea>
 		</div>
 
 		<div class="joined">
@@ -55,6 +67,11 @@
 		<div class="modif" v-if="canModify">
 			<button id="modifier" v-on:click="checkModif">Modifier</button>
 			<button id="annuler" v-if="modifier" v-on:click="annuler">Annuler</button>
+		</div>
+
+		<div class="abo" v-if="!canModify && logged">
+			<button v-if="!isFollowing" id="abonnement" v-on:click="abonner">S'abonner</button>
+			<button v-if="isFollowing" id="desabonnement" v-on:click="desabonner">Se Désabonner</button>
 		</div>
 
 
@@ -70,7 +87,7 @@
           <img :src="link_photo_sav">
         </div>
         
-        <p id="login">{{user.login}}</p>
+        <p id="login">{{user.t_name}}</p>
         <p id="credit">@{{user.login}}</p>
 
       </div>
@@ -113,12 +130,16 @@ export default{
       posts: [],
       logged: this.$cookies.isKey('token'),
       canModify: false,
+      isFollowing: false,
+      following: 0,
+      followers: 0,
       user: {},
       date: "",
       modifier: false,
       modifier_photo: false,
       modifier_cover: false,
       desc: "",
+      name: "",
       link_cover: "",
       link_photo: "",
       link_cover_sav: "",
@@ -169,6 +190,14 @@ export default{
 						desc :  this.desc}, 
 						{useCredentails :true});
 				}
+				if(this.name !== this.user.t_name && this.name !== "" && 
+					this.name !== null && this.name.value !== 0) {
+					await axios.post('http://localhost:5050/user/name',
+						{token : this.$cookies.get("token"), 
+						name :  this.name}, 
+						{useCredentails :true});
+
+				}
 				if(this.link_cover_sav !== this.user.cover_pic) {
 					await axios.post('http://localhost:5050/user/cover',
 						{token : this.$cookies.get("token"), 
@@ -181,6 +210,8 @@ export default{
 						link :  this.link_photo_sav}, 
 						{useCredentails :true});
 				}
+				this.name = this.user.t_name;
+				this.$refs["name"].value = this.user.t_name;
 				this.modifier_cover = false;
 				this.modifier_photo = false;
 				this.modifier = false;
@@ -302,20 +333,69 @@ export default{
             this.posts = info.posts;
         }
 
+      },
+
+      async abonnement() {
+
+		let reponse = await axios.post("http://localhost:5050/user/abonnement",
+			{token: this.$cookies.get("token"), user: this.user.login},
+			{useCredentails :true});
+
+		this.isFollowing = reponse.data.exist;
+
+      },
+
+      async abonner() {
+
+		await axios.post("http://localhost:5050/user/abonner",
+			{token: this.$cookies.get("token"), user: this.user.login},
+			{useCredentails :true});
+
+		this.isFollowing = true;
+
+      },
+
+      async desabonner() {
+
+		await axios.post("http://localhost:5050/user/desabonner",
+			{token: this.$cookies.get("token"), user: this.user.login},
+			{useCredentails :true});
+
+		this.isFollowing = false;
+      },
+
+      async nbabonnement() {
+		let reponse = await axios.post("http://localhost:5050/user/nbabonnement",
+			{user: this.user.login},
+			{useCredentails :true});
+
+		this.following = reponse.data.nbabonnement;
+      },
+
+       async nbabonnes() {
+		let reponse = await axios.post("http://localhost:5050/user/nbabonnes",
+			{user: this.user.login},
+			{useCredentails :true});
+
+		this.followers = reponse.data.nbabonnes;
       }
   },
 
   beforeMount: async function(){
 
 	let info = await this.getInfo();
-	if(info.user!=null){
-				this.posts = info.posts;
-				this.user = info.user;
-				this.date = this.getDate(info.user.date_inscription.substring(0,10));
-				this.desc = info.user.description;
-				this.link_cover_sav = info.user.cover_pic;
-				this.link_photo_sav = info.user.profile_pic;
-				this.canModify= info.canModify;
+	if(info.user != null){
+		this.posts = info.posts;
+		this.user = info.user;
+		this.date = this.getDate(info.user.date_inscription.substring(0,10));
+		this.desc = info.user.description;
+		this.name = info.user.t_name;
+		this.link_cover_sav = info.user.cover_pic;
+		this.link_photo_sav = info.user.profile_pic;
+		this.canModify = info.canModify;
+		await this.abonnement();
+		await this.nbabonnement();
+		await this.nbabonnes();
 	}
 
 	else{
@@ -334,14 +414,18 @@ export default{
 				let info = await self.getInfo();
 				if(info.user!=null){
 
-          self.posts = info.posts;
-          self.user = info.user;
-          self.date = self.getDate(info.user.date_inscription.substring(0,10));
-          if(!self.modifier){
-            self.desc = info.user.description;
-            self.link_cover_sav = info.user.cover_pic;
-            self.link_photo_sav = info.user.profile_pic;
-          }
+					self.posts = info.posts;
+					self.user = info.user;
+					self.date = self.getDate(info.user.date_inscription.substring(0,10));
+					if(!self.modifier){
+						self.desc = info.user.description;
+						self.name = info.user.name;
+						self.link_cover_sav = info.user.cover_pic;
+						self.link_photo_sav = info.user.profile_pic;
+					}
+					self.canModify = info.canModify;
+					await self.nbabonnement();
+					await self.nbabonnes();
 				}
 
 				else{
@@ -350,7 +434,7 @@ export default{
 				}
 
 			}
-		})(this), 1000);
+		})(this), 5000);
   }
 }
 

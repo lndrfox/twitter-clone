@@ -85,6 +85,29 @@ router.post('/modif'
 
 });
 
+router.post('/name'
+
+,async function(req, res){ 
+
+
+		try{
+			if(global.tokens.hasOwnProperty(req.body.token)) {
+
+				if(req.body.name !== null) {
+					await model.modifName(global.tokens[req.body.token], req.body.name);
+				}
+			}
+
+			res.end();
+
+
+		}catch(error){
+			console.error(error);
+			return res.status(500).send('Erreur interne au serveur, connexion à la base de données impossible');
+		}
+
+});
+
 router.post('/cover'
 
 ,async function(req, res){ 
@@ -126,7 +149,134 @@ router.post('/photo'
 
 });
 
+router.post('/abonnement'
 
+,async function(req, res){ 
+
+
+		try{
+			if(global.tokens.hasOwnProperty(req.body.token)) {
+
+				if(req.body.token) {
+
+					let rows = await model.abonnement(global.tokens[req.body.token], req.body.user);
+					if (rows.length === 0) {
+						res.send({exist: false});
+					}
+					else{
+						res.send({exist: true});
+					}
+				}
+
+				else {
+					res.send({exist: false});
+				}
+			}
+
+			else{
+				res.send({exist: false});
+			}
+
+			res.end();
+
+
+		}catch(error){
+			console.error(error);
+			return res.status(500).send('Erreur interne au serveur, connexion à la base de données impossible');
+		}
+
+});
+
+router.post('/abonner'
+
+,async function(req, res){ 
+
+
+		try{
+			if(global.tokens.hasOwnProperty(req.body.token)) {
+
+				let rows = await model.abonnement(global.tokens[req.body.token], req.body.user);
+
+				if(rows.length === 0){
+
+					await model.abonner(global.tokens[req.body.token], req.body.user);
+				}
+			}
+
+			res.end();
+
+
+		}catch(error){
+			console.error(error);
+			return res.status(500).send('Erreur interne au serveur, connexion à la base de données impossible');
+		}
+
+});
+
+router.post('/desabonner'
+
+,async function(req, res){ 
+
+
+		try{
+			if(global.tokens.hasOwnProperty(req.body.token)) {
+
+				let rows = await model.abonnement(global.tokens[req.body.token], req.body.user);
+				
+				if(rows.length !== 0){
+					await model.desabonner(global.tokens[req.body.token], req.body.user);
+				}
+			}
+
+			res.end();
+
+
+		}catch(error){
+			console.error(error);
+			return res.status(500).send('Erreur interne au serveur, connexion à la base de données impossible');
+		}
+
+});
+
+router.post('/nbabonnement'
+
+,async function(req, res){ 
+
+
+		try{
+
+			let nb = await model.nbabonnement(req.body.user);
+
+			res.send({nbabonnement: nb});
+			res.end();
+
+
+		}catch(error){
+			console.error(error);
+			return res.status(500).send('Erreur interne au serveur, connexion à la base de données impossible');
+		}
+
+});
+
+router.post('/nbabonnes'
+
+,async function(req, res){ 
+
+
+		try{
+
+			let nb = await model.nbabonnes(req.body.user);
+
+			res.send({nbabonnes: nb});
+			res.end();
+
+
+		}catch(error){
+			console.error(error);
+			return res.status(500).send('Erreur interne au serveur, connexion à la base de données impossible');
+		}
+
+});
 
 /*-- EXPORT --*/
 

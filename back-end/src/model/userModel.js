@@ -95,6 +95,30 @@ function userModel(){
 
 	}
 
+	this.modifName = async(login, name) =>{
+
+		/*-- CONNECTING TO DATABASE --*/
+
+		const db=require('./connectDB');
+		let connection;
+
+		try{
+			connection= await db.connectDB();
+		}catch(error){
+
+			throw error;
+		}
+
+		connection.query("UPDATE users SET t_name = ? WHERE login = ?",[name, login],
+					function(err, result){
+					if(err) throw err;
+				});
+
+		db.closeDB(connection);
+
+
+	}
+
 	this.modifCover = async(login, link) =>{
 
 		/*-- CONNECTING TO DATABASE --*/
@@ -141,6 +165,130 @@ function userModel(){
 		db.closeDB(connection);
 
 
+	}
+
+	this.abonnement = async (suiveur, suivi) => {
+
+		/*-- CONNECTING TO DATABASE --*/
+
+		const db=require('./connectDB');
+		let connection;
+
+		try{
+			connection = await db.connectDB();
+		}catch(error){
+
+			throw error;
+		}
+
+		/*-- GETTING USER MATCHING WITH userName --*/
+
+		const [rows, field] = await connection.execute("SELECT login_suivi, login_suiveur FROM abonnements WHERE login_suivi = ? AND login_suiveur = ?"
+			,[suivi, suiveur]);
+
+		db.closeDB(connection);
+		return rows;
+	}
+
+	this.abonner = async(suiveur, suivi) =>{
+
+		/*-- CONNECTING TO DATABASE --*/
+
+		const db=require('./connectDB');
+		let connection;
+
+		try{
+			connection= await db.connectDB();
+		}catch(error){
+
+			throw error;
+		}
+
+		connection.query("INSERT INTO abonnements (login_suivi, login_suiveur) VALUES (? ,?)",[suivi, suiveur],
+					function(err, result){
+					if(err) throw err;
+				});
+
+		db.closeDB(connection);
+	}
+
+
+	this.desabonner = async(suiveur, suivi) =>{
+
+		/*-- CONNECTING TO DATABASE --*/
+
+		const db=require('./connectDB');
+		let connection;
+
+		try{
+			connection= await db.connectDB();
+		}catch(error){
+
+			throw error;
+		}
+
+		connection.query("DELETE FROM abonnements WHERE login_suivi = ? AND login_suiveur = ?",[suivi, suiveur],
+					function(err, result){
+					if(err) throw err;
+				});
+
+		db.closeDB(connection);
+	}
+
+	this.nbabonnement = async (user) => {
+
+		/*-- CONNECTING TO DATABASE --*/
+
+		const db=require('./connectDB');
+		let connection;
+
+		try{
+			connection = await db.connectDB();
+		}catch(error){
+
+			throw error;
+		}
+
+		/*-- GETTING USER MATCHING WITH userName --*/
+
+		const [rows, field] = await connection.execute("SELECT count(*) AS nb FROM abonnements WHERE login_suiveur = ? GROUP BY login_suiveur"
+			,[user]);
+
+		db.closeDB(connection);
+		if(rows.length === 0) {
+			return 0;
+		}
+		else {
+			return rows[0].nb;
+		}
+	}
+
+	this.nbabonnes = async (user) => {
+
+		/*-- CONNECTING TO DATABASE --*/
+
+		const db=require('./connectDB');
+		let connection;
+
+		try{
+			connection = await db.connectDB();
+		}catch(error){
+
+			throw error;
+		}
+
+		/*-- GETTING USER MATCHING WITH userName --*/
+
+		const [rows, field] = await connection.execute("SELECT count(*) AS nb FROM abonnements WHERE login_suivi = ? GROUP BY login_suivi"
+			,[user]);
+
+		db.closeDB(connection);
+		if(rows.length === 0) {
+			return 0;
+		}
+		else {
+			return rows[0].nb;
+		}
 	}
 }
 

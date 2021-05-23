@@ -138,10 +138,13 @@ body {
 
 #recherche input{
   width: 210px;
+  height: 38px;
   padding: 10px 10px;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 4px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
   box-sizing: border-box;
   font-size: 14px;
   font-family: "Gill Sans", sans-serif;
@@ -157,6 +160,7 @@ body {
   background-color:  #1298cb;
   float: left;
   width: 110px;
+  height: 38px;
   border: 0px solid;
   border-radius: 20px;
   border-top-left-radius: 0px;
@@ -375,7 +379,7 @@ body {
 }
 
 .profil_bar #profil #begin{
-  padding-left: 300px;
+  padding-left: 380px;
 }
 
 .profil_bar #profil .bar {
@@ -435,6 +439,20 @@ body {
   color: #8e8e8e;
 }
 
+.profil_desc #t_name input[type="text"]{
+  width: 98%;
+  padding: 6px 6px;
+  font-size: 14px;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  border: 2px solid #d3d3d3;
+  border-radius: 5px;
+}
+
+.profil_desc #t_name input[type="text"]:focus {
+  outline: none !important;
+  box-shadow: 0 0 10px #719ECE;
+}
+
 .profil_desc #desc{
   margin-bottom: 20px;
   font-size: 14px;
@@ -470,14 +488,14 @@ body {
   height: 16px;
 }
 
-.profil_desc .modif{
+.profil_desc .modif, .profil_desc .abo{
   border: 0px solid;
   border-top-width: thin;
   border-top-color: #d3d3d3;
   text-align: center;
 }
 
-.profil_desc .modif button{
+.profil_desc .modif button, .profil_desc .abo button{
   margin-top: 20px;
   width: 100%;
   border: 0px solid;
@@ -489,18 +507,18 @@ body {
   font-weight: bold;
 }
 
-.profil_desc .modif #modifier{
+.profil_desc .modif #modifier, .profil_desc .abo #abonnement{
   background-color:  #1298cb;
 }
 
-.profil_desc .modif #modifier:hover{
+.profil_desc .modif #modifier:hover, .profil_desc .abo #abonnement:hover{
    background-color: #118bb9;
 }
 
-.profil_desc .modif #annuler{
+.profil_desc .modif #annuler, .profil_desc .abo #desabonnement{
   background-color:  #e52929;
 }
 
-.profil_desc .modif #annuler:hover{
+.profil_desc .modif #annuler:hover, .profil_desc .abo #desabonnement:hover{
    background-color: #ca2626;
 }
