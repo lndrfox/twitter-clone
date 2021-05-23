@@ -80,41 +80,108 @@
 
     <div id="message" v-for="message in posts" v-bind:key="message.id_message">
 
-      <div class="user">
+       <div v-if="!isRT(message)">
+
+       <div class="user" v-on:click="redirectUser(message.login)">
 
         <div class="img">
-          <img :src="link_photo_sav">
+          <img :src="message.profile_pic">
         </div>
         
-        <p id="login">{{user.t_name}}</p>
-        <p id="credit">@{{user.login}}</p>
+        <p id="login">{{message.t_name}}</p>
+        <p id="credit">@{{message.login}}</p>
 
       </div>
 
-      <br><div class="post">
-       {{message.content}}
-      </div>
 
-      <div class="footer">
+        <br><div class="post">
+         {{message.content}}
+        </div>
 
-        <p>{{getDatePost(message.date_message)}}</p>
+        <div class="footer">
 
-        <div class="react">
+          <p>{{getDate(message.date_message)}}</p>
 
-          <div v-if="logged">
-            <button id="like" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
-            <p>{{message.nb_likes}}</p>
+          <div class="react">
 
-            <button id="dislike" @click="dislike(message.id_message, message.user_liked, message.user_disliked)"></button>
-            <p>{{message.nb_dislikes}}</p>
+            <div v-if="logged">
+              <button id="like" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
+              <p>{{message.nb_likes}}</p>
 
-            <button id="rt" @click="rt(message.id_message,message.user_rt)" >rt</button>
-            <p>{{message.nb_rt}}</p>
+              <button id="dislike" @click="dislike(message.id_message, message.user_liked, message.user_disliked)"></button>
+              <p>{{message.nb_dislikes}}</p>
+
+              <button id="rt" @click="rt(message.id_message,message.user_rt)" >rt</button>
+              <p>{{message.nb_rt}}</p>
+            </div>
+
           </div>
+        </div>
 
         </div>
+
+              <div v-if="isRT(message)">
+
+       <div class="user" v-on:click="redirectUser(message.login_rter)">
+
+        <div class="img">
+          <img :src="message.profile_pic_rter">
+        </div>
+        
+        <p id="login">{{message.t_name_rter}}</p>
+        <p id="credit">@{{message.login_rter}}</p>
+
       </div>
 
+      <div id="message">
+
+         <div class="user" v-on:click="redirectUser(message.login)">
+
+        <div class="img">
+          <img :src="message.profile_pic">
+        </div>
+        
+        <p id="login">{{message.t_name}}</p>
+        <p id="credit">@{{message.login}}</p>
+
+      </div>
+
+        <br><div class="post">
+         {{message.content}}
+        </div>
+
+        <div class="footer">
+
+          <p>{{getDate(message.date_message)}}</p>
+
+          <div class="react">
+
+            <div v-if="logged">
+              <button id="like" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
+              <p>{{message.nb_likes}}</p>
+
+              <button id="dislike" @click="dislike(message.id_message, message.user_liked, message.user_disliked)"></button>
+              <p>{{message.nb_dislikes}}</p>
+
+              <button id="rt" @click="rt(message.id_message,message.user_rt)" >rt</button>
+              <p>{{message.nb_rt}}</p>
+            </div>
+
+          </div>
+        </div>
+
+        
+
+      </div>
+
+      <div class="footer"> 
+
+        <p>{{getDate(message.date_retweet)}}</p>
+
+      </div>
+
+
+        </div>
     </div>
 
   </div>
@@ -171,6 +238,16 @@ export default{
         }
       },
 
+      isRT(message){
+
+        if(message.login_rter != null){
+
+          return true;
+        }
+
+        return false;
+      },
+
       annuler() {
 		this.modifier_cover = false;
 		this.modifier_photo = false;
@@ -219,6 +296,23 @@ export default{
 				this.modifier = false;
 				this.link_photo = "";
 				this.link_cover= "";
+
+				let info = await this.getInfo();
+        if(info.user != null){
+					this.posts = info.posts;
+					this.user = info.user;
+					this.date = this.getDate(info.user.date_inscription.substring(0,10));
+					this.desc = info.user.description;
+					this.name = info.user.t_name;
+					this.link_cover_sav = info.user.cover_pic;
+					this.link_photo_sav = info.user.profile_pic;
+					this.canModify = info.canModify;
+					await this.abonnement();
+					await this.nbabonnement();
+					await this.nbabonnes();
+
+        }
+
 			}
 
       },

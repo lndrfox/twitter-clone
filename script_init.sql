@@ -75,6 +75,7 @@ ALTER TABLE twitternj.reactions ADD CONSTRAINT
 CREATE TABLE twitternj.retweet(
 	id_message INT,
 	login_user nvarchar(50),
+	date_retweet datetime NOT NULL DEFAULT NOW(),
 	PRIMARY KEY(id_message,login_user)
 );
 
@@ -89,27 +90,11 @@ ALTER TABLE twitternj.retweet ADD CONSTRAINT
 	ON DELETE CASCADE
 	ON UPDATE CASCADE;
 
-CREATE TABLE twitternj.retweet_cite(
-	id_cite INT PRIMARY KEY AUTO_INCREMENT,
-	id_message INT NOT NULL,
-	login_user nvarchar(50) NOT NULL,
-	id_message_citation INT NOT NULL
-);
-
-ALTER TABLE twitternj.retweet_cite ADD CONSTRAINT
-	FK_cite_message_id FOREIGN KEY (id_message)
-	REFERENCES messages(id_message)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE;
-
-ALTER TABLE twitternj.retweet_cite ADD CONSTRAINT
-	FK_cite_login_user FOREIGN KEY (login_user)
-	REFERENCES users(login)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE;
 
 CREATE USER twitternj@localhost IDENTIFIED BY 'Access_data1';
 
 GRANT ALL PRIVILEGES ON twitternj . * TO twitternj@localhost;
 
 FLUSH PRIVILEGES;
+
+
