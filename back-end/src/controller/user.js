@@ -278,6 +278,34 @@ router.post('/nbabonnes'
 
 });
 
+router.post('/following'
+
+,async function(req, res){ 
+
+		try{
+
+			if(global.tokens.hasOwnProperty(req.body.token)) {
+
+				let rows = await model.following(global.tokens[req.body.token]);
+
+				let following = []
+
+				for(var i = 0; i < rows.length; i++) {
+					following.push(rows[i].login_suivi);
+				}
+
+				res.send({following: following});
+			}
+			res.end();
+
+
+		}catch(error){
+			console.error(error);
+			return res.status(500).send('Erreur interne au serveur, connexion à la base de données impossible');
+		}
+
+});
+
 /*-- EXPORT --*/
 
 module.exports= router;

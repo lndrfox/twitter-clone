@@ -5,12 +5,12 @@
     <button v-on:click="rechercher">Rechercher</button>
   </div>
 
-  <div id="messagesContaines"><div id="message" class="poster">
+  <div id="messagesContaines" v-if="logged"><div id="message" class="poster">
     <div class="user">
 
     </div>
 
-    <form v-if="logged" v-on:submit.prevent="checkPost">
+    <form v-on:submit.prevent="checkPost">
      <textarea v-model="post_content" maxlength="280" rows="2" ref="post_content" placeholder="Quoi de neuf ?"></textarea>
      <br>
     <input type="submit" name="submit" value="Publier">
@@ -21,7 +21,7 @@
   <div id="messagesContaines">
 
     <div id="message" v-for="message in messages" v-bind:key="message.id_message">
-      <div v-if="getMention(recherche_text_sav, message.content, message.login)">
+      <div v-if="affichage(recherche_text_sav, message.content, message.login)">
 
        <div class="user" v-on:click="redirectUser(message.login)">
 
@@ -78,7 +78,9 @@ export default {
       errorPost: "",
       recherche: false,
       recherche_text: "",
-      recherche_text_sav: ""
+      recherche_text_sav: "",
+      user: {},
+      following: []
     }
   },
 
@@ -101,6 +103,38 @@ export default {
 
           let response =await axios.get('http://localhost:5050/home', {useCredentails :true});
           return response.data.messages;
+        }
+
+      },
+
+      async getUser(){
+
+        if(this.logged){
+
+          let response = await axios.post('http://localhost:5050/user',
+            {token : this.$cookies.get("token")}, 
+            {useCredentails :true});
+          return response.data.user;
+        }
+
+        else{
+          return {};
+        }
+
+      },
+
+       async getFollowing(){
+
+        if(this.logged){
+
+          let response = await axios.post('http://localhost:5050/user/following',
+            {token : this.$cookies.get("token")}, 
+            {useCredentails :true});
+          return response.data.following;
+        }
+
+        else{
+          return [];
         }
 
       },
@@ -187,29 +221,63 @@ export default {
         }
       },
 
-      getMention(s, text, login) {
-        if(this.recherche) {
-          if(s[0] === '@') {
-            if (login === s.substring(1,s.length)) {
-              return true;
-            }
+      getMentionUser(s, login) {
+        if(s[0] === '@') {
+          if (login === s.substring(1,s.length)) {
+            return true;
           }
-          let i = text.search(s);
-          if(i !== -1) {
-            if((text[i-1] === '\n' ||  text[i-1] === ' ' || i === 0) && 
-               (text[i+s.length] === '\n' ||  text[i+s.length] === ' ' || i+s.length === text.length)) {
-                  return true;
-            }
-          }
-          return false;
         }
-        return true;
-      }
+        return false;
+      },
+
+      getMention(s, text) {
+        let i = text.search(s);
+        if(i !== -1) {
+          if((text[i-1] === '\n' ||  text[i-1] === ' ' || i === 0) && 
+             (text[i+s.length] === '\n' ||  text[i+s.length] === ' ' || i+s.length === text.length)) {
+                return true;
+          }
+        }
+        return false;
+      },
+
+      affichage(s, text, login) {
+
+        /* Par barre de recherche */
+        if(this.recherche) {
+            return (this.getMention(s, text) || 
+                    this.getMentionUser(s, login));
+          }
+
+        /* Utilisateur non connecte */
+        if(this.logged === false) {
+
+          return this.getMention("@everyone", text);
+        }
+
+        /* Utilisateur connecte*/
+        else {
+
+          let user = '@' + this.user.login;
+
+          let follow = false;
+          for(var i = 0; i < this.following.length; i++) {
+            let user_followed = '@' + this.following[i];
+            follow = follow || this.getMentionUser(user_followed, login);
+          }
+
+          return (this.getMention("@everyone", text) || 
+                  this.getMention(user, text)) || follow;
+        }
+
+      },
   },
 
   beforeMount: async function(){
 
-    this.messages= await this.getMessages();
+    this.messages = await this.getMessages();
+    this.user = await this.getUser();
+    this.following = await this.getFollowing();
   },
 
   mounted: 

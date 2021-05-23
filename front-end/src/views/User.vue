@@ -46,7 +46,6 @@
 			{{user.t_name}}
 			</div>
 			<div v-if="modifier" id="t_name">
-				{{user.t_name}}
 				<input type="text" v-model="name" maxlength="50" ref="name">
 			</div>	
 
