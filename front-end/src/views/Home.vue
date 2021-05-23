@@ -116,9 +116,12 @@
         
 
       </div>
-      <br>
 
-      <div class="footer"></div>
+      <div class="footer"> 
+
+        <p>{{getDate(message.date_retweet)}}</p>
+
+      </div>
 
 
         </div>
