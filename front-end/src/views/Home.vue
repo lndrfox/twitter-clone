@@ -385,6 +385,7 @@ export default {
           this.recherche_text_sav = "";
         } 
         else {
+
           this.recherche = true;
           this.recherche_text_sav = this.recherche_text;
           this.home = true;
@@ -441,7 +442,9 @@ export default {
         }
       },
 
-      affichage(s, text, login, login_rter) {
+      affichage(s, text, login_user, login_rter) {
+
+        let login = login_user;
 
         /* Si c'est un retweet */ 
           if(login_rter != null) {
@@ -471,23 +474,16 @@ export default {
         /* Utilisateur connecte*/
         else {
 
-          if (login_rter !== null) {
-            return follow;
-          }
-
-          let user = '@' + this.user.login;
-
           let follow = false;
 
           for(var i = 0; i < this.following.length; i++) {
-            let user_followed = '@' + this.following[i];
-            follow = follow || this.getMentionUser(user_followed, login);
+            follow = follow || (this.following[i] === login);
           }
 
           /* Tout */
           if(this.home) {
             return (this.getMention("@everyone", text) || 
-                    this.getMention(user, text)) || follow;
+                    this.getMention(text, this.user.login) || follow);
           }
           /* Abonnements uniquement */
           else {
@@ -512,7 +508,6 @@ export default {
      (function(self) {         
          return async function() {   
             self.messages= await self.getMessages(); 
-            self.resize();
          }
      })(this),
      5000); 
