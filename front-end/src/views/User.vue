@@ -101,11 +101,10 @@
 
         <div class="footer">
 
-          <p>{{getDate(message.date_message)}}</p>
+          <p>{{getDatePost(message.date_message)}}</p>
 
           <div class="react">
 
-            <div v-if="logged">
               <button :id="likeActive(message.user_liked)" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
               <p>{{message.nb_likes}}</p>
 
@@ -114,7 +113,6 @@
 
               <button :id="rtActive(message.user_rt)" @click="rt(message.id_message,message.user_rt)" ></button>
               <p>{{message.nb_rt}}</p>
-            </div>
 
           </div>
         </div>
@@ -153,11 +151,10 @@
 
         <div class="footer">
 
-          <p>{{getDate(message.date_message)}}</p>
+          <p>{{getDatePost(message.date_message)}}</p>
 
           <div class="react">
 
-            <div v-if="logged">
               <button :id="likeActive(message.user_liked)" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
               <p>{{message.nb_likes}}</p>
 
@@ -166,7 +163,6 @@
 
               <button :id="rtActive(message.user_rt)" @click="rt(message.id_message,message.user_rt)" ></button>
               <p>{{message.nb_rt}}</p>
-            </div>
 
           </div>
         </div>
@@ -177,7 +173,7 @@
 
       <div class="footer"> 
 
-        <p>{{getDate(message.date_retweet)}}</p>
+        <p>{{getDatePost(message.date_retweet)}}</p>
 
       </div>
 
@@ -219,6 +215,11 @@ export default{
 
   methods: {
 
+      redirectConnect(){
+
+        this.$router.push({ name: 'login'});
+      },
+
       async getInfo(){
 
         let tok = this.logged ? this.$cookies.get('token') : "";
@@ -250,7 +251,7 @@ export default{
       },
 
       likeActive(user_liked) {
-        if(user_liked === 0) {
+        if(user_liked === 0 || !this.logged) {
           return 'like';
         } else {
           return 'likeActive';
@@ -258,7 +259,7 @@ export default{
       },
 
       dislikeActive(user_disliked) {
-        if(user_disliked === 0) {
+        if(user_disliked === 0 || !this.logged) {
           return 'dislike';
         } else {
           return 'dislikeActive';
@@ -266,7 +267,7 @@ export default{
       },
 
       rtActive(user_rt) {
-        if(user_rt === 0) {
+        if(user_rt === 0 || !this.logged) {
           return 'rt';
         } else {
           return 'rtActive';
@@ -419,6 +420,10 @@ export default{
 
       async like(id, user_liked, user_disliked){
 
+        if(!this.logged) {
+          this.redirectConnect();
+        }
+
         if(this.logged && user_liked==0 && user_disliked == 0){
 
             await axios.post('http://localhost:5050/home/react',{token : this.$cookies.get("token"), react : "l", id: id}, {useCredentails :true});
@@ -438,6 +443,10 @@ export default{
 
       async dislike(id, user_liked, user_disliked){
 
+        if(!this.logged) {
+          this.redirectConnect();
+        }
+
         if(this.logged && user_liked==0 && user_disliked == 0){
 
             await axios.post('http://localhost:5050/home/react',{token : this.$cookies.get("token"), react : "d", id: id}, {useCredentails :true});
@@ -456,6 +465,10 @@ export default{
       },
 
       async rt(id, user_rt){
+
+        if(!this.logged) {
+          this.redirectConnect();
+        }
 
         if(this.logged && user_rt==0 ){
 

@@ -176,10 +176,7 @@ function homeModel(){
 
 		db.closeDB(connection);
 
-
-		
 	}
-
 
 }
 
