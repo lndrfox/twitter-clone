@@ -47,7 +47,7 @@
 			{{user.t_name}}
 			</div>
 			<div v-if="modifier" id="t_name">
-				<input type="text" v-model="name" maxlength="50" ref="name">
+				<input type="text" v-model="name" :placeholder="user.t_name" maxlength="50" ref="name">
 			</div>	
 
 			<p>@{{user.login}}</p>
@@ -301,6 +301,7 @@ export default{
 						{token : this.$cookies.get("token"), 
 						name :  this.name}, 
 						{useCredentails :true});
+					this.$refs["name"].value = this.user.t_name;
 
 				}
 				if(this.link_cover_sav !== this.user.cover_pic) {
