@@ -33,6 +33,6 @@ MariaDB
 
 ### Existing Accounts 
 
-Login : _rbin Password : cacahuete
-Login : galaxsquid Password : squeek
-Login : rat_violi Password : ratata
+* Login : _rbin Password : cacahuete
+* Login : galaxsquid Password : squeek
+* Login : rat_violi Password : ratata
