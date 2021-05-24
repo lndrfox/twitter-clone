@@ -24,7 +24,7 @@
     </div>
 
     <form v-on:submit.prevent="checkPost">
-     <textarea v-model="post_content" maxlength="280" rows="2" ref="post_content" placeholder="Quoi de neuf ?"></textarea>
+     <textarea v-model="post_content" maxlength="280" cols="44" :rows="postHeight" ref="post_content" placeholder="Quoi de neuf ?"></textarea>
      <br>
     <input type="submit" name="submit" value="Publier">
     {{errorPost}}
@@ -60,7 +60,6 @@
 
           <div class="react">
 
-            <div v-if="logged">
               <button :id="likeActive(message.user_liked)" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
               <p>{{message.nb_likes}}</p>
 
@@ -69,7 +68,6 @@
 
               <button :id="rtActive(message.user_rt)" @click="rt(message.id_message,message.user_rt)" ></button>
               <p>{{message.nb_rt}}</p>
-            </div>
 
           </div>
         </div>
@@ -112,8 +110,6 @@
 
           <div class="react">
 
-            <div v-if="logged">
-
               <button :id="likeActive(message.user_liked)" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
               <p>{{message.nb_likes}}</p>
 
@@ -122,7 +118,7 @@
 
               <button :id="rtActive(message.user_rt)" @click="rt(message.id_message,message.user_rt)" ></button>
               <p>{{message.nb_rt}}</p>
-            </div>
+
 
           </div>
         </div>
@@ -160,6 +156,7 @@ export default {
       logged: this.$cookies.isKey('token'),
       post_content: "",
       errorPost: "",
+      postHeight: 2,
 
       home: true,
 
@@ -177,6 +174,11 @@ export default {
       redirectUser(login){
 
         this.$router.push({ name: 'user', query: { login: login }});
+      },
+
+      redirectConnect(){
+
+        this.$router.push({ name: 'login'});
       },
 
       isRT(message){
@@ -242,6 +244,22 @@ export default {
         this.post_content="";
       },
 
+      resize () {
+        let lines = this.post_content.split("\n");
+        let rows = lines.length;
+        if(rows < 2) {
+          rows = 2;
+        }
+        for(var i = 0; i < lines.length; i++) {
+          let len = lines[i].length;
+          while(len > 44) {
+            rows += 1;
+            len -= 44;
+          }
+        }
+        this.postHeight = rows;
+      },
+
       async post_message(){
           await axios.post('http://localhost:5050/home',{token : this.$cookies.get("token"), post_content :  this.post_content}, {useCredentails :true});
       },
@@ -264,6 +282,10 @@ export default {
 
       async rt(id, user_rt){
 
+        if(!this.logged) {
+          this.redirectConnect();
+        }
+
         if(this.logged && user_rt==0 ){
 
             await axios.post('http://localhost:5050/home/rt',{token : this.$cookies.get("token"), id: id}, {useCredentails :true});
@@ -280,6 +302,10 @@ export default {
       },
 
       async like(id, user_liked, user_disliked){
+
+        if(!this.logged) {
+          this.redirectConnect();
+        }
 
         if(this.logged && user_liked==0 && user_disliked == 0){
 
@@ -298,6 +324,10 @@ export default {
 
       async dislike(id, user_liked, user_disliked){
 
+        if(!this.logged) {
+          this.redirectConnect();
+        }
+
         if(this.logged && user_liked==0 && user_disliked == 0){
 
             await axios.post('http://localhost:5050/home/react',{token : this.$cookies.get("token"), react : "d", id: id}, {useCredentails :true});
@@ -314,7 +344,7 @@ export default {
       },
 
       likeActive(user_liked) {
-        if(user_liked === 0) {
+        if(user_liked === 0 || !this.logged) {
           return 'like';
         } else {
           return 'likeActive';
@@ -322,7 +352,7 @@ export default {
       },
 
       dislikeActive(user_disliked) {
-        if(user_disliked === 0) {
+        if(user_disliked === 0 || !this.logged) {
           return 'dislike';
         } else {
           return 'dislikeActive';
@@ -330,7 +360,7 @@ export default {
       },
 
       rtActive(user_rt) {
-        if(user_rt === 0) {
+        if(user_rt === 0 || !this.logged) {
           return 'rt';
         } else {
           return 'rtActive';
@@ -476,15 +506,24 @@ export default {
   },
 
   mounted: 
+
     async function () {
       setInterval(
      (function(self) {         
          return async function() {   
             self.messages= await self.getMessages(); 
-
+            self.resize();
          }
      })(this),
      5000); 
+
+      setInterval(
+     (function(self) {         
+         return function() { 
+            self.resize();
+         }
+     })(this),
+     0); 
     }
 }
 
