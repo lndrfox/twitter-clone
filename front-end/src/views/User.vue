@@ -218,6 +218,12 @@ export default{
   },
 
   methods: {
+      
+      redirectUser(login){
+
+        this.$router.push({ name: 'user', query: { login: login }});
+
+      },
 
       async getInfo(){
 
@@ -573,7 +579,7 @@ export default{
 				}
 
 			}
-		})(this), 5000);
+		})(this), 1000);
   }
 }
 
