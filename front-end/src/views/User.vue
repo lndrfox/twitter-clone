@@ -583,6 +583,7 @@ export default{
 						self.link_photo_sav = info.user.profile_pic;
 					}
 					self.canModify = info.canModify;
+					await self.abonnement();
 					await self.nbabonnement();
 					await self.nbabonnes();
 				}
