@@ -1,24 +1,28 @@
 # web-projet-nj
 
 ## Project setup
+
+### At the project root
+
+```
+sudo mysql -u root
+	source script_init.sql
+
+```
+### In front-end
+
 ```
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### In back-end
+
 ```
-npm run build
+npm install
+npm start
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
