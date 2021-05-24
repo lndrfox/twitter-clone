@@ -47,7 +47,7 @@
 			{{user.t_name}}
 			</div>
 			<div v-if="modifier" id="t_name">
-				<input type="text" v-model="name" :placeholder="user.t_name" maxlength="50" ref="name">
+				<input type="text" v-model="name" :placeholder="user.t_name" maxlength="50">
 			</div>	
 
 			<p>@{{user.login}}</p>
@@ -295,20 +295,19 @@ export default{
 				this.modifier = true
 			}
 			else {
+				if(this.name) {
+					if(this.name !== this.user.t_name && this.name.length > 0) {
+						await axios.post('http://localhost:5050/user/name',
+							{token : this.$cookies.get("token"), 
+							name :  this.name}, 
+							{useCredentails :true});
+					}
+				}
 				if(this.desc !== this.user.description){
 					await axios.post('http://localhost:5050/user/modif',
 						{token : this.$cookies.get("token"), 
 						desc :  this.desc}, 
 						{useCredentails :true});
-				}
-				if(this.name !== this.user.t_name && this.name !== "" && 
-					this.name !== null && this.name.value !== 0) {
-					await axios.post('http://localhost:5050/user/name',
-						{token : this.$cookies.get("token"), 
-						name :  this.name}, 
-						{useCredentails :true});
-					this.$refs["name"].value = this.user.t_name;
-
 				}
 				if(this.link_cover_sav !== this.user.cover_pic) {
 					await axios.post('http://localhost:5050/user/cover',
@@ -323,29 +322,11 @@ export default{
 						{useCredentails :true});
 				}
 				this.name = this.user.t_name;
-				this.$refs["name"].value = this.user.t_name;
 				this.modifier_cover = false;
 				this.modifier_photo = false;
-				this.modifier = false;
 				this.link_photo = "";
 				this.link_cover= "";
-
-				let info = await this.getInfo();
-        if(info.user != null){
-					this.posts = info.posts;
-					this.user = info.user;
-					this.date = this.getDate(info.user.date_inscription.substring(0,10));
-					this.desc = info.user.description;
-					this.name = info.user.t_name;
-					this.link_cover_sav = info.user.cover_pic;
-					this.link_photo_sav = info.user.profile_pic;
-					this.canModify = info.canModify;
-					await this.abonnement();
-					await this.nbabonnement();
-					await this.nbabonnes();
-
-        }
-
+				this.modifier = false;
 			}
 
       },
