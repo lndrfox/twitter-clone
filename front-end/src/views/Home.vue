@@ -444,7 +444,7 @@ export default {
       affichage(s, text, login, login_rter) {
 
         /* Si c'est un retweet */ 
-          if(login_rter !== null) {
+          if(login_rter != null) {
             login = login_rter;
             text = "";
           }

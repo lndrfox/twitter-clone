@@ -26,3 +26,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ## Database
 
 MariaDB
+
+### Existing Accounts 
+
+Login : _rbin Password : cacahuete
+Login : galaxsquid Password : squeek
+Login : rat_violi Password : ratata
