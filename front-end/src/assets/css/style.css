@@ -135,6 +135,8 @@ body {
 
 #recherche{
   margin: 30px 20px;
+  margin-top: 30px;
+  position: absolute;
 }
 
 #recherche input{
@@ -181,7 +183,40 @@ body {
 #messagesContaines{
   color: #333;
   margin: auto;
-  width: 45%;
+  width: 580px;
+  position: relative;
+}
+
+#tab {
+  margin: auto;
+  margin-top: 20px;
+  width: 545px;
+}
+
+#tab button {
+  width: 50%;
+  background-color: transparent;
+  color: #808080;
+  border: 0px solid;
+  padding: 10px 15px;
+  font-size: 18px;
+  font-weight: bold;
+  outline: none;
+}
+
+#tab #afficheActive, #tab #afficheaboActive {
+  border-bottom-width: 4px;
+  border-bottom-color: #1298cb;
+  color:  #1298cb;
+}
+
+#tab #afficheActive:hover, #tab #afficheaboActive:hover {
+  border-bottom-color: #1088b7;
+  color: #1088b7;
+}
+
+#tab #affiche:hover, #tab #afficheabo:hover {
+  color: #676767;
 }
 
 #message{
@@ -202,10 +237,10 @@ body {
   overflow:hidden;
   background-color: transparent;
   border: 0px solid;
-  margin: 15px 15px;
+  margin: 0px 15px;
   width: 93%;
   font-size: 18px;
-   resize: none;
+  resize: none;
   font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
 }
 

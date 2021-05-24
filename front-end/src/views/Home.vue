@@ -1,18 +1,26 @@
 <template>
 
-  <div v-if="logged">
-    <button v-on:click="afficheTout">Tout</button>
-    <button v-on:click="afficheAbonnements">Abonnements</button>
-  </div>
-
   <div id="recherche">
     <input type="search" placeholder="@everyone" v-model="recherche_text">
     <button v-on:click="rechercher">Rechercher</button>
   </div>
 
-  <div id="messagesContaines" v-if="logged"><div id="message" class="poster">
-    <div class="user">
+  <div id="messagesContaines" v-if="logged">
 
+    <div id="tab">
+      <button :id="afficheActive()" v-on:click="afficheTout">Tout</button>
+      <button :id="afficheAbonnementsActive()" v-on:click="afficheAbonnements">Abonnements</button>
+    </div>
+
+    <div id="message" class="poster">
+
+    <div class="user">
+      <div class="img">
+          <img :src="user.profile_pic">
+        </div>
+        
+        <p id="login">{{user.t_name}}</p>
+        <p id="credit">@{{user.login}}</p>
     </div>
 
     <form v-on:submit.prevent="checkPost">
@@ -349,6 +357,7 @@ export default {
         else {
           this.recherche = true;
           this.recherche_text_sav = this.recherche_text;
+          this.home = true;
         }
       },
 
@@ -374,10 +383,32 @@ export default {
 
       afficheTout() {
         this.home = true;
+        this.recherche = false;
+        this.recherche_text = "";
+        this.recherche_text_sav = "";
       },
 
       afficheAbonnements() {
         this.home = false;
+        this.recherche = false;
+        this.recherche_text = "";
+        this.recherche_text_sav = "";
+      },
+
+      afficheActive() {
+        if(this.home === false) {
+          return 'affiche';
+        } else {
+          return 'afficheActive';
+        }
+      },
+
+      afficheAbonnementsActive() {
+        if(this.home === true) {
+          return 'afficheabo';
+        } else {
+          return 'afficheaboActive';
+        }
       },
 
       affichage(s, text, login, login_rter) {
