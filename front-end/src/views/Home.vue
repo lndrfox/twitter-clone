@@ -5,9 +5,22 @@
     <button v-on:click="rechercher">Rechercher</button>
   </div>
 
-  <div id="messagesContaines" v-if="logged"><div id="message" class="poster">
-    <div class="user">
+  <div id="messagesContaines" v-if="logged">
 
+    <div id="tab">
+      <button :id="afficheActive()" v-on:click="afficheTout">Tout</button>
+      <button :id="afficheAbonnementsActive()" v-on:click="afficheAbonnements">Abonnements</button>
+    </div>
+
+    <div id="message" class="poster">
+
+    <div class="user">
+      <div class="img">
+          <img :src="user.profile_pic">
+        </div>
+        
+        <p id="login">{{user.t_name}}</p>
+        <p id="credit">@{{user.login}}</p>
     </div>
 
     <form v-on:submit.prevent="checkPost">
@@ -21,20 +34,20 @@
   <div id="messagesContaines">
 
     <div id="message" v-for="message in messages" v-bind:key="message.id_message">
-      <div v-if="affichage(recherche_text_sav, message.content, message.login)">
+      <div v-if="affichage(recherche_text_sav, message.content, message.login, message.login_rter)">
 
-        <div v-if="!isRT(message)">
+      <div v-if="!isRT(message)">
 
-       <div class="user" v-on:click="redirectUser(message.login)">
+         <div class="user" v-on:click="redirectUser(message.login)">
 
-        <div class="img">
-          <img :src="message.profile_pic">
-        </div>
-        
-        <p id="login">{{message.t_name}}</p>
-        <p id="credit">@{{message.login}}</p>
+            <div class="img">
+              <img :src="message.profile_pic">
+            </div>
+            
+            <p id="login">{{message.t_name}}</p>
+            <p id="credit">@{{message.login}}</p>
 
-      </div>
+          </div>
 
 
         <br><div class="post">
@@ -48,20 +61,20 @@
           <div class="react">
 
             <div v-if="logged">
-              <button id="like" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
+              <button :id="likeActive(message.user_liked)" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
               <p>{{message.nb_likes}}</p>
 
-              <button id="dislike" @click="dislike(message.id_message, message.user_liked, message.user_disliked)"></button>
+              <button :id="dislikeActive(message.user_disliked)" @click="dislike(message.id_message, message.user_liked, message.user_disliked)"></button>
               <p>{{message.nb_dislikes}}</p>
 
-              <button id="rt" @click="rt(message.id_message,message.user_rt)" >rt</button>
+              <button :id="rtActive(message.user_rt)" @click="rt(message.id_message,message.user_rt)" ></button>
               <p>{{message.nb_rt}}</p>
             </div>
 
           </div>
         </div>
 
-        </div>
+      </div>
 
       <div v-if="isRT(message)">
 
@@ -100,13 +113,14 @@
           <div class="react">
 
             <div v-if="logged">
-              <button id="like" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
+
+              <button :id="likeActive(message.user_liked)" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
               <p>{{message.nb_likes}}</p>
 
-              <button id="dislike" @click="dislike(message.id_message, message.user_liked, message.user_disliked)"></button>
+              <button :id="dislikeActive(message.user_disliked)" @click="dislike(message.id_message, message.user_liked, message.user_disliked)"></button>
               <p>{{message.nb_dislikes}}</p>
 
-              <button id="rt" @click="rt(message.id_message,message.user_rt)" >rt</button>
+              <button :id="rtActive(message.user_rt)" @click="rt(message.id_message,message.user_rt)" ></button>
               <p>{{message.nb_rt}}</p>
             </div>
 
@@ -146,9 +160,13 @@ export default {
       logged: this.$cookies.isKey('token'),
       post_content: "",
       errorPost: "",
+
+      home: true,
+
       recherche: false,
       recherche_text: "",
       recherche_text_sav: "",
+
       user: {},
       following: []
     }
@@ -295,6 +313,30 @@ export default {
 
       },
 
+      likeActive(user_liked) {
+        if(user_liked === 0) {
+          return 'like';
+        } else {
+          return 'likeActive';
+        }
+      },
+
+      dislikeActive(user_disliked) {
+        if(user_disliked === 0) {
+          return 'dislike';
+        } else {
+          return 'dislikeActive';
+        }
+      },
+
+      rtActive(user_rt) {
+        if(user_rt === 0) {
+          return 'rt';
+        } else {
+          return 'rtActive';
+        }
+      },
+
        getDate(s) {
         let mois = ["Janvier","Février","Mars","Avril",
           "Mai","Juin","Juillet","Août",
@@ -315,6 +357,7 @@ export default {
         else {
           this.recherche = true;
           this.recherche_text_sav = this.recherche_text;
+          this.home = true;
         }
       },
 
@@ -338,13 +381,56 @@ export default {
         return false;
       },
 
-      affichage(s, text, login) {
+      afficheTout() {
+        this.home = true;
+        this.recherche = false;
+        this.recherche_text = "";
+        this.recherche_text_sav = "";
+      },
 
-        /* Par barre de recherche */
-        if(this.recherche) {
-            return (this.getMention(s, text) || 
-                    this.getMentionUser(s, login));
+      afficheAbonnements() {
+        this.home = false;
+        this.recherche = false;
+        this.recherche_text = "";
+        this.recherche_text_sav = "";
+      },
+
+      afficheActive() {
+        if(this.home === false) {
+          return 'affiche';
+        } else {
+          return 'afficheActive';
+        }
+      },
+
+      afficheAbonnementsActive() {
+        if(this.home === true) {
+          return 'afficheabo';
+        } else {
+          return 'afficheaboActive';
+        }
+      },
+
+      affichage(s, text, login, login_rter) {
+
+        /* Si c'est un retweet */ 
+          if(login_rter !== null) {
+            login = login_rter;
+            text = "";
           }
+
+        /* Par barre de recherche multiple arguments */
+        if(this.recherche) {
+          let r = s.split(" ");
+          let res = false;
+
+          for(var k = 0; k < r.length; k++) {
+           res = res || (this.getMention(r[k], text) || 
+                      this.getMentionUser(r[k], login));
+          }
+          
+          return res;
+        }
 
         /* Utilisateur non connecte */
         if(this.logged === false) {
@@ -355,16 +441,28 @@ export default {
         /* Utilisateur connecte*/
         else {
 
+          if (login_rter !== null) {
+            return follow;
+          }
+
           let user = '@' + this.user.login;
 
           let follow = false;
+
           for(var i = 0; i < this.following.length; i++) {
             let user_followed = '@' + this.following[i];
             follow = follow || this.getMentionUser(user_followed, login);
           }
 
-          return (this.getMention("@everyone", text) || 
-                  this.getMention(user, text)) || follow;
+          /* Tout */
+          if(this.home) {
+            return (this.getMention("@everyone", text) || 
+                    this.getMention(user, text)) || follow;
+          }
+          /* Abonnements uniquement */
+          else {
+            return follow;
+          }
         }
 
       },

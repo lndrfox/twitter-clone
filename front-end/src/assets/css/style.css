@@ -38,7 +38,7 @@ body {
   margin: auto;
   margin-top: 50px;
   margin-bottom: 50px;
-  width: 20%;
+  width: 260px;
   background-color: white;
   padding: 15px;
   padding-left: 32px;
@@ -85,6 +85,7 @@ body {
   display: inline-block;
   font-size: 16px;
   font-family: "Gill Sans", sans-serif;
+  outline: none;
 }
 
 .login .connect input[type=submit]:hover{
@@ -134,6 +135,8 @@ body {
 
 #recherche{
   margin: 30px 20px;
+  margin-top: 30px;
+  position: absolute;
 }
 
 #recherche input{
@@ -171,6 +174,7 @@ body {
   display: inline-block;
   font-size: 15px;
   font-weight: bold;
+  outline: none;
 }
 #recherche button:hover {
   background-color: #118bb9;
@@ -179,7 +183,40 @@ body {
 #messagesContaines{
   color: #333;
   margin: auto;
-  width: 45%;
+  width: 580px;
+  position: relative;
+}
+
+#tab {
+  margin: auto;
+  margin-top: 20px;
+  width: 545px;
+}
+
+#tab button {
+  width: 50%;
+  background-color: transparent;
+  color: #808080;
+  border: 0px solid;
+  padding: 10px 15px;
+  font-size: 18px;
+  font-weight: bold;
+  outline: none;
+}
+
+#tab #afficheActive, #tab #afficheaboActive {
+  border-bottom-width: 4px;
+  border-bottom-color: #1298cb;
+  color:  #1298cb;
+}
+
+#tab #afficheActive:hover, #tab #afficheaboActive:hover {
+  border-bottom-color: #1088b7;
+  color: #1088b7;
+}
+
+#tab #affiche:hover, #tab #afficheabo:hover {
+  color: #676767;
 }
 
 #message{
@@ -200,10 +237,10 @@ body {
   overflow:hidden;
   background-color: transparent;
   border: 0px solid;
-  margin: 15px 15px;
-  width: 93%;
+  margin: 0px 15px;
+  width: 505px;
   font-size: 18px;
-   resize: none;
+  resize: none;
   font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
 }
 
@@ -219,7 +256,7 @@ body {
   background-color:  #1298cb;
   margin-right: 15px;
   float: right;
-  width: 17%;
+  width: 92px;
   border: 0px solid;
   border-radius: 20px;
   color: white;
@@ -227,6 +264,7 @@ body {
   display: inline-block;
   font-size: 16px;
   font-weight: bold;
+  outline: none;
 }
 #message input[type=submit]:hover{
    background-color: #118bb9;
@@ -285,24 +323,58 @@ body {
   padding-bottom: 33px;
 }
 
-#message .footer .react #like{
+#message .footer .react button{
   float: left;
-  background: url("../img/like.png") no-repeat top left;
   border: 0px solid;
-  background-size: 25px 25px;
   width: 25px;
+  outline: none;
+}
+
+#message .footer .react #like{
+  background: url("../img/like.png") no-repeat top left;
+  background-size: 25px 25px;
   height: 25px;
+}
+
+#message .footer .react #likeActive{
+  background: url("../img/likeactive.png") no-repeat top left;
+  background-size: 25px 25px;
+  height: 25px;
+
 }
 
 #message .footer .react #dislike {
   margin-top: 0px;
   margin-left: 15px;
-  float: left;
   background: url("../img/dislike.png") no-repeat top left;
-  border: 0px solid;
   background-size: 23px 23px;
-  width: 25px;
   height: 23px;
+}
+
+#message .footer .react #dislikeActive {
+  margin-top: 0px;
+  margin-left: 15px;
+  background: url("../img/dislikeactive.png") no-repeat top left;
+  background-size: 23px 23px;
+  height: 23px;
+}
+
+#message .footer .react #rt{
+  margin-top: 5px;
+  margin-left: 15px;
+  margin-right: 6px;
+  background: url("../img/retweet.png") no-repeat top left;
+  background-size: 25px 15px;
+  height: 15px;
+}
+
+#message .footer .react #rtActive{
+  margin-top: 5px;
+  margin-left: 15px;
+  margin-right: 6px;
+  background: url("../img/retweetactive.png") no-repeat top left;
+  background-size: 25px 15px;
+  height: 15px;
 }
 
 #message .footer .react button:hover{
@@ -330,7 +402,7 @@ body {
 .profil_bar #cover_pic #plus{
   position: absolute;
   top: 245px;
-  left: 95%;
+  left: 1223px;
   width: 50px;
   height: 50px;
   border-radius: 25px;
@@ -353,12 +425,12 @@ body {
 }
 
 .profil_bar #cover_pic input{
-  left:62%;
+  left: 800px;
   top: 218px;
 }
 
 .profil_bar #profil input{
-  left: 20%;
+  left: 260px;
   top: 290px;
 }
 
@@ -505,6 +577,7 @@ body {
   display: inline-block;
   font-size: 16px;
   font-weight: bold;
+  outline: none;
 }
 
 .profil_desc .modif #modifier, .profil_desc .abo #abonnement{
