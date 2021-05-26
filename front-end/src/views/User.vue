@@ -21,17 +21,17 @@
 				<input type="text" v-model="link_photo">
 			</div>
 
-			<div class = "bar" id="begin">
+			<div :class = "afficheHomeActive()" id="begin" v-on:click="homeactive()">
 				<div class="text">Posts</div>
 				{{posts.length}}
 			</div>
 
-			<div class = "bar">
+			<div :class = "afficheFollowingActive()" v-on:click="followingactive()">
 				<div class="text">Following</div>
 				{{following}}
 			</div>
 
-			<div class = "bar">
+			<div :class = "afficheFollowersActive()" v-on:click="followersactive()">
 				<div class="text">Followers</div>
 				{{followers}}
 			</div>
@@ -73,11 +73,39 @@
 			<button v-if="!isFollowing" id="abonnement" v-on:click="abonner">S'abonner</button>
 			<button v-if="isFollowing" id="desabonnement" v-on:click="desabonner">Se Désabonner</button>
 		</div>
-
-
 	</div>
 
 	<div id="messagesContaines">
+		<div v-if="followingActive">
+			<div class="users" v-for="usr in users.users_following" v-bind:key="usr.id" v-on:click="redirectUser(usr.login)">
+
+				<div class="img">
+					<img :src="usr.profile_pic">
+				</div>
+				<div class="name">
+					<p id="login">{{usr.t_name}}</p>
+					<p id="credit">@{{usr.login}}</p>
+				</div>
+
+			</div>
+		</div>
+		<br>
+		<div v-if="followersActive">
+			<div class="users" v-for="usr in users.users_follower" v-bind:key="usr.id" v-on:click="redirectUser(usr.login)">
+
+				<div class="img">
+					<img :src="usr.profile_pic">
+				</div>
+				<div class="name">
+					<p id="login">{{usr.t_name}}</p>
+					<p id="credit">@{{usr.login}}</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div id="messagesContaines" v-if="homeActive">
 
     <div id="message" v-for="message in posts" v-bind:key="message.id_message">
 
@@ -196,10 +224,17 @@ export default{
       posts: [],
       logged: this.$cookies.isKey('token'),
       canModify: false,
+
       isFollowing: false,
       following: 0,
       followers: 0,
       user: {},
+      users: {},
+
+      homeActive: true,
+      followingActive: false,
+      followersActive: false,
+
       date: "",
       modifier: false,
       modifier_photo: false,
@@ -218,6 +253,7 @@ export default{
       redirectUser(login){
 
         this.$router.push({ name: 'user', query: { login: login }});
+        this.homeactive();
 
       },
 
@@ -244,6 +280,55 @@ export default{
 			{useCredentails :true});
         return response.data;
         }
+      },
+
+      async getUsers() {
+		let response = await axios.post('http://localhost:5050/user/usersfollow',
+			{user: this.user.login},
+			{useCredentails :true});
+		return response.data;
+      },
+
+      homeactive() {
+		this.homeActive = true;
+		this.followingActive = false;
+		this.followersActive = false;
+      },
+
+      afficheHomeActive() {
+		if(this.homeActive === false) {
+			return 'bar'
+		} else {
+			return 'barActive'
+		}
+      },
+
+      followingactive() {
+		this.homeActive = false
+		this.followingActive = true;
+		this.followersActive = false;
+      },
+
+      afficheFollowingActive() {
+		if(this.followingActive === false) {
+			return 'bar'
+		} else {
+			return 'barActive'
+		}
+      },
+
+      followersactive() {
+		this.homeActive = false;
+		this.followingActive = false;
+		this.followersActive = true;
+      },
+
+      afficheFollowersActive() {
+		if(this.followersActive === false) {
+			return 'bar'
+		} else {
+			return 'barActive'
+		}
       },
 
       isRT(message){
@@ -536,6 +621,7 @@ export default{
 		await this.abonnement();
 		await this.nbabonnement();
 		await this.nbabonnes();
+		this.users = await this.getUsers();
 	}
 
 	else{
@@ -567,6 +653,7 @@ export default{
 					await self.abonnement();
 					await self.nbabonnement();
 					await self.nbabonnes();
+					self.users = await self.getUsers();
 				}
 
 				else{

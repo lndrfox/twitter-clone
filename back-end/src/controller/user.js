@@ -286,15 +286,80 @@ router.post('/following'
 
 			if(global.tokens.hasOwnProperty(req.body.token)) {
 
-				let rows = await model.following(global.tokens[req.body.token]);
-
-				let following = []
-
-				for(var i = 0; i < rows.length; i++) {
-					following.push(rows[i].login_suivi);
-				}
+				let following = await model.following(global.tokens[req.body.token]);
 
 				res.send({following: following});
+			}
+			res.end();
+
+
+		}catch(error){
+			console.error(error);
+			return res.status(500).send('Erreur interne au serveur, connexion à la base de données impossible');
+		}
+
+});
+
+router.post('/users'
+
+,async function(req, res){ 
+
+		try{
+
+			res.send({users: await model.users()});
+			res.end();
+
+
+		}catch(error){
+			console.error(error);
+			return res.status(500).send('Erreur interne au serveur, connexion à la base de données impossible');
+		}
+
+});
+
+
+router.post('/usersfollow'
+
+,async function(req, res){ 
+
+		try{
+
+			if(req.body.user) {
+
+				let logins_following = await model.following(req.body.user);
+				let logins_followers = await model.follower(req.body.user);
+				let users = await model.users();
+				let users_following = [];
+				let users_followers = [];
+
+				for(var i = 0; i < users.length; i++) {
+					var found = 0;
+					for(var j = 0; j < logins_following.length; j++) {
+						if(users[i].login === logins_following[j]) {
+							found = 1;
+							break;
+						}
+					}
+					if(found === 1) {
+						users_following.push(users[i]);	
+					}
+
+					found = 0;
+					for(var j = 0; j < logins_followers.length; j++) {
+						if(users[i].login === logins_followers[j]) {
+							found = 1;
+							break;
+						}
+					}
+					if(found === 1) {
+						users_followers.push(users[i]);	
+					}
+				}
+
+				console.log(users_following);
+				console.log(users_followers);
+
+				res.send({users_following: users_following, users_follower: users_followers});
 			}
 			res.end();
 

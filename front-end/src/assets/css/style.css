@@ -455,17 +455,30 @@ body {
   padding-left: 380px;
 }
 
-.profil_bar #profil .bar {
+.profil_bar #profil .bar,  .profil_bar #profil .barActive{
   padding: 10px 20px;
   font-weight: bold;
   text-align: center;
   font-size: 18px;
 }
 
-.profil_bar #profil .bar .text {
+.profil_bar #profil .bar .text, .profil_bar #profil .barActive .text {
   padding-top: 5px;
   font-size: 13px;
 }
+
+.profil_bar #profil .bar:hover {
+  color: #686868;
+}
+
+.profil_bar #profil .barActive{
+  color:  #1298cb;
+}
+
+.profil_bar #profil .barActive:hover{
+  color: #1089b8;
+}
+
 
 .profil_bar #profil img{
   margin-left: 50px;
@@ -595,4 +608,57 @@ body {
 
 .profil_desc .modif #annuler:hover, .profil_desc .abo #desabonnement:hover{
    background-color: #ca2626;
+}
+
+.users {
+  margin: 30px 20px;
+  padding: 15px 15px;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  border-radius:5px;
+  border: 1px solid #eee #ddd #bbb;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  font-size: 19px;
+  letter-spacing: -0.05em;
+  height: 150px;
+}
+
+.users:hover {
+  background-color: #fafafa;
+}
+
+.users .img{
+  float: left;
+  margin-right: 20px;
+}
+
+.users img{
+  width: 150px;
+  height: 150px;
+  border-radius: 75px;
+}
+
+.users .name {
+  margin-top: 30px;
+}
+
+.users .name #login{
+  font-weight:bold;
+  font-size: 0.9em;
+  margin-bottom:0px;
+}
+
+.users .name #credit{
+  color: #7c7b7b;
+  font-size: 0.85em;
+  padding-top: 3px;
+  margin-top: 0px;
+  font-size: 15px;
+}
+
+.users #login{
+  font-weight:bold;
+  font-size: 0.9em;
+  padding-top: 21px;
+  margin-bottom:0px;
 }
