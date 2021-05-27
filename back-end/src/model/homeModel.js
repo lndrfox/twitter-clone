@@ -90,7 +90,7 @@ function homeModel(){
 			throw error;
 		}
 
-		connection.query("INSERT INTO retweet (id_message, login_user) VALUES (? ,?) ",
+		connection.query("INSERT IGNORE INTO retweet (id_message, login_user) VALUES (? ,?) ",
 					[id_message, login],
 					function(err, result){
 					if(err) throw err;
@@ -142,7 +142,7 @@ function homeModel(){
 			throw error;
 		}
 
-		connection.query("INSERT INTO reactions (id_message, login_user, reaction) VALUES (? ,?, ?) ",
+		connection.query("INSERT IGNORE INTO reactions (id_message, login_user, reaction) VALUES (? ,?, ?) ",
 					[id_message, login, react],
 					function(err, result){
 					if(err) throw err;
