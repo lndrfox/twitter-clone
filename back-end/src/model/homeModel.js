@@ -176,6 +176,53 @@ function homeModel(){
 
 		db.closeDB(connection);
 
+	},
+
+	this.displayComments = async () => {
+
+		/*-- CONNECTING TO DATABASE --*/
+
+		const db=require('./connectDB');
+		let connection;
+
+		try{
+			connection= await db.connectDB();
+		}catch(error){
+
+			throw error;
+		}
+
+		/*-- GETTING USERS MATCHING WITH userName --*/
+
+		const [rows, field] = await connection.execute(
+			"SELECT c.id_commentaire, c.id_message, c.login, c.content, c.date_commentaire, u.profile_pic, u.t_name FROM commentaires c JOIN users u ON (u.login = c.login)",
+			);
+		db.closeDB(connection);
+		return rows;
+	},
+
+	this.addComment = async(login, id_message, content) =>{
+
+		/*-- CONNECTING TO DATABASE --*/
+
+		const db=require('./connectDB');
+		let connection;
+
+		try{
+			connection= await db.connectDB();
+		}catch(error){
+
+			throw error;
+		}
+
+		connection.query("INSERT INTO commentaires (id_message, login, content) VALUES (? ,?, ?) ",
+					[id_message, login, content],
+					function(err, result){
+					if(err) throw err;
+				});
+
+		db.closeDB(connection);
+
 	}
 
 }

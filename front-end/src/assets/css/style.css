@@ -360,6 +360,24 @@ body {
   height: 23px;
 }
 
+#message .footer .react #comment {
+  margin-top: 2px;
+  margin-left: 15px;
+  margin-right: 3px;
+  background: url("../img/comment.png") no-repeat top left;
+  background-size: 22px 22px;
+  height: 22px;
+}
+
+#message .footer .react #commentActive {
+  margin-top: 2px;
+  margin-left: 15px;
+  margin-right: 3px;
+  background: url("../img/commentactive.png") no-repeat top left;
+  background-size: 22px 22px;
+  height: 22px;
+}
+
 #message .footer .react #rt{
   margin-top: 5px;
   margin-left: 15px;
@@ -387,7 +405,57 @@ body {
   float: left;
 }
 
+#message .footer .react .com .img{
+  float: left;
+  margin-right: 15px;
+}
 
+#message .footer .react .com img{
+  border-radius: 20px;
+  height: 40px;
+  width: 40px;
+}
+
+#message .footer .react .com p {
+  font-size: 13px;
+  margin-right: 5px;
+  padding-bottom: 0px;
+}
+
+#message .footer .react .com #login{
+  font-weight: bold;
+  color: #333;
+}
+
+#message .footer .react .com .commentContent{
+  color: #333;
+  margin-top: 5px;
+  word-wrap: break-word;
+}
+
+#message .footer .react .writeComment{
+  margin-top: 25px;
+  padding-bottom: 35px;
+}
+
+#message .footer .react .writeComment textarea{
+  width: 99%;
+  font-size: 15px;
+  margin: 0px 0px;
+  border: 1px solid #d3d3d3;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  background-color: #eef9ff;
+  color: #333;
+}
+
+#message .footer .react .writeComment textarea:hover{
+  background-color: #e8f7ff;
+}
+
+#message .footer .react .writeComment input[type="submit"] {
+  margin-top: 15px;
+  width: 120px;
+}
 
 /*--------------------------------------------------------------------
                                   USER

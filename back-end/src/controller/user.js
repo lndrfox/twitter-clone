@@ -356,9 +356,6 @@ router.post('/usersfollow'
 					}
 				}
 
-				console.log(users_following);
-				console.log(users_followers);
-
 				res.send({users_following: users_following, users_follower: users_followers});
 			}
 			res.end();

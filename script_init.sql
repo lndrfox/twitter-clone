@@ -2,10 +2,10 @@ CREATE DATABASE IF NOT EXISTS twitternj;
 
 DROP TABLE IF EXISTS twitternj.reactions;
 DROP TABLE IF EXISTS twitternj.retweet;
-DROP TABLE IF EXISTS twitternj.retweet_cite;
 DROP TABLE IF EXISTS twitternj.messages;
 DROP TABLE IF EXISTS twitternj.abonnements;
 DROP TABLE IF EXISTS twitternj.users;
+DROP TABLE IF EXISTS twitternj.commentaires;
 
 
 
@@ -90,6 +90,24 @@ ALTER TABLE twitternj.retweet ADD CONSTRAINT
 	ON DELETE CASCADE
 	ON UPDATE CASCADE;
 
+CREATE TABLE twitternj.commentaires(
+	id_commentaire INT PRIMARY KEY AUTO_INCREMENT,
+	id_message INT NOT NULL,
+	login nvarchar(50) NOT NULL,
+	content nvarchar(280) NOT NULL,
+	date_commentaire datetime NOT NULL DEFAULT NOW()
+);
+
+ALTER TABLE twitternj.commentaires ADD CONSTRAINT
+	FK_commentaires_message_id FOREIGN KEY (id_message)
+	REFERENCES messages(id_message)
+	ON DELETE CASCADE;
+
+ALTER TABLE twitternj.commentaires ADD CONSTRAINT
+	FK_commentaires_login FOREIGN KEY (login)
+	REFERENCES users(login)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE;
 	
 USE twitternj;
 

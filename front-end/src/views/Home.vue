@@ -1,5 +1,7 @@
 <template>
 
+  <!-- Barre de recherche -->
+
   <div id="recherche">
     <input type="search" placeholder="@everyone" v-model="recherche_text">
     <button v-on:click="rechercher">Rechercher</button>
@@ -7,10 +9,14 @@
 
   <div id="messagesContaines" v-if="logged">
 
+    <!-- Barre de selection -->
+
     <div id="tab">
       <button :id="afficheActive()" v-on:click="afficheTout">Tout</button>
       <button :id="afficheAbonnementsActive()" v-on:click="afficheAbonnements">Abonnements</button>
     </div>
+
+    <!-- Ecrire un post -->
 
     <div id="message" class="poster">
 
@@ -31,10 +37,14 @@
     </form>
   </div></div>
 
+  <!-- Affichage des posts -->
+
   <div id="messagesContaines">
 
     <div id="message" v-for="message in messages" v-bind:key="message.id_message">
       <div v-if="affichage(recherche_text_sav, message.content, message.login, message.login_rter)">
+
+      <!-- Posts qui n'appartiennent pas à la catégorie retweet -->
 
       <div v-if="!isRT(message)">
 
@@ -58,6 +68,8 @@
 
           <p>{{getDate(message.date_message)}}</p>
 
+           <!-- Reactions -->
+
           <div class="react">
 
               <button :id="likeActive(message.user_liked)" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
@@ -66,13 +78,55 @@
               <button :id="dislikeActive(message.user_disliked)" @click="dislike(message.id_message, message.user_liked, message.user_disliked)"></button>
               <p>{{message.nb_dislikes}}</p>
 
+              <button :id="commentActive(message.id_message)" @click="openComments(message.id_message)"></button>
+              <p>{{nbComments(message.id_message)}}</p>
+
               <button :id="rtActive(message.user_rt)" @click="rt(message.id_message,message.user_rt)" ></button>
               <p>{{message.nb_rt}}</p>
+
+              <!-- Commentaires -->
+
+              <div v-if="commentsactive[message.id_message -1]"><br>
+                <div class="com" v-for="com in showComments(message.id_message)" v-bind:key="com.id_commentaire"><br><br>
+                  <div v-on:click="redirectUser(com.login)">
+                    <div class="img">
+                      <img :src="com.profile_pic">
+                    </div>
+              
+                    <p id="login">{{com.t_name}}</p>
+                    <p id="credit">@{{com.login}}</p>
+                    
+
+                    <br><div class="commentContent">
+                      {{com.content}}
+                    </div>
+
+                    <p id="date">{{getDate(com.date_commentaire)}}</p>
+
+                  </div>
+                </div>
+                <br v-if="nbComments(message.id_message) > 0">
+
+                <!-- Ecrire un commentaire -->
+      
+                <div class ="writeComment">
+
+                  <form v-on:submit.prevent="checkComment(message.id_message)">
+                    <textarea v-model="post_comment[message.id_message -1]" maxlength="280" cols="44" rows="3" ref="post_comment[message.id_message - 1]" placeholder="Donner votre avis"></textarea>
+                    <input type="submit" name="submit" value="Commenter">
+                  </form>
+                  {{errorComment}}
+
+                </div>
+
+              </div>
 
           </div>
         </div>
 
       </div>
+
+      <!-- Posts retweet -->
 
       <div v-if="isRT(message)">
 
@@ -89,7 +143,9 @@
 
       <div id="message">
 
-         <div class="user" v-on:click="redirectUser(message.login)">
+      <!-- Post original -->
+
+      <div class="user" v-on:click="redirectUser(message.login)">
 
         <div class="img">
           <img :src="message.profile_pic">
@@ -108,6 +164,8 @@
 
           <p>{{getDate(message.date_message)}}</p>
 
+           <!-- Réactions -->
+
           <div class="react">
 
               <button :id="likeActive(message.user_liked)" @click="like(message.id_message, message.user_liked, message.user_disliked)"></button>
@@ -116,14 +174,52 @@
               <button :id="dislikeActive(message.user_disliked)" @click="dislike(message.id_message, message.user_liked, message.user_disliked)"></button>
               <p>{{message.nb_dislikes}}</p>
 
+              <button :id="commentActive(message.id_message)" @click="openComments(message.id_message)"></button>
+              <p>{{nbComments(message.id_message)}}</p>
+
               <button :id="rtActive(message.user_rt)" @click="rt(message.id_message,message.user_rt)" ></button>
               <p>{{message.nb_rt}}</p>
+
+              <!-- Commentaires -->
+
+              <div v-if="commentsactive[message.id_message -1]"><br>
+                <div class="com" v-for="com in showComments(message.id_message)" v-bind:key="com.id_commentaire"><br><br>
+                  <div v-on:click="redirectUser(com.login)">
+                    <div class="img">
+                      <img :src="com.profile_pic">
+                    </div>
+              
+                    <p id="login">{{com.t_name}}</p>
+                    <p id="credit">@{{com.login}}</p>
+                    
+
+                    <br><div class="commentContent">
+                      {{com.content}}
+                    </div>
+
+                    <p id="date">{{getDate(com.date_commentaire)}}</p>
+
+                  </div>
+                </div>
+                <br v-if="nbComments(message.id_message) > 0">
+
+                <!-- Ecrire un commentaire -->
+      
+                <div class ="writeComment">
+
+                  <form v-on:submit.prevent="checkComment(message.id_message)">
+                    <textarea v-model="post_comment[message.id_message -1]" maxlength="280" cols="44" rows="3" ref="post_comment[message.id_message - 1]" placeholder="Donner votre avis"></textarea>
+                    <input type="submit" name="submit" value="Commenter">
+                  </form>
+                  {{errorComment}}
+
+                </div>
+
+              </div>
 
 
           </div>
         </div>
-
-        
 
       </div>
 
@@ -159,6 +255,10 @@ export default {
       postHeight: 2,
 
       home: true,
+      comments: [],
+      commentsactive: [],
+      post_comment: [],
+      errorComment: "",
 
       recherche: false,
       recherche_text: "",
@@ -223,7 +323,12 @@ export default {
 
       },
 
-       async getFollowing(){
+      async getComments() {
+        let response = await axios.post('http://localhost:5050/home/comments',  {useCredentails :true});
+        return response.data.comments;
+      },
+
+      async getFollowing(){
 
         if(this.logged){
 
@@ -236,6 +341,8 @@ export default {
         else{
           return [];
         }
+
+
 
       },
 
@@ -271,11 +378,37 @@ export default {
           await this.post_message();
           this.messages= await this.getMessages();
           this.resetInput();
+          this.commentsactive.length = this.messages.length;
+          this.commentsactive[this.messages.length - 1] = false;
         }
 
         else{
 
           this.errorPost="Le poste doit faire entre 1 et 280 charactères";
+        }
+
+      },
+
+      async post_com(id_message){
+          await axios.post('http://localhost:5050/home/addcomment',
+            {token : this.$cookies.get("token"), 
+            content :  this.post_comment[id_message -1],
+            id_message: id_message}, 
+            {useCredentails :true});
+      },
+
+      async checkComment(id_message){
+
+        if(this.post_comment[id_message -1].length <= 280 && this.post_comment[id_message -1].length >0){
+
+          await this.post_com(id_message);
+          this.comments = await this.getComments();
+          this.post_comment[id_message -1] = "";
+        }
+
+        else{
+
+          this.errorComment = "Le commentaire doit faire entre 1 et 280 charactères";
         }
 
       },
@@ -341,6 +474,61 @@ export default {
             this.messages= await this.getMessages();
         }
 
+      },
+
+      openComments(id_message) {
+        if(this.commentsactive[id_message - 1] === false) {
+          this.commentsactive[id_message - 1] = true;
+        } else {
+          this.commentsactive[id_message - 1] = false;
+        }
+      },
+
+      commentsactiveReset() {
+        for (var i = 0; i < this.messages.length; i++) {
+          this.commentsactive[i] = false;
+        }
+      },
+
+      postCommentReset() {
+        for (var i = 0; i < this.messages.length; i++) {
+          this.post_comment[i] = "";
+        }
+      },
+
+      commentActive(id_message){
+        if(this.commentsactive[id_message - 1] === true) {
+          return 'commentActive';
+        } else {
+          return 'comment';
+        }
+
+      },
+
+      nbComments(id_message) {
+        let nb = 0;
+        for(var i = 0; i < this.comments.length; i++) {
+          if(this.comments[i].id_message === id_message) {
+            nb ++;
+          }
+        }
+        return nb;
+      },
+
+      showComments(id_message){
+        if(this.commentsactive[id_message - 1]) {
+          let comments_message = [];
+          for(var i = 0; i < this.comments.length; i++) {
+            if(this.comments[i].id_message === id_message) {
+              comments_message.push(this.comments[i]);
+            }
+          }
+          comments_message.sort(function (a, b) {
+            return new Date(a.date_commentaire) - new Date(b.date_commentaire);
+          });
+          return comments_message;
+        }
+        return [];
       },
 
       likeActive(user_liked) {
@@ -417,6 +605,8 @@ export default {
         this.recherche = false;
         this.recherche_text = "";
         this.recherche_text_sav = "";
+        this.commentsactiveReset();
+        this.postCommentReset();
       },
 
       afficheAbonnements() {
@@ -424,6 +614,8 @@ export default {
         this.recherche = false;
         this.recherche_text = "";
         this.recherche_text_sav = "";
+        this.commentsactiveReset();
+        this.postCommentReset();
       },
 
       afficheActive() {
@@ -499,6 +691,11 @@ export default {
     this.messages = await this.getMessages();
     this.user = await this.getUser();
     this.following = await this.getFollowing();
+    this.comments = await this.getComments();
+    this.commentsactive = new Array(this.messages.length);
+    this.commentsactiveReset();
+    this.post_comment = new Array(this.messages.length);
+    this.postCommentReset();
   },
 
   mounted: 
@@ -507,7 +704,8 @@ export default {
       setInterval(
      (function(self) {         
          return async function() {   
-            self.messages= await self.getMessages(); 
+            self.messages = await self.getMessages();
+            self.comments = await self.getComments();
          }
      })(this),
      5000); 
