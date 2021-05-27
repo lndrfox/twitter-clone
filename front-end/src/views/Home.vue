@@ -20,22 +20,24 @@
 
     <div id="message" class="poster">
 
-    <div class="user">
-      <div class="img">
-          <img :src="user.profile_pic">
-        </div>
-        
-        <p id="login">{{user.t_name}}</p>
-        <p id="credit">@{{user.login}}</p>
+      <div class="user">
+        <div class="img">
+            <img :src="user.profile_pic">
+          </div>
+          
+          <p id="login">{{user.t_name}}</p>
+          <p id="credit">@{{user.login}}</p>
+      </div>
+
+      <form v-on:submit.prevent="checkPost">
+       <textarea v-model="post_content" maxlength="280" cols="44" :rows="resize()" ref="post_content" placeholder="Quoi de neuf ?"></textarea>
+       <br>
+      <input type="submit" name="submit" value="Publier">
+      <p id="error">{{errorPost}}</p>
+      </form>
     </div>
 
-    <form v-on:submit.prevent="checkPost">
-     <textarea v-model="post_content" maxlength="280" cols="44" :rows="postHeight" ref="post_content" placeholder="Quoi de neuf ?"></textarea>
-     <br>
-    <input type="submit" name="submit" value="Publier">
-    {{errorPost}}
-    </form>
-  </div></div>
+  </div>
 
   <!-- Affichage des posts -->
 
@@ -112,10 +114,10 @@
                 <div class ="writeComment">
 
                   <form v-on:submit.prevent="checkComment(message.id_message)">
-                    <textarea v-model="post_comment[message.id_message -1]" maxlength="280" cols="44" rows="3" ref="post_comment[message.id_message - 1]" placeholder="Donner votre avis"></textarea>
+                    <textarea v-model="post_comment[message.id_message -1]" maxlength="280" cols="44" :rows="resizeComment(message.id_message, false)" ref="post_comment[message.id_message - 1]" placeholder="Donner votre avis"></textarea>
                     <input type="submit" name="submit" value="Commenter">
                   </form>
-                  {{errorComment}}
+                  {{errorComment[message.id_message -1]}}
 
                 </div>
 
@@ -208,10 +210,10 @@
                 <div class ="writeComment">
 
                   <form v-on:submit.prevent="checkComment(message.id_message)">
-                    <textarea v-model="post_comment[message.id_message -1]" maxlength="280" cols="44" rows="3" ref="post_comment[message.id_message - 1]" placeholder="Donner votre avis"></textarea>
+                    <textarea v-model="post_comment[message.id_message -1]" maxlength="280" cols="44" :rows="resizeComment(message.id_message, true)" ref="post_comment[message.id_message - 1]" placeholder="Donner votre avis"></textarea>
                     <input type="submit" name="submit" value="Commenter">
                   </form>
-                  {{errorComment}}
+                  {{errorComment[message.id_message -1]}}
 
                 </div>
 
@@ -252,13 +254,12 @@ export default {
       logged: this.$cookies.isKey('token'),
       post_content: "",
       errorPost: "",
-      postHeight: 2,
 
       home: true,
       comments: [],
       commentsactive: [],
       post_comment: [],
-      errorComment: "",
+      errorComment: [],
 
       recherche: false,
       recherche_text: "",
@@ -364,7 +365,29 @@ export default {
             len -= 44;
           }
         }
-        this.postHeight = rows;
+        return rows;
+      },
+
+      resizeComment (id_message, retweet) {
+        let line;
+        if(retweet) {
+          line = 47;
+        } else {
+          line = 51;
+        }
+        let lines = this.post_comment[id_message -1].split("\n");
+        let rows = lines.length;
+        if(rows < 2) {
+          rows = 2;
+        }
+        for(var i = 0; i < lines.length; i++) {
+          let len = lines[i].length;
+          while(len > line) {
+            rows += 1;
+            len -= line;
+          }
+        }
+        return rows;
       },
 
       async post_message(){
@@ -408,7 +431,7 @@ export default {
 
         else{
 
-          this.errorComment = "Le commentaire doit faire entre 1 et 280 charactères";
+          this.errorComment[id_message -1] = "Le commentaire doit faire entre 1 et 280 charactères";
         }
 
       },
@@ -493,6 +516,12 @@ export default {
       postCommentReset() {
         for (var i = 0; i < this.messages.length; i++) {
           this.post_comment[i] = "";
+        }
+      },
+
+      postErrorReset() {
+        for (var i = 0; i < this.messages.length; i++) {
+          this.errorComment[i] = "";
         }
       },
 
@@ -696,6 +725,8 @@ export default {
     this.commentsactiveReset();
     this.post_comment = new Array(this.messages.length);
     this.postCommentReset();
+    this.errorComment =  new Array(this.messages.length);
+    this.postErrorReset();
   },
 
   mounted: 
@@ -709,14 +740,6 @@ export default {
          }
      })(this),
      5000); 
-
-      setInterval(
-     (function(self) {         
-         return function() { 
-            self.resize();
-         }
-     })(this),
-     0); 
     }
 }
 

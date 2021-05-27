@@ -252,6 +252,13 @@ body {
   padding-bottom: 50px;
 }
 
+.poster #error {
+  margin-left: 15px;
+  color: #7c7b7b;
+  font-size: 0.85em;
+  margin-bottom: 0px;
+}
+
 #message input[type=submit]{
   background-color:  #1298cb;
   margin-right: 15px;
@@ -599,7 +606,7 @@ body {
   padding: 6px 6px;
   font-size: 14px;
   font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
-  border: 2px solid #d3d3d3;
+  border: 1px solid #d3d3d3;
   border-radius: 5px;
 }
 
@@ -615,10 +622,12 @@ body {
 
 .profil_desc textarea{
   margin-bottom: 20px;
+  padding: 6px 6px;
+  padding-bottom: 0px;
   width: 100%;
   font-size: 14px;
   font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
-  border: 2px solid #d3d3d3;
+  border: 1px solid #d3d3d3;
   border-radius: 5px;
   resize: none;
 }

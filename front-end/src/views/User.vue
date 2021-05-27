@@ -64,7 +64,7 @@
 		<div v-if="!modifier" id="desc">
 			{{user.description}}
 		</div><div v-if="modifier" id="desc">
-			<textarea v-model="desc" maxlength="200" rows="5" cols="33"></textarea>
+			<textarea v-model="desc" maxlength="200" :rows="resize()" cols="33"></textarea>
 		</div>
 
 		<div class="joined">
@@ -194,10 +194,10 @@
                 <div class ="writeComment">
 
                   <form v-on:submit.prevent="checkComment(message.id_message)">
-                    <textarea v-model="post_comment[message.id_message -1]" maxlength="280" cols="44" rows="3" ref="post_comment[message.id_message - 1]" placeholder="Donner votre avis"></textarea>
+                    <textarea v-model="post_comment[message.id_message -1]" maxlength="280" cols="44" :rows="resizeComment(message.id_message, false)" ref="post_comment[message.id_message - 1]" placeholder="Donner votre avis"></textarea>
                     <input type="submit" name="submit" value="Commenter">
                   </form>
-                  {{errorComment}}
+                  {{errorComment[message.id_message - 1]}}
 
                 </div>
 
@@ -290,10 +290,10 @@
                 <div class ="writeComment">
 
                   <form v-on:submit.prevent="checkComment(message.id_message)">
-                    <textarea v-model="post_comment[message.id_message -1]" maxlength="280" cols="44" rows="3" ref="post_comment[message.id_message - 1]" placeholder="Donner votre avis"></textarea>
+                    <textarea v-model="post_comment[message.id_message -1]" maxlength="280" cols="44" :rows="resizeComment(message.id_message, true)" ref="post_comment[message.id_message - 1]" placeholder="Donner votre avis"></textarea>
                     <input type="submit" name="submit" value="Commenter">
                   </form>
-                  {{errorComment}}
+                  {{errorComment[message.id_message -1]}}
 
                 </div>
 
@@ -345,7 +345,7 @@ export default{
       comments: [],
       commentsactive: [],
       post_comment: [],
-      errorComment: "",
+      errorComment: [],
 
       date: "",
       modifier: false,
@@ -406,6 +406,45 @@ export default{
         return response.data.comments;
       },
 
+      resize () {
+        let lines = this.desc.split("\n");
+        let rows = lines.length;
+        if(rows < 3) {
+          rows = 3;
+        }
+        for(var i = 0; i < lines.length; i++) {
+          let len = lines[i].length;
+          while(len > 26) {
+            rows += 1;
+            len -= 26;
+          }
+        }
+        return rows;
+      },
+
+     resizeComment (id_message, retweet) {
+        let line;
+        if(retweet) {
+          line = 47;
+        } else {
+          line = 51;
+        }
+        let lines = this.post_comment[id_message -1].split("\n");
+        let rows = lines.length;
+        if(rows < 2) {
+          rows = 2;
+        }
+        for(var i = 0; i < lines.length; i++) {
+          let len = lines[i].length;
+          while(len > line) {
+            rows += 1;
+            len -= line;
+          }
+        }
+      
+        return rows;
+      },
+
       async post_com(id_message){
           await axios.post('http://localhost:5050/home/addcomment',
             {token : this.$cookies.get("token"), 
@@ -425,7 +464,7 @@ export default{
 
         else{
 
-          this.errorComment = "Le commentaire doit faire entre 1 et 280 charactères";
+          this.errorComment[id_message -1] = "Le commentaire doit faire entre 1 et 280 charactères";
         }
 
       },
@@ -439,14 +478,38 @@ export default{
       },
 
       commentsactiveReset() {
-        for (var i = 0; i < this.posts.length; i++) {
+		let max = 1
+		for(var k = 0; k < this.posts.length; k++) {
+			if(this.posts[k].id_message > max) {
+				max = this.posts[k].id_message;
+			}
+		}
+        for (var i = 0; i < max; i++) {
           this.commentsactive[i] = false;
         }
       },
 
       postCommentReset() {
-        for (var i = 0; i < this.posts.length; i++) {
+		let max = 1
+		for(var k = 0; k < this.posts.length; k++) {
+			if(this.posts[k].id_message > max) {
+				max = this.posts[k].id_message;
+			}
+		}
+        for (var i = 0; i < max; i++) {
           this.post_comment[i] = "";
+        }
+      },
+
+      postErrorReset() {
+		let max = 1
+		for(var k = 0; k < this.posts.length; k++) {
+			if(this.posts[k].id_message > max) {
+				max = this.posts[k].id_message;
+			}
+		}
+        for (var i = 0; i < max; i++) {
+          this.errorComment[i] = "";
         }
       },
 
@@ -826,10 +889,18 @@ export default{
 	}
 
 	this.comments = await this.getComments();
-    this.commentsactive = new Array(this.posts.length);
+	let max = 1
+	for(var k = 0; k < this.posts.length; k++) {
+		if(this.posts[k].id_message > max) {
+			max = this.posts[k].id_message;
+		}
+	}
+    this.commentsactive = new Array(max);
     this.commentsactiveReset();
-    this.post_comment = new Array(this.posts.length);
+    this.post_comment = new Array(max);
     this.postCommentReset();
+    this.errorComment =  new Array(max);
+    this.postErrorReset();
 
 
   },
@@ -862,6 +933,8 @@ export default{
 
 					this.$router.push({name: "home"});
 				}
+
+				self.comments = await self.getComments();
 
 			}
 		})(this), 1000);
