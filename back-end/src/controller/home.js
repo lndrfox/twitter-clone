@@ -99,6 +99,42 @@ router.post('/rt/un'
 
 });
 
+router.post('/logged'
+
+,async function(req, res){ 
+
+	if(global.tokens.hasOwnProperty(req.body.token)){
+
+		res.send({messages : await model.displayMessagesLogged(global.tokens[req.body.token],req.body.post_content)});
+	}
+
+	res.end();
+
+});
+
+router.post('/comments'
+
+,async function(req, res){ 
+
+	res.send({comments : await model.displayComments()});
+
+	res.end();
+
+});
+
+router.post('/addcomment'
+
+,async function(req, res){ 
+
+	if(global.tokens.hasOwnProperty(req.body.token) && req.body.id_message && req.body.content){
+
+		await model.addComment(global.tokens[req.body.token], req.body.id_message, req.body.content);
+	}
+
+	res.end();
+
+});
+
 
 /*-- EXPORT --*/
 

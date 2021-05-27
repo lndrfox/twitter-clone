@@ -310,6 +310,73 @@ function userModel(){
 		const [rows, field] = await connection.execute("SELECT login_suivi FROM abonnements WHERE login_suiveur = ?",[userName]);
 
 		db.closeDB(connection);
+
+		let following = []
+
+		for(var i = 0; i < rows.length; i++) {
+			following.push(rows[i].login_suivi);
+		}
+
+		return following;
+	}
+
+	this.follower = async (userName) => {
+
+		/*-- CONNECTING TO DATABASE --*/
+
+		const db=require('./connectDB');
+		let connection;
+
+		try{
+			connection = await db.connectDB();
+		}catch(error){
+
+			throw error;
+		}
+
+		/*-- GETTING USER MATCHING WITH userName --*/
+
+		const [rows, field] = await connection.execute("SELECT login_suiveur FROM abonnements WHERE login_suivi = ?",[userName]);
+
+		db.closeDB(connection);
+
+		let follower = []
+
+		for(var i = 0; i < rows.length; i++) {
+			follower.push(rows[i].login_suiveur);
+		}
+
+		return follower;
+	}
+
+	this.users = async () => {
+
+		/*-- CONNECTING TO DATABASE --*/
+
+		const db=require('./connectDB');
+		let connection;
+
+		try{
+			connection = await db.connectDB();
+		}catch(error){
+
+			throw error;
+		}
+
+		/*-- GETTING USER MATCHING WITH userName --*/
+
+		const [rows, field] = await connection.execute(
+			"SELECT (@cnt := @cnt + 1) AS id, u.login, u.t_name, u.profile_pic, count(a1.login_suivi) as following, a2.followers " 
+			+ "FROM abonnements a1 "
+			+ "RIGHT JOIN users u ON (u.login = a1.login_suiveur) "
+			+ "JOIN (SELECT login, count(login_suiveur) as followers FROM abonnements "
+			+ "		RIGHT JOIN users ON (login = login_suivi) "
+			+ "		GROUP BY login_suivi) a2 "
+			+ "ON (a2.login = u.login) "
+			+ "CROSS JOIN (SELECT @cnt := 0) AS init "
+			+ "GROUP BY a1.login_suiveur");
+
+		db.closeDB(connection);
 		return rows;
 	}
 }

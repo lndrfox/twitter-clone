@@ -252,6 +252,13 @@ body {
   padding-bottom: 50px;
 }
 
+.poster #error {
+  margin-left: 15px;
+  color: #7c7b7b;
+  font-size: 0.85em;
+  margin-bottom: 0px;
+}
+
 #message input[type=submit]{
   background-color:  #1298cb;
   margin-right: 15px;
@@ -360,6 +367,24 @@ body {
   height: 23px;
 }
 
+#message .footer .react #comment {
+  margin-top: 2px;
+  margin-left: 15px;
+  margin-right: 3px;
+  background: url("../img/comment.png") no-repeat top left;
+  background-size: 22px 22px;
+  height: 22px;
+}
+
+#message .footer .react #commentActive {
+  margin-top: 2px;
+  margin-left: 15px;
+  margin-right: 3px;
+  background: url("../img/commentactive.png") no-repeat top left;
+  background-size: 22px 22px;
+  height: 22px;
+}
+
 #message .footer .react #rt{
   margin-top: 5px;
   margin-left: 15px;
@@ -387,7 +412,58 @@ body {
   float: left;
 }
 
+#message .footer .react .com .img{
+  float: left;
+  margin-right: 15px;
+}
 
+#message .footer .react .com img{
+  border-radius: 20px;
+  height: 40px;
+  width: 40px;
+}
+
+#message .footer .react .com p {
+  font-size: 13px;
+  margin-right: 5px;
+  padding-bottom: 0px;
+}
+
+#message .footer .react .com #login{
+  font-weight: bold;
+  color: #333;
+}
+
+#message .footer .react .com .commentContent{
+  color: #333;
+  margin-top: 5px;
+  word-wrap: break-word;
+}
+
+#message .footer .react .writeComment{
+  margin-top: 25px;
+  padding-bottom: 35px;
+}
+
+#message .footer .react .writeComment textarea{
+  padding: 8px 8px;
+  width: 96%;
+  font-size: 15px;
+  margin: 0px 0px;
+  border: 1px solid #d3d3d3;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  background-color: #eef9ff;
+  color: #333;
+}
+
+#message .footer .react .writeComment textarea:hover{
+  background-color: #e8f7ff;
+}
+
+#message .footer .react .writeComment input[type="submit"] {
+  margin-top: 15px;
+  width: 120px;
+}
 
 /*--------------------------------------------------------------------
                                   USER
@@ -455,17 +531,30 @@ body {
   padding-left: 380px;
 }
 
-.profil_bar #profil .bar {
+.profil_bar #profil .bar,  .profil_bar #profil .barActive{
   padding: 10px 20px;
   font-weight: bold;
   text-align: center;
   font-size: 18px;
 }
 
-.profil_bar #profil .bar .text {
+.profil_bar #profil .bar .text, .profil_bar #profil .barActive .text {
   padding-top: 5px;
   font-size: 13px;
 }
+
+.profil_bar #profil .bar:hover {
+  color: #686868;
+}
+
+.profil_bar #profil .barActive{
+  color:  #1298cb;
+}
+
+.profil_bar #profil .barActive:hover{
+  color: #1089b8;
+}
+
 
 .profil_bar #profil img{
   margin-left: 50px;
@@ -517,7 +606,7 @@ body {
   padding: 6px 6px;
   font-size: 14px;
   font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
-  border: 2px solid #d3d3d3;
+  border: 1px solid #d3d3d3;
   border-radius: 5px;
 }
 
@@ -533,10 +622,12 @@ body {
 
 .profil_desc textarea{
   margin-bottom: 20px;
+  padding: 6px 6px;
+  padding-bottom: 0px;
   width: 100%;
   font-size: 14px;
   font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
-  border: 2px solid #d3d3d3;
+  border: 1px solid #d3d3d3;
   border-radius: 5px;
   resize: none;
 }
@@ -595,4 +686,57 @@ body {
 
 .profil_desc .modif #annuler:hover, .profil_desc .abo #desabonnement:hover{
    background-color: #ca2626;
+}
+
+.users {
+  margin: 30px 20px;
+  padding: 15px 15px;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  border-radius:5px;
+  border: 1px solid #eee #ddd #bbb;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  font-size: 19px;
+  letter-spacing: -0.05em;
+  height: 150px;
+}
+
+.users:hover {
+  background-color: #fafafa;
+}
+
+.users .img{
+  float: left;
+  margin-right: 20px;
+}
+
+.users img{
+  width: 150px;
+  height: 150px;
+  border-radius: 75px;
+}
+
+.users .name {
+  margin-top: 30px;
+}
+
+.users .name #login{
+  font-weight:bold;
+  font-size: 0.9em;
+  margin-bottom:0px;
+}
+
+.users .name #credit{
+  color: #7c7b7b;
+  font-size: 0.85em;
+  padding-top: 3px;
+  margin-top: 0px;
+  font-size: 15px;
+}
+
+.users #login{
+  font-weight:bold;
+  font-size: 0.9em;
+  padding-top: 21px;
+  margin-bottom:0px;
 }
