@@ -39,6 +39,27 @@
 
   </div>
 
+  <div id="messagesContaines">
+
+   <div v-for="usr in users" v-bind:key="usr.id" v-on:click="redirectUser(usr.login)">
+
+      <div class="users" v-if="affichage_profil(usr.login, recherche_text_sav)">
+
+        <div class="img">
+          <img :src="usr.profile_pic">
+        </div>
+        <div class="name">
+          <p id="login">{{usr.t_name}}</p>
+          <p id="credit">@{{usr.login}}</p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
   <!-- Affichage des posts -->
 
   <div id="messagesContaines">
@@ -266,7 +287,8 @@ export default {
       recherche_text_sav: "",
 
       user: {},
-      following: []
+      following: [],
+      users: []
     }
   },
 
@@ -342,9 +364,12 @@ export default {
         else{
           return [];
         }
+      },
 
-
-
+      async getUsers() {
+        let response = await axios.post('http://localhost:5050/user/users',
+          {useCredentails :true});
+        return response.data.users;
       },
 
       resetInput() {
@@ -663,6 +688,20 @@ export default {
         }
       },
 
+      affichage_profil(login, s) {
+        if(this.recherche) {
+          let r = s.split(" ");
+          let res = false;
+
+          for(var k = 0; k < r.length; k++) {
+           res = res || this.getMentionUser(r[k], login);
+          }
+          
+          return res;
+        }
+        return false;
+      },
+
       affichage(s, text, login_user, login_rter) {
 
         let login = login_user;
@@ -720,6 +759,7 @@ export default {
     this.messages = await this.getMessages();
     this.user = await this.getUser();
     this.following = await this.getFollowing();
+    this.users = await this.getUsers();
     this.comments = await this.getComments();
     this.commentsactive = new Array(this.messages.length);
     this.commentsactiveReset();
