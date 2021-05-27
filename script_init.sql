@@ -136,6 +136,11 @@ INTO TABLE retweet
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
 LINES TERMINATED BY '\n';
 
+LOAD DATA LOCAL INFILE './data/commentaires.txt' 
+INTO TABLE commentaires
+FIELDS TERMINATED BY ',' ENCLOSED BY '"'
+LINES TERMINATED BY '\n';
+
 CREATE USER twitternj@localhost IDENTIFIED BY 'Access_data1';
 
 GRANT ALL PRIVILEGES ON twitternj . * TO twitternj@localhost;
