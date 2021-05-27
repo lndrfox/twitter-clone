@@ -439,7 +439,8 @@ body {
 }
 
 #message .footer .react .writeComment textarea{
-  width: 99%;
+  padding: 8px 8px;
+  width: 96%;
   font-size: 15px;
   margin: 0px 0px;
   border: 1px solid #d3d3d3;
