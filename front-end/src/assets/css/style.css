@@ -1,0 +1,742 @@
+body {
+  background-color: #e5eef1;
+  margin: 0px 0px;
+}
+
+/*--------------------------------------------------------------------
+                            NAVIGUATION BAR
+  --------------------------------------------------------------------*/
+.topnav {
+  background-color: white;
+  overflow: hidden;
+}
+
+.topnav a{
+  float: left;
+  color: #333;;
+  text-align: center;
+  padding: 16px 26px;
+  text-decoration: none;
+  font-size: 17px;
+  font-family: "Gill Sans", sans-serif
+}
+
+.topnav a:hover {
+  background-color: #e5e5e5;
+}
+
+.topnav a.active {
+  background-color: #1298cb;
+  color: white;
+}
+
+/*--------------------------------------------------------------------
+                                LOGIN
+  --------------------------------------------------------------------*/
+
+.login { 
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  width: 260px;
+  background-color: white;
+  padding: 15px;
+  padding-left: 32px;
+  padding-right: 32px;
+  border-radius:10px;
+  font-size: 16px;
+  font-family: "Gill Sans", sans-serif;
+  color: #333;
+  box-shadow: 5px 5px 15px #d5d5d5;
+}
+
+.login .header{
+  text-align: center;
+}
+
+.login input[type=text], .login input[type=password]{
+  width: 100%;
+  padding: 10px 10px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family: "Gill Sans", sans-serif;
+}
+
+.login input[type=text]:focus, .login input[type=password]:focus {
+  outline: none !important;
+  box-shadow: 0 0 10px #719ECE;
+}
+
+.connect{
+  text-align:center; 
+  padding-top:20px;
+}
+
+.login .connect input[type=submit]{
+  background-color:  #1298cb;
+  border: 1px solid #1486b4;
+  border-radius: 4px;
+  color: white;
+  padding: 10px 15px;
+  display: inline-block;
+  font-size: 16px;
+  font-family: "Gill Sans", sans-serif;
+  outline: none;
+}
+
+.login .connect input[type=submit]:hover{
+  background-color: #118bb9;
+}
+
+.register{
+  text-align:center; 
+  padding-top:20px;
+}
+
+.login .alert{
+  background-color: #ffaeae;
+  padding: 14px 20px;
+  border-radius: 6px;
+  color: #8e3a3a;
+  border: 1px solid #e4a2a2;
+}
+
+.login .footer{
+
+  text-align: center;
+  border: 0px solid;
+  border-top-width: thin;
+  border-top-color: #d3d3d3;
+}
+
+.login .footer a {
+  background-color: #4CAF50;
+  text-decoration: none;
+  border: 1px solid #4aa84c;
+  border-radius: 4px;
+  padding: 10px 15px;
+  display: inline-block;
+  font-size: 16px;
+  font-family: "Gill Sans", sans-serif;
+  color: white;
+}
+
+.login .footer a:hover {
+  background-color: #469949;
+}
+
+/*--------------------------------------------------------------------
+                                HOME
+  --------------------------------------------------------------------*/
+
+#recherche{
+  margin: 30px 20px;
+  margin-top: 30px;
+  position: absolute;
+}
+
+#recherche input{
+  width: 210px;
+  height: 38px;
+  padding: 10px 10px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-family: "Gill Sans", sans-serif;
+  float: left;
+}
+
+#recherche input:focus {
+  outline: none !important;
+  box-shadow: 0 0 10px #719ECE;
+}
+
+#recherche button{
+  background-color:  #1298cb;
+  float: left;
+  width: 110px;
+  height: 38px;
+  border: 0px solid;
+  border-radius: 20px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  color: white;
+  padding: 10px 15px;
+  padding-left: 12px;
+  display: inline-block;
+  font-size: 15px;
+  font-weight: bold;
+  outline: none;
+}
+#recherche button:hover {
+  background-color: #118bb9;
+}
+
+#messagesContaines{
+  color: #333;
+  margin: auto;
+  width: 580px;
+  position: relative;
+}
+
+#tab {
+  margin: auto;
+  margin-top: 20px;
+  width: 545px;
+}
+
+#tab button {
+  width: 50%;
+  background-color: transparent;
+  color: #808080;
+  border: 0px solid;
+  padding: 10px 15px;
+  font-size: 18px;
+  font-weight: bold;
+  outline: none;
+}
+
+#tab #afficheActive, #tab #afficheaboActive {
+  border-bottom-width: 4px;
+  border-bottom-color: #1298cb;
+  color:  #1298cb;
+}
+
+#tab #afficheActive:hover, #tab #afficheaboActive:hover {
+  border-bottom-color: #1088b7;
+  color: #1088b7;
+}
+
+#tab #affiche:hover, #tab #afficheabo:hover {
+  color: #676767;
+}
+
+#message{
+  margin: 30px 20px;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  border-radius:5px;
+  border: 1px solid #eee #ddd #bbb;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  letter-spacing: -0.05em;
+}
+
+#message:hover {
+  background-color: #fafafa;
+}
+
+#message textarea {
+  overflow:hidden;
+  background-color: transparent;
+  border: 0px solid;
+  margin: 0px 15px;
+  width: 505px;
+  font-size: 18px;
+  resize: none;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+}
+
+#message textarea:focus, #message textarea:hover {
+  outline: none !important;
+}
+
+.poster {
+  padding-bottom: 50px;
+}
+
+.poster #error {
+  margin-left: 15px;
+  color: #7c7b7b;
+  font-size: 0.85em;
+  margin-bottom: 0px;
+}
+
+#message input[type=submit]{
+  background-color:  #1298cb;
+  margin-right: 15px;
+  float: right;
+  width: 92px;
+  border: 0px solid;
+  border-radius: 20px;
+  color: white;
+  padding: 10px 15px;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  outline: none;
+}
+#message input[type=submit]:hover{
+   background-color: #118bb9;
+}
+
+#message .user .img{
+  float: left;
+  padding: 15px 15px;
+  padding-right: 7px;
+}
+
+#message .user img{
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+}
+
+#message .user #login{
+  font-weight:bold;
+  font-size: 0.9em;
+  padding-top: 21px;
+  margin-bottom:0px;
+}
+
+#message .user #credit{
+  color: #7c7b7b;
+  font-size: 0.85em;
+  padding-top: 3px;
+  margin-top: 0px;
+  margin-bottom: 6px;
+}
+
+#message .post {
+  font-size: 18px;
+  line-height: 20px;
+  padding: 0px 15px;
+  padding-bottom: 10px;
+  word-wrap: break-word;
+}
+
+#message .footer {
+  font-size: 14px;
+  color: #7c7b7b;
+  margin: 10px 15px;
+}
+
+#message .footer p{
+  margin: 0px 0px;
+  padding-bottom: 10px;
+}
+
+#message .footer .react{
+  border: 0px solid;
+  border-top-width: thin;
+  border-top-color: #dfdfdf;
+  padding: 5px 0px;
+  padding-bottom: 33px;
+}
+
+#message .footer .react button{
+  float: left;
+  border: 0px solid;
+  width: 25px;
+  outline: none;
+}
+
+#message .footer .react #like{
+  background: url("../img/like.png") no-repeat top left;
+  background-size: 25px 25px;
+  height: 25px;
+}
+
+#message .footer .react #likeActive{
+  background: url("../img/likeactive.png") no-repeat top left;
+  background-size: 25px 25px;
+  height: 25px;
+
+}
+
+#message .footer .react #dislike {
+  margin-top: 0px;
+  margin-left: 15px;
+  background: url("../img/dislike.png") no-repeat top left;
+  background-size: 23px 23px;
+  height: 23px;
+}
+
+#message .footer .react #dislikeActive {
+  margin-top: 0px;
+  margin-left: 15px;
+  background: url("../img/dislikeactive.png") no-repeat top left;
+  background-size: 23px 23px;
+  height: 23px;
+}
+
+#message .footer .react #comment {
+  margin-top: 2px;
+  margin-left: 15px;
+  margin-right: 3px;
+  background: url("../img/comment.png") no-repeat top left;
+  background-size: 22px 22px;
+  height: 22px;
+}
+
+#message .footer .react #commentActive {
+  margin-top: 2px;
+  margin-left: 15px;
+  margin-right: 3px;
+  background: url("../img/commentactive.png") no-repeat top left;
+  background-size: 22px 22px;
+  height: 22px;
+}
+
+#message .footer .react #rt{
+  margin-top: 5px;
+  margin-left: 15px;
+  margin-right: 6px;
+  background: url("../img/retweet.png") no-repeat top left;
+  background-size: 25px 15px;
+  height: 15px;
+}
+
+#message .footer .react #rtActive{
+  margin-top: 5px;
+  margin-left: 15px;
+  margin-right: 6px;
+  background: url("../img/retweetactive.png") no-repeat top left;
+  background-size: 25px 15px;
+  height: 15px;
+}
+
+#message .footer .react button:hover{
+   filter: brightness(80%);
+}
+
+#message .footer .react p{
+  padding-top: 5px;
+  float: left;
+}
+
+#message .footer .react .com .img{
+  float: left;
+  margin-right: 15px;
+}
+
+#message .footer .react .com img{
+  border-radius: 20px;
+  height: 40px;
+  width: 40px;
+}
+
+#message .footer .react .com p {
+  font-size: 13px;
+  margin-right: 5px;
+  padding-bottom: 0px;
+}
+
+#message .footer .react .com #login{
+  font-weight: bold;
+  color: #333;
+}
+
+#message .footer .react .com .commentContent{
+  color: #333;
+  margin-top: 5px;
+  word-wrap: break-word;
+}
+
+#message .footer .react .writeComment{
+  margin-top: 25px;
+  padding-bottom: 35px;
+}
+
+#message .footer .react .writeComment textarea{
+  padding: 8px 8px;
+  width: 96%;
+  font-size: 15px;
+  margin: 0px 0px;
+  border: 1px solid #d3d3d3;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  background-color: #eef9ff;
+  color: #333;
+}
+
+#message .footer .react .writeComment textarea:hover{
+  background-color: #e8f7ff;
+}
+
+#message .footer .react .writeComment input[type="submit"] {
+  margin-top: 15px;
+  width: 120px;
+}
+
+/*--------------------------------------------------------------------
+                                  USER
+  --------------------------------------------------------------------*/
+
+.profil_bar #cover_pic img{
+  display: flex;
+  position: relative;
+  width: 100%;
+  height: 220px;
+}
+
+.profil_bar #cover_pic #plus{
+  position: absolute;
+  top: 245px;
+  left: 1223px;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+}
+
+.profil_bar #cover_pic #plus:hover{
+  filter: brightness(90%);
+}
+
+.profil_bar input{
+  box-shadow: 0 0 10px #8dbaea;
+  position: absolute;
+  padding: 5px 10px;
+  width: 400px;
+  font-size: 14px;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  border:1px solid #1298cb;
+  border-radius: 5px;
+  resize: none;
+}
+
+.profil_bar #cover_pic input{
+  left: 800px;
+  top: 218px;
+}
+
+.profil_bar #profil input{
+  left: 260px;
+  top: 290px;
+}
+
+.profil_bar input:focus{
+  outline: none !important;
+  box-shadow: 0 0 10px #719ECE;
+}
+
+.profil_bar #profil{
+  margin-top: -5px;
+  padding: 5px 5px;
+  background-color: white;
+  overflow: hidden;
+  display: flex;
+  font-family: "Goudy Bookletter 1911", sans-serif;
+  letter-spacing: -0.05em;
+  color: #808080;
+}
+
+.profil_bar #profil #begin{
+  padding-left: 380px;
+}
+
+.profil_bar #profil .bar,  .profil_bar #profil .barActive{
+  padding: 10px 20px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 18px;
+}
+
+.profil_bar #profil .bar .text, .profil_bar #profil .barActive .text {
+  padding-top: 5px;
+  font-size: 13px;
+}
+
+.profil_bar #profil .bar:hover {
+  color: #686868;
+}
+
+.profil_bar #profil .barActive{
+  color:  #1298cb;
+}
+
+.profil_bar #profil .barActive:hover{
+  color: #1089b8;
+}
+
+
+.profil_bar #profil img{
+  margin-left: 50px;
+  position: absolute;
+  top: 170px;
+  width: 200px;
+  height: 200px;
+  border-radius: 100px;
+}
+
+.profil_bar #profil #plus{
+  position: absolute;
+  top: 310px;
+  left: 160px;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+}
+
+.profil_bar #profil #plus:hover{
+  filter: brightness(90%);
+}
+
+.profil_desc {
+  margin: 5px 5px;
+  margin-top: 50px;
+  margin-left: 45px;
+  float: left;
+  width: 240px;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  letter-spacing: -0.05em;
+  color: #1e1e1e;
+}
+
+.profil_desc #name{
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.profil_desc #name p{
+  margin-top: 0px;
+  font-size: 14px;
+  color: #8e8e8e;
+}
+
+.profil_desc #t_name input[type="text"]{
+  width: 98%;
+  padding: 6px 6px;
+  font-size: 14px;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  border: 1px solid #d3d3d3;
+  border-radius: 5px;
+}
+
+.profil_desc #t_name input[type="text"]:focus {
+  outline: none !important;
+  box-shadow: 0 0 10px #719ECE;
+}
+
+.profil_desc #desc{
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.profil_desc textarea{
+  margin-bottom: 20px;
+  padding: 6px 6px;
+  padding-bottom: 0px;
+  width: 100%;
+  font-size: 14px;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  border: 1px solid #d3d3d3;
+  border-radius: 5px;
+  resize: none;
+}
+
+.profil_desc textarea:focus {
+  outline: none !important;
+  box-shadow: 0 0 10px #719ECE;
+}
+
+.profil_desc .joined{
+  margin-bottom: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 16px;
+  color: #8e8e8e;
+}
+
+.profil_desc .joined img{
+  margin-right: 5px;
+  float: left;
+  width: 16px;
+  height: 16px;
+}
+
+.profil_desc .modif, .profil_desc .abo{
+  border: 0px solid;
+  border-top-width: thin;
+  border-top-color: #d3d3d3;
+  text-align: center;
+}
+
+.profil_desc .modif button, .profil_desc .abo button{
+  margin-top: 20px;
+  width: 100%;
+  border: 0px solid;
+  border-radius: 20px;
+  color: white;
+  padding: 10px 15px;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: bold;
+  outline: none;
+}
+
+.profil_desc .modif #modifier, .profil_desc .abo #abonnement{
+  background-color:  #1298cb;
+}
+
+.profil_desc .modif #modifier:hover, .profil_desc .abo #abonnement:hover{
+   background-color: #118bb9;
+}
+
+.profil_desc .modif #annuler, .profil_desc .abo #desabonnement{
+  background-color:  #e52929;
+}
+
+.profil_desc .modif #annuler:hover, .profil_desc .abo #desabonnement:hover{
+   background-color: #ca2626;
+}
+
+.users {
+  margin: 30px 20px;
+  padding: 15px 15px;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  border-radius:5px;
+  border: 1px solid #eee #ddd #bbb;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  font-size: 19px;
+  letter-spacing: -0.05em;
+  height: 150px;
+}
+
+.users:hover {
+  background-color: #fafafa;
+}
+
+.users .img{
+  float: left;
+  margin-right: 20px;
+}
+
+.users img{
+  width: 150px;
+  height: 150px;
+  border-radius: 75px;
+}
+
+.users .name {
+  margin-top: 30px;
+}
+
+.users .name #login{
+  font-weight:bold;
+  font-size: 0.9em;
+  margin-bottom:0px;
+}
+
+.users .name #credit{
+  color: #7c7b7b;
+  font-size: 0.85em;
+  padding-top: 3px;
+  margin-top: 0px;
+  font-size: 15px;
+}
+
+.users #login{
+  font-weight:bold;
+  font-size: 0.9em;
+  padding-top: 21px;
+  margin-bottom:0px;
+}

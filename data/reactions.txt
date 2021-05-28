@@ -1,0 +1,3 @@
+4,"galaxsquid","l"
+5,"rbin_","d"
+7,"rbin_","l"

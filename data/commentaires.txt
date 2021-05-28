@@ -1,0 +1,7 @@
+1,7,"galaxsquid","Bah la tu as celle par défaut en même temps","2021-05-27 17:53:49"
+2,3,"galaxsquid","Thééé !!!!","2021-05-27 17:54:23"
+3,3,"rat_violi","Ah non, le café gagne a 100%","2021-05-27 17:54:47"
+4,6,"rbin_","Je sais pas mais ça doit s'arrêter","2021-05-27 21:56:31"
+5,3,"rbin_","Moi c'est thé du coup x)","2021-05-27 21:56:50"
+6,4,"rbin_","Je suis pas concerné par la question, mais les rats c'est trop chou","2021-05-27 21:57:37"
+7,6,"galaxsquid","Mais trop, j'en ai marre, laissez moi sortir la. Je sais que j'aime les calmar mais quand même","2021-05-27 21:59:38"
