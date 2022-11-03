@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import VueCookies from 'vue3-cookies'
+
 import App from './App'
 
 
@@ -57,7 +58,7 @@ router.beforeEach((to, from, next) => {
 
 export default router
 
-let app =createApp(App);
+const app =createApp(App);
 app.use(VueCookies);
 app.use(router).mount('#app')
 
