@@ -1,6 +1,6 @@
 # IMPORTANT
 
-This project is a twitter clone in node and vue-cli. It was done as a University project during a web development course 
+This project is a twitter clone in vue. It was done as a University project during a web development course 
 as part of the 6th semester of my bachelor in computer science. 70% of it was developed in the span of ten days so clean code
 was not the priority.
 
